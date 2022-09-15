@@ -1,0 +1,19 @@
+{
+	"name": "brain",
+	"version": "1.0.0",
+	"main": "index.js",
+	"license": "MIT",
+	"type": "commonjs",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"book": "node brainText.js",
+		"book:dev": "nodemon brainText.js"
+	},
+	"dependencies": {
+		"brain.js": "^2.0.0-beta.15",
+		"gpu.js": "1.4.9",
+		"mnist": "^1.1.0",
+		"synaptic": "^1.1.4"
+	}
+}
