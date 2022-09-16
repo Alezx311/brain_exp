@@ -1,25 +1,35 @@
 const brain = require("brain.js")
-const { getUnical } = require("./values")
-const Values = require("./values")
-const { format, fileRead, FILE_POETS, getLines, BRAIN_TRAINING_OPTIONS, fileWrite, getJson } = Values
+const Helpers = require("./helpers")
+const { TrainingDataPoetry } = require("./trainingData")
 
 const NETWORK_FILE = "/networks/brainPoets.json"
 const RESULTS_FILE = "/results/brainPoets.json"
 
-const net = new brain.recurrent.LSTM()
+// const OPTIONS_TRAIN = { log: true }
+// const OPTIONS_NET = { log: true }
+const OPTIONS_NET = Helpers.OPTIONS_BRAIN_LSTM
+const OPTIONS_TRAIN = Helpers.OPTIONS_BRAIN_TRAIN
 
-const CONTENT = fileRead(FILE_POETS)
-const LINES = getLines(CONTENT).filter(String).map(Values.getTrainingProps)
-const RUN_DATA = LINES.filter(({ input }) => input.length > 3)
+const net = new brain.recurrent.LSTM(OPTIONS_NET)
+console.log("Network created successfully")
 
-const trainResults = net.train(RUN_DATA, BRAIN_TRAINING_OPTIONS)
+console.log(TrainingDataPoetry.DESC)
+console.log(TrainingDataPoetry.examples)
+
+const trainingData = TrainingDataPoetry.dataGenerate(1000)
+const trainingDataJson = JSON.stringify(trainingData)
+Helpers.fileWrite(`./training/poetry_${Date.now()}.json`, trainingDataJson)
+console.log("Training data saved")
+
+const trainResults = net.train(trainingData, OPTIONS_TRAIN)
 console.log("Network Training success", trainResults)
-fileWrite(getJson(net.toJSON()), NETWORK_FILE)
+
+const json = net.toJSON()
+Helpers.fileWrite(NETWORK_FILE, Helpers.toJson(json))
 console.log("Network Saved to file")
 
-console.log("Run data", RUN_DATA.length)
-
-const results = RUN_DATA.map((v) => ({ ...v, result: net.run(v.input) }))
+const results = TrainingDataPoetry.WORDS_SEQUENCES.map((seq) => ({ ...seq, result: net.run(seq.word) }))
 console.log("Results", results)
-fileWrite(getJson(results), RESULTS_FILE)
+
+Helpers.fileWrite(RESULTS_FILE, Helpers.toJson(results))
 console.log("Results saved to file")
