@@ -78,7 +78,7 @@ class Constants {
 }
 
 module.exports = class Helpers extends Constants {
-	source = (message = __filename) => `\n\t${Helpers.timestamp}\t\n${message}\n`
+	source = (message = __filename) => `\n\t${this.timestamp}\t\n${message}\n`
 
 	static get time() {
 		return Date.now

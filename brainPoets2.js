@@ -1,4 +1,5 @@
 const brain = require("brain.js")
+const { OPTIONS_BRAIN_TRAIN } = require("./helpers")
 const Helpers = require("./helpers")
 const { TrainingDataPoetry } = require("./trainingData")
 const { now } = performance
@@ -23,7 +24,7 @@ const TIME_TRAIN_DATA_GENERATED = now()
 // console.log("Training data saved")
 
 console.log("Network Training started")
-net.train(trainingData, { log: true, callback: console.info })
+net.train(trainingData, OPTIONS_BRAIN_TRAIN)
 const TIME_TRAINING = now()
 console.log("Network Training success")
 
