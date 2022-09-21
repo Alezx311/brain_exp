@@ -6,7 +6,7 @@ const { log, warn, info } = console
 const { random: _random, min: _min, max: _max } = Math
 const { keys: _keys, values: _values, entries: _entries, assign: _assign } = Object
 
-class Constants {
+module.exports = class Helpers {
 	//* File names
 	static FILENAME_OUTPUT = "output.txt"
 	static FILENAME_INPUT = "input.txt"
@@ -75,9 +75,7 @@ class Constants {
 		callback: info,
 		callbackPeriod: 10
 	}
-}
 
-module.exports = class Helpers extends Constants {
 	source = (message = __filename) => `\n\t${this.timestamp}\t\n${message}\n`
 
 	static get time() {
@@ -110,6 +108,7 @@ module.exports = class Helpers extends Constants {
 	static fileRead = (s = this.LOG_FILE) => fs.readFileSync(this.filePath(s), this.OPTIONS_FS).toString()
 	static fileWrite = (file = this.LOG_FILE, data = "") => fs.writeFileSync(this.filePath(file), data, this.OPTIONS_FS)
 	static fileAppend = (file = this.LOG_FILE, data = "") => fs.appendFileSync(this.filePath(file), data, this.OPTIONS_FS)
+	static fileCreateDir = (dir = this.PATH_LOG) => fs.mkdirSync(dir)
 
 	//* Generate Value Helpers
 	static gen = () => _random()
@@ -242,4 +241,17 @@ module.exports = class Helpers extends Constants {
 
 		return { word, index, values, text }
 	}
+	static msToTimeDesc = (ms) => {
+		const seconds = Math.floor(ms / 1000)
+		const minutes = Math.floor(seconds / 60)
+		const hours = Math.floor(minutes / 60)
+		const days = Math.floor(hours / 24)
+		return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
+	}
+	static encode = (arg, size = 100) =>
+		arg
+			.split("")
+			.map((x) => x.charCodeAt(0) / 256)
+			.slice(0, size)
+	static decode = (arg) => arg.map((v) => String.fromCharCode(v * 256)).join("")
 }
