@@ -1,49 +1,34 @@
+const BrainText = require("brain-text")
 const brain = require("brain.js")
-const Helpers = require("./helpers")
-const { TrainingDataPoetry } = require("./trainingData")
-const { now } = performance
 
-const TIMESTAMP_START = Helpers.timestamp
-const TIME_START = now()
+let brainText = new BrainText()
 
-const NETWORK_FILE = "/networks/brainPoets.json"
-const RESULTS_FILE = "/results/brainPoets.json"
+brainText.setConfiguration({
+	iterations: 3000, // the maximum times to iterate the training data
+	errorThresh: 0.006, // the acceptable error percentage from training data
+	log: true, // true to use console.log, when a function is supplied it is used
+	logPeriod: 10, // iterations between logging out
+	learningRate: 0.3, // multiply's against the input and the delta then adds to momentum
+	momentum: 0.1 // multiply's against the specified "change" then adds to learning rate for change
+})
 
-const OPTIONS_NET = Helpers.OPTIONS_BRAIN_LSTM
-const OPTIONS_TRAIN = Helpers.OPTIONS_BRAIN_TRAIN
+const modelJSON =
+	'{"encender_lampara": ["enciende la luz","esto está muy oscuro"],"apagar_lampara": ["apaga la luz","apaga la lámpara"]}'
+brainText.loadTrainDataFromInputDataString(modelJSON)
 
-const net = new brain.NeuralNetwork(OPTIONS_NET)
-// const net = new brain.recurrent.LSTM(OPTIONS_NET)
-console.log("Network created successfully")
+let result = brainText.train()
+result.then(() => {
+	let r = brainText.run("encender luz")
+	console.log(r)
+})
 
-const trainingData = TrainingDataPoetry.dataGenerate(1000)
-const TIME_TRAIN_DATA_GENERATED = now()
+brainText.addData([
+	{ label: "encender_lampara", text: "dale a la lamparita" },
+	{ label: "apagar_lampara", text: "quita la lamparita" }
+])
+brainText.addOneData({ label: "encender_lampara", text: "dale a la lamparita" })
+result = brainText.train()
 
-// const trainingDataJson = JSON.stringify(trainingData)
-// Helpers.fileWrite(`./training/poetry_${Date.now()}.json`, trainingDataJson)
-// console.log("Training data saved")
-
-console.log("Network Training started")
-net.train(trainingData, { log: true, callback: console.info })
-const TIME_TRAINING = now()
-console.log("Network Training success")
-
-Helpers.fileWrite(NETWORK_FILE, JSON.stringify(net.toJSON()))
-const TIME_NETWORK_SAVED = now()
-console.log("Network saved success")
-
-console.info(`
-Start Time: ${TIMESTAMP_START}
-
-Training data generated on ${TIME_TRAIN_DATA_GENERATED - TIME_START} milliseconds.
-Network trained on ${TIME_TRAINING - TIME_TRAIN_DATA_GENERATED} milliseconds.
-Network backup on ${TIME_NETWORK_SAVED - TIME_TRAINING} milliseconds
-
-End Time: ${Helpers.timestamp}
-`)
-
-// const results = TrainingDataPoetry.WORDS_SEQUENCES.map((seq) => ({ ...seq, result: net.run(seq.word) }))
-// console.log("Results", results)
-
-// Helpers.fileWrite(RESULTS_FILE, Helpers.toJson(results))
-// console.log("Results saved to file")
+let jsonModel = brainText.train()
+let net = new new brain.NeuralNetwork()()
+net.fromJSON(jsonModel.net)

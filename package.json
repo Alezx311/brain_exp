@@ -11,8 +11,11 @@
 		"book:dev": "nodemon brainText.js"
 	},
 	"dependencies": {
+		"@tensorflow/tfjs": "^3.20.0",
 		"@types/jest": "^29.0.3",
 		"@types/node": "^18.7.18",
+		"brain-pact": "^1.0.3",
+		"brain-text": "^1.1.30",
 		"brain.js": "^2.0.0-beta.15",
 		"concurrently": "^7.4.0",
 		"gpu.js": "1.4.9",

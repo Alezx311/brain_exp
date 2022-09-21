@@ -1,12 +1,15 @@
 const fs = require("fs")
 const path = require("path")
+const util = require("util")
 
+const { format: _format } = util
 const { now } = Date
 const { log, warn, info } = console
 const { random: _random, min: _min, max: _max } = Math
 const { keys: _keys, values: _values, entries: _entries, assign: _assign } = Object
+const { fromCharCode } = String
 
-module.exports = class Helpers {
+class Helpers {
 	//* File names
 	static FILENAME_OUTPUT = "output.txt"
 	static FILENAME_INPUT = "input.txt"
@@ -29,27 +32,48 @@ module.exports = class Helpers {
 	static PATH_LOG = path.join(this.PATH_FILES, this.FILENAME_LOG)
 
 	//* Chars
+	static CHAR_CODE_MULT = 256
+	static MAX_ENCODED_SIZE = 100
 	static LINE = "\n"
 	static TAB = "\t"
 	static SPACE = " "
 	static COMMA = ","
 	static DOT = "."
-	static CHAR_DIV = "#"
+	static DIV = "#"
 	static CHARS_NUM = "0123456789"
 	static CHARS_ENG = "abcdefghijklmnopqrstuvwxyz"
 	static CHARS_RUS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-	static CHARS_SPECIAL = [this.LINE, this.TAB, this.SPACE, this.COMMA, this.DOT].join("")
-	static CHARS_LETTERS = this.CHARS_ENG + this.CHARS_RUS
-	static CHARS_VALID = this.CHARS_LETTERS + this.CHARS_NUM + this.CHARS_SPECIAL
+	static CHARS_SIMPLE = this.CHARS_ENG + this.CHARS_RUS + this.CHARS_NUM
+	static CHARS_SPECIAL = this.LINE + this.TAB + this.SPACE + this.COMMA + this.DOT + this.DIV
+	static CHARS_VALID = this.CHARS_SIMPLE + this.CHARS_SPECIAL
+	static CHARS_AND_CODES = this.CHARS_VALID.split("").reduce((acc, char) => {
+		const code = char.charCodeAt(0)
+		const encoded = this.encode(code)
+		return [...acc, { char, code, encoded }]
+	}, [])
+	static CHAR_CODES = {
+		CHARS_NUM: this.CHARS_NUM.split("").reduce((acc, char) => [...acc, char.charCodeAt(0)], []),
+		CHARS_ENG: this.CHARS_ENG.split("").reduce((acc, char) => [...acc, char.charCodeAt(0)], []),
+		CHARS_RUS: this.CHARS_RUS.split("").reduce((acc, char) => [...acc, char.charCodeAt(0)], []),
+		CHARS_SIMPLE: this.CHARS_SIMPLE.split("").reduce((acc, char) => [...acc, char.charCodeAt(0)], []),
+		CHARS_SPECIAL: this.CHARS_SPECIAL.split("").reduce((acc, char) => [...acc, char.charCodeAt(0)], [])
+	}
+
+	static isCharLatin = (char) => this.CHARS_ENG.includes(char.toLowerCase())
+	static isCharKyrrylic = (char) => this.CHARS_RUS.includes(char.toLowerCase())
+	static isCharNum = (char) => this.CHARS_NUM.includes(char.toLowerCase())
+	static isCharSpecial = (char) => this.CHARS_SPECIAL.includes(char.toLowerCase())
+	static isCharValid = (char) => this.CHARS_VALID.includes(char.toLowerCase())
 
 	//* Dividers
-	static DIV_LINE = `\n${this.CHAR_DIV.repeat(20)}\n`
-	static DIV_TITLE = `\t${this.CHAR_DIV.repeat(5)}\t`
+	static DIV_LINE = `\n${this.DIV.repeat(20)}\n`
+	static DIV_TITLE = `\t${this.DIV.repeat(5)}\t`
 
 	//* Constants
 	static MIN = 1
 	static MAX = 100
 	static RANGE = [this.MIN, this.MAX]
+
 	static ARRAY_SIZE = 10
 	static LIKE_DIFF = 0.1
 	static MIN_LENGTH = 3
@@ -126,19 +150,39 @@ module.exports = class Helpers {
 	static genObjKey = (v = null) => this.genElement(_keys(v))
 	static genObjValue = (v = null) => this.genElement(_values(v))
 	static genObjEntry = (v = null) => this.genElement(_entries(v))
+	static genCharLatin = () => this.genElement(this.CHARS_ENG)
+	static genCharKyrillic = () => this.genElement(this.CHARS_RUS)
+	static genCharCodeLatin = () => this.genInt(122, 97)
+	static genCharCodeKyrillic = () => this.genInt(1103, 1072)
+	static getRgb = (hex) => {
+		const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+		hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+			return r + r + g + g + b + b
+		})
+
+		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+		return result
+			? {
+					r: Math.round(parseInt(result[1], 16) / 2.55) / 100,
+					g: Math.round(parseInt(result[2], 16) / 2.55) / 100,
+					b: Math.round(parseInt(result[3], 16) / 2.55) / 100
+			  }
+			: null
+	}
 
 	//* Validators
-	static isExist = (v = null) => v !== null && v !== undefined
 	static is = (v = null) => !!v
+	static isExist = (v = null) => v !== null && v !== undefined
 	static isType = (v1 = null, v2 = null) => typeof v1 === typeof v2
-	static isLen = (v = null, l = 0) => this.is(v?.length) && v?.length >= l
-	static isKey = (v = null, p = null) => this.is(v?.[p])
-	static isFunc = (fn = null) => typeof fn === "function"
-	static isNum = (v = null, l = 0) => this.is(v) && typeof v === "number" && v >= l
-	static isStr = (v = null, l = 0) => this.is(v) && typeof v === "string" && this.isLen(v, l)
-	static isArr = (v = null, l = 0) => this.is(v) && typeof v === "object" && Array.isArray(v) && this.isLen(v, l)
-	static isObj = (v = null, l = 0) => this.is(v) && typeof v === "object" && !Array.isArray(v)
-	static isEqual = (v1 = null, v2 = null) => this.toJson(v1) === this.toJson(v2)
+	static isLen = (v = null, l = 0) => v?.length > l
+	static isKey = (v = null, p = null) => util.isObj(v) && v.hasOwnProperty(p)
+	static isFunc = (fn = null) => f instanceof Function || util.isFunc(v)
+	static isNum = (v = null, l = 0) => (v instanceof Number || util.isNum(v)) && v > l
+	static isStr = (v = null, l = 0) => (v instanceof String || util.isStr(v)) && v.length > l
+	static isArr = (v = null, l = 0) => (v instanceof Array || util.isArr(v)) && v.length > l
+	static isObj = (v = null) => v instanceof Object || util.isObj(v)
+	static isRxp = (v = null) => v instanceof RegExp
+	static isEqual = (v1 = null, v2 = null) => this.jsonCreate(v1) === this.jsonCreate(v2)
 	static isNumBetween = (v = null, range = this.RANGE) => this.isNum(v, _min(...range)) && v < _max(...range)
 
 	//* Get Value Helpers
@@ -169,19 +213,19 @@ module.exports = class Helpers {
 
 	//* Converters
 	static toArray = (v = null) => (this.isArr(v) ? v : [v])
-	static toObj = (v = null) => (this.isObj(v) ? v : _assign({}, { value: v }))
-	static toText = (v = null) => (this.isObj(v) ? this.toJson(v) : this.isArr(v) ? v.join(this.LINE) : `${v}`)
-	static toKeys = (v = null) => (this.isObj(v) ? _keys(v) : Object.getOwnPropertyNames(v)) || []
+	static toObj = (v = null) => (this.isObj(v) ? v : { value: v })
+	static toText = (v = null) => (this.isObj(v) ? this.jsonCreate(v) : this.isArr(v) ? v.join("\n") : `${v}`)
+	static toKeys = (v = null) => (this.isObj(v) ? _keys(v) : _names(v)) || []
 	static toNumDiff = (...v) => _max(...v) - _min(...v)
 	static toNumRange = (...v) => [_min(...v), _max(...v)]
 	static toNumLike = (v = 0, coff = this.LIKE_DIFF) => [v - coff, v + coff]
-	static toTrim = (v = null) => (typeof v === "string" ? v : `${v}`).trim()
+	static toTrim = (v = null) => (this.isStr(v) ? v : `${v}`).trim()
 	static toTrimLine = (v = "") => v.replace("\n", " ")
 	// .replace(/[^а-яa-z,.]/gim, "")
 
-	static toJoin = (v) => v.join(this.LINE)
-	static toUnical = (v = null) => this.isArr(v) && [...new Set([...v])]
-	static toRepeat = (v = null, r = 2) => this.toTrim(v).repeat(r)
+	static toUnical = (v = null) => [...new Set(v)]
+	static toJoin = (v) => (this.isArr(v) ? v.join(this.LINE) : this.toText(v))
+	static toRepeat = (v = null, r = 2) => this.toText(v).repeat(r)
 	static toReversed = (v = null) => (this.isArr(v) ? v.reverse() : this.toTrim(v).split().reverse().join())
 	static toBuffer = (v = null) => Buffer.from(this.toTrim())
 	static toFloatFixed = (v = null, l = 2) => Number((typeof v === "number" ? v : 0).toFixed(l))
@@ -195,23 +239,80 @@ module.exports = class Helpers {
 		const other = s.slice(1).toLowerCase()
 		return first + other
 	}
-	static toJson = (v = null) => JSON.stringify(this.toObj(v), null, 2)
-	static toAverage = (...v) => {
-		const nums = this.isArr(v, 1) ? v.filter(Number) : [0, 0]
-		return nums.reduce(this.reduceSum) / nums.length
+
+	static jsonParse = (value = null) => JSON.parse(value)
+	static jsonCreate = (value = null) => JSON.stringify(this.toObj(value), null, 2)
+
+	static toAverage = (values) => {
+		if (!values || !values.length) return 0
+		const nums = values.filter(Number)
+		const length = nums.length
+		return nums.reduce((acc, v) => acc + v, 0) / length
 	}
 
 	//* Regular Expressions
-	static toRxp = (...v) => new RegExp(...v)
-	static toRxpNext = (w = "", t = 1) => this.toRxp(w + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(t), "i")
-	static toMatchLineWithWord = (s = "", w = "") => this.toTrim(s).match(this.toRxp(`^.{0,}${w}[^$]+$`))
-	static toMatchWordLast = (s = "") => this.toTrim(s).match(/(\B[а-яa-z]+\B)$/i)
-	static toMatchWordSequence = (s = "", w = "", l = 1) => this.toTrim(s).match(this.toRxpNext(w, l))
-	static toMatchChars = (s = "") => this.toTrim(s).match(/\B([а-яa-z])\B/gim)
-	static toMatchWords = (s = "") => this.toTrim(s).match(/\B([а-яa-z]+)\B/gim)
-	static toMatchPhrases = (s = "") => this.toTrim(s).match(/.+\.|.+$/gim)
-	static toMatchLines = (s = "") => this.toTrim(s).match(/.+\n|^.+$/gim)
-	static toMatchNextWord = (s = "", w = "") => s.match(new RegExp(w + "\\s(\\w+)"))?.[1]
+	static toRxp = (str = "", flags = "im") => new RegExp(str, flags)
+	static toRxpNext = (word = "", rep = 1) => {
+		const rxpString = word + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(rep)
+		return new RegExp(rxpString, "gim")
+	}
+	static toMatchWordFirst = (str = "") => str.match(/^(\w+)\b/i)
+	static toMatchWordLast = (str = "") => str.match(/\b(\w+)$/i)
+	static toMatchLineWithWord = (str = "", word = "") => {
+		if (!this.isStr(str)) return ""
+		const rxp = this.toRxp(`^.+${word}.+$`, "im")
+		const result = rxp.exec(str) ?? ""
+		return result
+	}
+
+	static toMatchChars = (str = "") => {
+		if (!this.isStr(str)) return []
+
+		return str.split("").filter(String)
+	}
+
+	static toMatchWords = (str = "") => {
+		if (!this.isStr(str)) return []
+
+		return str
+			.split(/\s|\n|\t|\b/gim)
+			.filter((s) => this.isLen(s, 1))
+			.map((s) => s.replace(/\s|\n|\t/, "").trim())
+	}
+
+	static toMatchPhrases = (str = "") => {
+		if (!this.isStr(str)) return []
+
+		return str
+			.split(".")
+			.filter((s) => this.isLen(s, 1))
+			.map((s) => s.replace("\n", "").trim())
+	}
+
+	static toMatchLines = (str = "") => {
+		if (!this.isStr(str)) return []
+
+		return str
+			.split("\n")
+			.filter((s) => this.isLen(s, 1))
+			.map((s) => s.replace("\n", "").trim())
+	}
+
+	static toMatchDividered = (str = "", div = this.DIV) => {
+		if (!this.isStr(str)) return []
+
+		return str.split(div).filter((s) => this.isLen(s, 1))
+	}
+
+	static toMatchNextWords = (str = "", word = "", size = 2) => {
+		if (!this.isStr(str) || !this.isStr(word) || !str.includes(word)) return ""
+
+		const rxpString = word + ".\\b\\w+\\b".repeat(size)
+		const rxp = new RegExp(rxpString, "im")
+		const result = rxp.exec(str)
+
+		return result?.[1] ?? ""
+	}
 	static toArrValues = (arr) => arr.map((value, index) => ({ value, index, text: this.toText(value) }))
 	static toNotUnical = (arr) => {
 		const unical = this.toUnical(arr)
@@ -223,14 +324,43 @@ module.exports = class Helpers {
 		return notUnical.includes(el)
 	}
 
-	static replaceChars = (str, chars = /[^а-яa-z\s,.]/gim, rep = "") => str.replace(chars, rep)
+	static replaceManyChars = (str) => {
+		return str.replace(/\s+|\t+/gim, " ").replace(/\n+/gim, "\n")
+	}
+	static replaceChars = (str) => {
+		const replaced = str.replace(/[^а-яa-z\s\n,.]/gim, " ")
+		return this.replaceManyChars(replaced)
+	}
 
-	static getIndexAll = (arr = null, el = null) => arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
-	static getIndex = (v = null, el = null) => this.is(v?.length) && v.indexOf(el)
-	static getMatch = (v = null, el = null) => this.is(v?.length) && v.match(new RegExp(el, "im"))
-	static getMatchAll = (v = null, el = null) => this.is(v?.length) && v.match(new RegExp(el, "gim"))
-	static getFind = (v = null, el = null) => this.is(v?.length) && v.find(el)
-	static getFindAll = (v = null, el = null) => this.is(v?.length) && v.filter(el)
+	static getIndex = (src = "", el = "") => {
+		if (!this.isLen(src) || !el) return -1
+		return src.indexOf(el)
+	}
+	static getIndexAll = (arr = null, el = null) => {
+		if (!this.isArr(arr) || !el) return []
+		return arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
+	}
+	static getMatch = (v = "", el = "") => {
+		if (!this.isStr(v) || !el) return []
+		const rxp = this.isRxp(el) ? el : new RegExp(el, "im")
+		return v.match(rxp) ?? []
+	}
+	static getMatchAll = (v = "", el = "") => {
+		if (!this.isStr(v) || !el) return []
+		const rxp = this.isRxp(el) ? el : new RegExp(el, "gim")
+		return v.match(rxp) ?? []
+	}
+
+	static getElementsSequence = (arr, el, size = 3) => {
+		if (!this.isArr(arr) || !el || !arr.includes(el)) {
+			return []
+		}
+
+		const start = _max(arr.indexOf(el), 0)
+		const end = _min(index + size, arr.length - 1)
+
+		return arr.slice(start, end)
+	}
 	static getElementsSequence = (arr, word, size = this.dice6) => {
 		const index = this.getIndex(arr, word)
 		const values = arr.slice(index, index + size)
@@ -242,16 +372,57 @@ module.exports = class Helpers {
 		return { word, index, values, text }
 	}
 	static msToTimeDesc = (ms) => {
-		const seconds = Math.floor(ms / 1000)
-		const minutes = Math.floor(seconds / 60)
-		const hours = Math.floor(minutes / 60)
-		const days = Math.floor(hours / 24)
+		const seconds = ~~(ms / 1000)
+		const minutes = ~~(seconds / 60)
+		const hours = ~~(minutes / 60)
+		const days = ~~(hours / 24)
 		return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
 	}
-	static encode = (arg, size = 100) =>
-		arg
-			.split("")
-			.map((x) => x.charCodeAt(0) / 256)
-			.slice(0, size)
-	static decode = (arg) => arg.map((v) => String.fromCharCode(v * 256)).join("")
+
+	static toFixed = (value, size = 2) => Number(Number(value).toFixed(size))
+	static sliceToSize = (value, size) => (value.length > size ? value.slice(0, size) : value)
+	static codeEncode = (value) => value / this.CHAR_CODE_MULT
+	static codeDecode = (value) => ~~(value * this.CHAR_CODE_MULT)
+	static charEncode = (char) => this.codeEncode(char.charCodeAt(0))
+	static charEncode = (code) => _fromCharCode(this.codeDecode(code))
+
+	static encode = (value, size = this.MAX_ENCODED_SIZE) => {
+		let elements = null
+		if (this.isNum(value)) {
+			elements = [value]
+		} else if (this.isStr(value)) {
+			elements = value.split("")
+		} else if (this.isArr(value)) {
+			elements = value.filter(String)
+		}
+
+		const result = elements.reduce((acc, v) => [...acc, this.charEncode(v)], [])
+		return this.sliceToSize(result, size)
+	}
+
+	static decode = (value) => {
+		if (this.isNum(value)) {
+			return this.charDecode(value)
+		} else if (this.isArr(value)) {
+			return value.map(this.charDecode).filter(Boolean).join("")
+		}
+
+		return this.codeDecode(Number(value))
+	}
+
+	static isChar = (value, char) => (value === char ? 1 : 0)
+	static isLineBreak = (value) => this.isChar(value, "\n")
+	static isSharp = (value) => this.isChar(value, "#")
+	static isSpace = (value) => this.isChar(value, " ")
+	static isStar = (value) => this.isChar(value, "*")
+	static character = (str) => {
+		if (this.isStr(str)) {
+			const result = str.trim().split("").map(this.isSharp)
+			return result
+		}
+
+		return []
+	}
 }
+
+module.exports = Helpers

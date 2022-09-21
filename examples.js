@@ -1,24 +1,177 @@
 const brain = require("brain.js")
-// const TrainStream = require("train-stream")
-// const LineByLineReader = require("line-by-line")
 const fs = require("fs")
+const Helpers = require("./helpers")
 
 const { info: _info } = console
 const { keys: _keys, fromEntries: _from } = Object
 
-class Examples {
-	static encode = (arg, size = 100) =>
-		arg
-			.split("")
-			.map((x) => x.charCodeAt(0) / 256)
-			.slice(0, ~~size)
-	static decode = (arg) => arg.map((v) => String.fromCharCode(v * 256)).join("")
-	static isSharp = (char) => (char === "#" ? 1 : 0)
-	static character = (str) =>
-		str
-			.trim()
-			.split("")
-			.map((v) => this.isSharp(v))
+const MAGIC = Math.PI
+const HIDDEN_INPUTS = [20]
+const ITERATIONS = 1000
+const TRAIN_DATA_SIZE = 100
+const PREDICT_SIZE = 3
+const NET_OPT = { hiddenLayers: HIDDEN_INPUTS }
+const TRAIN_OPT = {
+	iterations: ITERATIONS,
+	errorThresh: 0.005,
+	learningRate: 0.2,
+	log: true,
+	interval: 1000
+}
+
+class Examples extends Helpers {
+	static LSTM = () => {
+		const net = new brain.recurrent.LSTM()
+		const trainData = [
+			{ input: "my unit-tests failed.", output: "software" },
+			{ input: "tried the program, but it was buggy.", output: "software" },
+			{ input: "i need a new power supply.", output: "hardware" },
+			{ input: "the drive has a 2TB capacity.", output: "hardware" },
+			{ input: "unit-tests", output: "software" },
+			{ input: "program", output: "software" },
+			{ input: "power supply", output: "hardware" },
+			{ input: "drive", output: "hardware" }
+		]
+
+		net.train(trainData)
+
+		const result = net.run("drive")
+		_info("output", result)
+
+		return result
+	}
+
+	static PREDICT_ENCODED = () => {
+		const net = new brain.recurrent.LSTMTimeStep(NET_OPT)
+
+		const FILE_CONTENT = "./files/poetry.txt"
+		const FILE_NETWORK = "./networks/predict_encoded.json"
+		const FILE_RESULTS = "./results/predict_encoded.json"
+
+		const TEXT = this.fileRead(FILE_CONTENT)
+			.toLowerCase()
+			.replace(/\n|\s+/gim, " ")
+		const WORDS_UNICAL = this.toUnical(TEXT.split(" ")).filter((s, i) => s.length > 3)
+		const WORDS = WORDS_UNICAL.filter((v, i) => i < TRAIN_DATA_SIZE)
+
+		const wordEncode = (word) => word.split("").map((ch) => ch.charCodeAt(0) / 256)
+		const wordDecode = (arr) => arr.reduce((acc, n) => [...acc, String.fromCharCode(n * 256)], []).join("")
+
+		// const json = this.fileRead(FILE_NETWORK)
+		// net.fromJSON(JSON.parse(json))
+		// _info("Network loaded")
+
+		const trainData = WORDS.map((word) => wordEncode(word))
+		const runData = WORDS_UNICAL.map((word) => wordEncode(word))
+
+		const trainResults = net.train([...trainData, ...runData], TRAIN_OPT)
+		_info("Training results", trainResults)
+
+		this.fileWrite(FILE_NETWORK, JSON.stringify(net.toJSON(), null, 2))
+		_info("Network saved")
+
+		const results = trainData.map((input) => {
+			const result = net.run(input)
+			const forecast = net.forecast(input, PREDICT_SIZE)
+			const decodedInput = wordDecode(input)
+			const decodedPredict = wordDecode(forecast)
+			const decodedResult = String.fromCharCode(result * 256)
+
+			return { input, result, forecast, decodedInput, decodedPredict, decodedResult }
+		})
+		this.fileWrite(FILE_RESULTS, JSON.stringify(results, null, 2))
+		_info("Results saved")
+
+		return results
+	}
+
+	static PREDICT_WORDS = () => {
+		const net = new brain.recurrent.LSTMTimeStep(NET_OPT)
+
+		const FILE_CONTENT = "./files/poetry.txt"
+		const FILE_NETWORK = "./networks/predict_words.json"
+		const FILE_RESULTS = "./results/predict_words.json"
+
+		const TEXT = this.fileRead(FILE_CONTENT)
+			.toLowerCase()
+			.replace(/\n|\s+/gim, " ")
+		const WORDS_UNICAL = this.toUnical(TEXT.split(" ")).filter((s, i) => s.length > 3)
+		const WORDS = WORDS_UNICAL.filter((v, i) => i < TRAIN_DATA_SIZE)
+
+		const indexEncode = (i) => i / MAGIC
+		const indexDecode = (i) => (i > 0 ? i : 1 * MAGIC)
+		const wordDecode = (i) => WORDS_UNICAL[~~indexDecode(i)]
+		const wordEncode = (w) => indexEncode(WORDS_UNICAL.indexOf(w))
+
+		// const json = this.fileRead(FILE_NETWORK)
+		// net.fromJSON(JSON.parse(json))
+		// _info("Network loaded")
+
+		const trainData = WORDS.map((word) => [wordEncode(word)])
+		const runData = WORDS_UNICAL.map((word) => [wordEncode(word)])
+
+		const trainResults = net.train([trainData], TRAIN_OPT)
+		_info("Training results", trainResults)
+
+		this.fileWrite(FILE_NETWORK, JSON.stringify(net.toJSON(), null, 2))
+		_info("Network saved")
+
+		const results = runData.map((input) => {
+			const result = net.forecast([input], PREDICT_SIZE)
+			const decoded = input.map(wordDecode)
+			const output = this.toUnical(result.map(wordDecode)).filter(Boolean)
+
+			return { input, result, decoded, output }
+		})
+		this.fileWrite(FILE_RESULTS, JSON.stringify(results, null, 2))
+		_info("Results saved")
+
+		return results
+	}
+
+	static PREDICT_LINES = () => {
+		const net = new brain.recurrent.LSTMTimeStep(NET_OPT)
+
+		const FILE_CONTENT = "./files/poetry.txt"
+		const FILE_NETWORK = "./networks/predict_lines.json"
+		const FILE_RESULTS = "./results/predict_lines.json"
+
+		const TEXT = this.fileRead(FILE_CONTENT).toLowerCase()
+		const LINES_UNICAL = this.toUnical(TEXT.split("\n"))
+			.filter((s, i) => s.length > 3)
+			.map((l) => l.replace("\n", " ").replace(/\s+/gim, " "))
+		const LINES = LINES_UNICAL.filter((v, i) => i < TRAIN_DATA_SIZE)
+
+		const indexEncode = (i) => i / MAGIC
+		const indexDecode = (i) => (i > 0 ? i : 1 * MAGIC)
+		const lineDecode = (i) => LINES_UNICAL[~~indexDecode(i)]
+		const lineEncode = (w) => indexEncode(LINES_UNICAL.indexOf(w))
+
+		// const json = this.fileRead(FILE_NETWORK)
+		// net.fromJSON(JSON.parse(json))
+		// _info("Network loaded")
+
+		const trainData = LINES.map((line) => [lineEncode(line)])
+		const runData = LINES_UNICAL.map((line) => [lineEncode(line)])
+
+		const trainResults = net.train([trainData], TRAIN_OPT)
+		_info("Training results", trainResults)
+
+		this.fileWrite(FILE_NETWORK, JSON.stringify(net.toJSON(), null, 2))
+		_info("Network saved")
+
+		const results = runData.map((input) => {
+			const result = net.forecast([input], PREDICT_SIZE)
+			const decoded = input.map(lineDecode)
+			const output = this.toUnical(result.map(lineDecode)).filter(Boolean)
+
+			return { input, result, decoded, output }
+		})
+		this.fileWrite(FILE_RESULTS, JSON.stringify(results, null, 2))
+		_info("Results saved")
+
+		return results
+	}
 
 	static TRAINED_MODEL_TRAIN_OPT = {
 		logPeriod: 100,
@@ -28,22 +181,22 @@ class Examples {
 	static TRAINED_MODEL_TRAIN_DATA = [
 		{
 			input: `Fuck being on some chill shit
-We go 0 to 100 nigga, real quick
-They be on that rap-to-pay-the-bill shit`,
+					We go 0 to 100 nigga, real quick
+					They be on that rap-to-pay-the-bill shit`,
 			output: { Drake: 1 }
 		},
 		{
 			input: `Still like, "Can you hit it with your OVO goose on?"
-I'm like, "What are you on?"
-Told me that she two on, ha, that's cute we a few on
-I could show you what to do in this bitch`,
+					I'm like, "What are you on?"
+					Told me that she two on, ha, that's cute we a few on
+					I could show you what to do in this bitch`,
 			output: { Drake: 1 }
 		},
 		{
 			input: `All you self promoters are janky
-We established like the Yankees
-This whole fucking game thank us
-We movin' militant but somehow you the one tankin'`,
+					We established like the Yankees
+					This whole fucking game thank us
+					We movin' militant but somehow you the one tankin'`,
 			output: { Drake: 1 }
 		},
 		{
@@ -430,11 +583,22 @@ Guess who's back`,
 		const trainResults = net.train(trainData, trainOpt)
 		_info("Training result: ", trainResults)
 
-		const input = this.PREDICT_FORECAST_DATA
-		const results = net.forecast(input, 3)
-		_info("next 3 predictions", { input, results })
+		const results = net.forecast(trainData, 10)
+		_info("next 10 predictions", { input: trainData, results })
 
-		return { results, input }
+		return results
+	}
+
+	static TRAIN_OPT_DEFAULT = {
+		iterations: 1000, // the maximum times to iterate the training data --> number greater than 0
+		errorThresh: 0.09, // the acceptable error percentage from training data --> number between 0 and 1
+		log: true, // true to use _info, when a function is supplied it is used --> Either true or a function
+		logPeriod: 100, // iterations between logging out --> number greater than 0
+		learningRate: 0.05, // scales with delta to effect training rate --> number between 0 and 1
+		momentum: 0.1, // scales with next layer's change value --> number between 0 and 1
+		callback: null, // a periodic call back that can be triggered while training --> null or function
+		callbackPeriod: 100, // the number of iterations through the training data between callback calls --> number greater than 0
+		timeout: Infinity // the max number of milliseconds to train for --> number greater than 0. Default --> Infinity
 	}
 
 	static MATH = () => {
@@ -472,9 +636,11 @@ Guess who's back`,
 		const trainResults = net.train(trainData, trainOpt)
 		_info("Training result: ", trainResults)
 
-		const input = this.CHARACTERS[0].input
-		const results = { input, result: brain.likely(input, net) }
-		_info(results)
+		const results = trainData.map(({ input }) => {
+			const result = brain.likely(input, net)
+			return { input, result }
+		})
+		_info("results", results)
 
 		return results
 	}
@@ -504,8 +670,10 @@ Guess who's back`,
 		const trainResults = net.train(trainData, trainOpt)
 		_info("Training result: ", trainResults)
 
-		const input = trainData[0].input
-		const results = { input, result: net.run(input) }
+		const results = trainData.map(({ input, output }) => {
+			const result = { input, result: net.run(input), output }
+			return result
+		})
 		_info("Result: ", results)
 
 		return results
@@ -519,9 +687,10 @@ Guess who's back`,
 		const trainResults = net.train(trainData, trainOpt)
 		_info("Training result: ", trainResults)
 
-		const input = "Code"
-		const results = { input, result: net.run(input) }
-		_info({ ...results, desc: `It starts with: ${results.result}` }) // It starts with: c
+		const results = trainData.map(({ input, output }) => {
+			return { input, result: net.run(input), output }
+		})
+		_info("Results", results) // It starts with: c
 
 		return results
 	}
@@ -532,14 +701,17 @@ Guess who's back`,
 		// const content = fs.readFileSync(file, "utf-8")
 		// net.fromJSON(JSON.parse(content))
 
-		net.train(this.TRAINED_MODEL_TRAIN_DATA, this.TRAINED_MODEL_TRAIN_OPT)
+		const trainData = this.TRAINED_MODEL_TRAIN_DATA
+		net.train(trainData, this.TRAINED_MODEL_TRAIN_OPT)
 
 		// const json = net.toJSON()
 		// fs.writeFileSync(file, JSON.stringify(json))
 
-		const { input, text } = this.TRAINED_MODEL_TRAIN_DATA[0]
-		const decoded = this.decode(input)
-		const results = { input, result: net.run(input), decoded, text }
+		const results = trainData.map(({ input, output, text }) => {
+			const result = net.run(input)
+			const decoded = this.decode(input)
+			return { input, output, result, decoded, text }
+		})
 		_info("Trained model", results)
 
 		return results
@@ -574,10 +746,33 @@ Guess who's back`,
 		const TRAINED_MODEL = this.TRAINED_MODEL()
 		_info("TRAINED_MODEL ready", TRAINED_MODEL)
 
+		_info("PREDICT_ENCODED started...")
+		const PREDICT_ENCODED = this.PREDICT_ENCODED()
+		_info("PREDICT_ENCODED ready", PREDICT_ENCODED)
+
+		_info("PREDICT_WORDS started...")
+		const PREDICT_WORDS = this.PREDICT_WORDS()
+		_info("PREDICT_WORDS ready", PREDICT_WORDS)
+
+		_info("PREDICT_LINES started...")
+		const PREDICT_LINES = this.PREDICT_LINES()
+		_info("PREDICT_LINES ready", PREDICT_LINES)
+
 		_info("Results Saving...")
-		const results = { PREDICT, MATH, RECOGNIZE, BOOK, TRAINED_MODEL }
+		const results = {
+			PREDICT,
+			MATH,
+			RECOGNIZE,
+			BOOK,
+			TENSE,
+			CLASSIFICATE,
+			TRAINED_MODEL,
+			PREDICT_ENCODED,
+			PREDICT_WORDS,
+			PREDICT_LINES
+		}
 		const json = JSON.stringify(results, null, 2)
-		fs.writeFileSync("./examples-results.json", json)
+		this.fileWrite("./results/examples.json", json)
 		_info("Results Saved")
 
 		return results
@@ -585,5 +780,3 @@ Guess who's back`,
 }
 
 module.exports = Examples
-
-Examples.INIT()

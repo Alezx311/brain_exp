@@ -56,7 +56,7 @@ word: ${this.word}
 line: ${this.line}
 unical: ${this.unical}
 notUnical: ${this.notUnical}
-sequence: ${Helpers.toJson(this.sequence)}`
+sequence: ${Helpers.jsonCreate(this.sequence)}`
 	}
 
 	static data = (size = Helpers.genInt(10000, 500)) => {
@@ -79,4 +79,4 @@ sequence: ${Helpers.toJson(this.sequence)}`
 	static sequenceFind = (word) => this.WORDS_SEQUENCES.find((el) => el.word === word).text
 }
 
-module.exports = { TrainingDataPoetry }
+module.exports = TrainingDataPoetry

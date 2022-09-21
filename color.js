@@ -1,93 +1,16 @@
-const { NeuralNetworkGPU } = require("brain.js")
-const { readdir } = require("fs/promises")
-const jimp = require("jimp")
-const { join } = require("path")
+const network = new brain.NeuralNetwork()
 
-const __dirname = __dirname
-const imageSize = 20
+const trainData = [
+	{ input: { r: 0.62, g: 0.72, b: 0.88 }, output: { light: 1 } },
+	{ input: { r: 0.1, g: 0.84, b: 0.72 }, output: { light: 1 } },
+	{ input: { r: 0.33, g: 0.24, b: 0.29 }, output: { dark: 1 } },
+	{ input: { r: 0.74, g: 0.78, b: 0.86 }, output: { light: 1 } },
+	{ input: { r: 0.31, g: 0.35, b: 0.41 }, output: { dark: 1 } },
+	{ input: { r: 1, g: 0.99, b: 0 }, output: { light: 1 } },
+	{ input: { r: 1, g: 0.42, b: 0.52 }, output: { dark: 1 } }
+]
 
-const getCompressedImage = async (path) => {
-	const image = await jimp.read(path)
-	const compressedImage = image.resize(imageSize, imageSize)
-	return compressedImage
-}
+network.train(trainData)
 
-const init = async () => {
-	const net = new NeuralNetworkGPU()
-	const trainingDir = join(__dirname, "./train")
-	const colors = await readdir(trainingDir)
-
-	const trainingData = (
-		await Promise.all(
-			colors.map(async (color) => {
-				const colorDir = join(trainingDir, color)
-				const images = await readdir(colorDir)
-				return await Promise.all(
-					images.map(async (imageName) => {
-						const compressedImage = await getCompressedImage(join(colorDir, imageName))
-						return {
-							input: compressedImage.bitmap.data,
-							output: {
-								[color]: 1
-							}
-						}
-					})
-				)
-			})
-		)
-	).flat()
-
-	console.time("Training")
-	net.train(trainingData, { log: true })
-	console.timeEnd("Training")
-
-	console.time("Running")
-	const runDir = join(__dirname, "./run")
-	const results = (
-		await Promise.all(
-			colors.map(async (color) => {
-				const colorDir = join(runDir, color)
-				const images = await readdir(colorDir)
-				return await Promise.all(
-					images.map(async (imageName) => {
-						const imagePath = join(colorDir, imageName)
-						const compressedImage = await getCompressedImage(imagePath)
-						const result = net.run(compressedImage.bitmap.data)
-						return {
-							result,
-							color,
-							imageName
-						}
-					})
-				)
-			})
-		)
-	).flat()
-	console.timeEnd("Running")
-
-	console.log(results)
-
-	return results
-}
-
-init()
-
-// jimp.read('./train/blue/download.jpg').then(image => {
-//   image = image.scaleToFit(50, 100)
-//   image.write('./t.jpg')
-
-//   console.time('Training')
-//   net.train([
-//     {input: image.bitmap.data, output: { blue: 1 } }
-//   ])
-//   console.timeEnd('Training')
-
-//   console.time('Running')
-//   const result = net.run(image.bitmap.data)
-//   console.timeEnd('Running')
-//   console.log(result)
-// })
-
-// net.train([
-
-// ])
+const result = brain.likely(rgb, network)
+console.log(result)

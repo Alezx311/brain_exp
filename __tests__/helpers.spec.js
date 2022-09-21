@@ -27,7 +27,7 @@ describe("Total", () => {
 			Helpers.SPACE,
 			Helpers.COMMA,
 			Helpers.DOT,
-			Helpers.CHAR_DIV,
+			Helpers.DIV,
 			Helpers.CHARS_NUM,
 			Helpers.CHARS_ENG,
 			Helpers.CHARS_RUS,
