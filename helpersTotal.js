@@ -2,9 +2,9 @@ const fs = require("fs")
 const path = require("path")
 const util = require("util")
 const cowsay = require("cowsay")
-const { rainbow, print } = require("lolcats")
 const gradientString = require("gradient-string")
 const chalk = require("chalk")
+const { rainbow, print } = require("lolcats")
 
 const { parse: _parse, stringify: _stringify} = JSON
 const { format: _format, isDeepStrictEqual: _isEqual } = util
