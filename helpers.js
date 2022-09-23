@@ -1,24 +1,29 @@
+const textTable = require("text-table")
 const fs = require("fs")
 const path = require("path")
 const util = require("util")
-const cowsay = require("cowsay")
 const gradientString = require("gradient-string")
 const chalk = require("chalk")
-const { rainbow, print } = require("lolcats")
+const cowsay = require("cowsay")
+const lolcats = require("lolcats")
+const O = require("json-stringify-safe")
+const S = require("string")
+const A = require("arr")
 
 const { now: _now } = Date
 const { cwd: _cwd, env: _env } = process
-const { parse: _parse, stringify: _stringify } = JSON
-const { format: _format, isDeepStrictEqual: _isEqual } = util
-const { log: _log, warn: _warn, info: _info, error: _error, table: _table } = console
+const { parse: _parse } = JSON
+const { format: _format, isDeepStrictEqual: _isDeepEqual } = util
+const { log: _log, warn: _warn, info: _info, error: _error } = console
 const { random: _random, min: _min, max: _max, abs: _abs, round: _round } = Math
+const { rainbow, print } = lolcats
 const { keys: _keys, values: _values, entries: _entries, assign: _assign, getOwnPropertyNames: _names } = Object
-const { isArray: _isArray } = Array
+const { isArray: _isArr } = Array
 const { fromCharCode: _fromCharCode } = String
 const {
 	MAX_SAFE_INTEGER: _MAX_SAFE_INTEGER,
 	MIN_SAFE_INTEGER: _MIN_SAFE_INTEGER,
-	MAX_VALUE: _MAX_VALUE,
+	MAX: _MAX_VALUE,
 	MIN_VALUE: _MIN_VALUE
 } = Number
 const {
@@ -28,7 +33,68 @@ const {
 	appendFileSync: _appendFile,
 	mkdirSync: _mkdir
 } = fs
+
+const _str = (...v) => v.map(S)
+const _json = (...v) => O(...v, null, 2)
+const _table = (v) => textTable(v, { align: ["l", "c"] })
+
+const is = (...a) => a.every((v) => !!v)
+const isLen = (...a) => a.every((v) => typeof v?.length === "number")
+const isNum = (...a) => a.every((v) => typeof v === "number")
+const isStr = (...a) => a.every((v) => typeof v === "string")
+const isFunc = (...a) => a.every((v) => typeof v === "function")
+const isBool = (...a) => a.every((v) => typeof v === "boolean")
+const isBig = (...a) => a.every((v) => typeof v === "bigint")
+const isSym = (...a) => a.every((v) => typeof v === "symbol")
+const isUnd = (...a) => a.every((v) => typeof v === "undefined")
+const isArr = (...a) => a.every((v) => _isArr(v))
+const isObj = (...a) => a.every((v) => this.isObjTruthy(v) && !_isArr(v))
+const isExist = (...a) => a.every((v) => v !== null && v !== undefined)
+const isEqualType = (v1, v2) => typeof v1 === typeof v2
+const isEqualStrict = (v1, v2) => _isDeepEqual(v1, v2)
+const isEvery = (a1, ...a2) => isArr(a1, a2) && a1.every((v1) => a2.includes(v1))
+const isSome = (a1, ...a2) => isArr(a1, a2) && a1.some((v1) => a2.includes(v1))
+
 class Helpers {
+	static is = is
+	static isLen = isLen
+	static isNum = isNum
+	static isStr = isStr
+	static isFunc = isFunc
+	static isBool = isBool
+	static isBig = isBig
+	static isSym = isSym
+	static isUnd = isUnd
+	static isArr = isArr
+	static isObj = isObj
+	static isExist = isExist
+	static isEqualType = isEqualType
+	static isEqualStrict = isEqualStrict
+	static isEvery = isEvery
+	static isSome = isSome
+
+	static _str = _str
+	static _json = _json
+	static _table = _table
+
+	static strHumanize = (v) => isStr(v) && S(v).humanize().s
+	static strLines = (v) => isStr(v) && S(v).lines().s
+	static strCollapseWhitespace = (v) => isStr(v) && S(v).collapseWhitespace().s
+	static strTitleCase = (v) => isStr(v) && S(v).titleCase().s
+	static strTrim = (v) => isStr(v) && S(v).trim().s
+
+	static arrLastIndex = (v) => isArr(v) && A.lastIndex(v)
+	static arrFindLast = (v) => isArr(v) && A.findLast(v)
+	static arrNumbers = (v) => isArr(v) && A.numbers(v)
+	static arrStrings = (v) => isArr(v) && A.strings(v)
+	static arrObjects = (v) => isArr(v) && A.objects(v)
+	static arrFunctions = (v) => isArr(v) && A.functions(v)
+	static arrArrays = (v) => isArr(v) && A.arrays(v)
+	static arrFirst = (v) => isArr(v) && A.first(v)
+	static arrLast = (v) => isArr(v) && A.last(v)
+	static arrFindFirst = (v) => isArr(v) && A.findFirst(v)
+	static arrHasType = (v) => isArr(v) && A.hasType(v)
+
 	//* Values Constants
 	static UND = undefined
 	static NULL = null
@@ -40,7 +106,7 @@ class Helpers {
 	static ARR = [this.STR, this.NUM]
 	static OBJ = { STR: this.STR, NUM: this.NUM }
 	static SYM = Symbol("Symbol example")
-	static BIG = this.NUM * this.MAX_VALUE
+	static BIG = this.NUM * this.MAX
 	static FUNC = (...values) => values
 	static VALUES_SOURCES = [
 		{ value: this.UND, desc: "UND" },
@@ -55,7 +121,13 @@ class Helpers {
 		{ value: this.SYM, desc: "SYM" },
 		{ value: this.BIG, desc: "BIG" },
 		{ value: this.FUNC, desc: "FUNC" }
-	].map((src, index) => ({ ...src, index, type: typeof src.value, callback: () => src.value }))
+	].map((src, index) => {
+		const obj = { ...src, index, type: typeof src.value, callback: () => src.value }
+		const entries = _entries(obj)
+		const text = entries.map(([k, v]) => [k, v].map(S))
+		return { ...obj, text }
+	})
+
 	static VALUES = this.VALUES_SOURCES.reduce((acc, v) => [...acc, v.value], [])
 	static TYPEOF_VALUES = ["string", "number", "function", "object", "boolean", "bigint", "symbol", "undefined"]
 
@@ -76,6 +148,17 @@ class Helpers {
 		"rainbow",
 		"pastel"
 	]
+
+	static elMapper = (el, index) => {
+		const isObj = typeof el === "object" && !!el && !Array.isArray(el)
+		const values = isObj ? { value: el?.value ?? el, index, ...el } : { value: el, index }
+		const obj = { ...values, index, type: typeof values.value }
+		const entr = _entries(obj).map(([k, v]) => [k, v].map(S))
+		return { ...obj, text: `\n${_table(entr)}\n` }
+	}
+	// console.log(elMapper(OBJ))
+	// console.log(elMapper(OBJ, { desc: "Some descr", someKey: "other props" }))
+
 	static COLOR_METHODS = ["blue", "red", "blue", "blue", "red", "underline", "green", "blue", "red", "green", "yellow"]
 	static CONSOLE_SOURCES = this.CONSOLE_METHODS.map((desc) => {
 		const callback = console[desc]
@@ -84,19 +167,19 @@ class Helpers {
 	})
 	static GRADIENTS_SOURCES = this.GRADIENT_METHODS.map((desc) => {
 		const callback = gradientString[desc]
-		const logger = (...v) => _log(callback(...v))
+		const logger = (...v) => _log(callback(_json(v)))
 		return { desc, callback, logger }
 	})
 	static COLORED_SOURCES = this.COLOR_METHODS.map((desc) => {
 		const callback = chalk[desc]
-		const logger = (...v) => _log(callback(...v))
+		const logger = (...v) => _log(callback(_json(v)))
 		return { desc, callback, logger }
 	})
 	static CONSOLE_OTHER_SOURCES = [
 		{ desc: "lolcat_print", callback: print, logger: print },
-		{ desc: "lolcat_rainbow", callback: rainbow, logger: (...v) => _log(rainbow(this.toText(v))) },
-		{ desc: "cow_say", callback: cowsay.say, logger: (...v) => _log(cowsay.say({ text: this.toText(v) })) },
-		{ desc: "cow_think", callback: cowsay.think, logger: (...v) => _log(cowsay.think({ text: this.toText(v) })) }
+		{ desc: "lolcat_rainbow", callback: rainbow, logger: (...v) => _log(rainbow(_json(v))) },
+		{ desc: "cow_say", callback: cowsay.say, logger: (...v) => _log(cowsay.say({ text: _json(v) })) },
+		{ desc: "cow_think", callback: cowsay.think, logger: (...v) => _log(cowsay.think({ text: _json(v) })) }
 	]
 	static LOGGER_SOURCES = [
 		...this.CONSOLE_SOURCES,
@@ -108,23 +191,22 @@ class Helpers {
 		this.LOGGER_SOURCES.map(({ logger, desc }) => logger({ text: `${desc} log message example\n${msg}` }))
 
 	//* Validators
-	static is = (...arr) => arr.every((el) => !!el)
-	static isTypeStr = (...arr) => arr.every((el) => typeof el === "string")
-	static isTypeNum = (...arr) => arr.every((el) => typeof el === "number")
-	static isTypeFunc = (...arr) => arr.every((el) => typeof el === "function")
-	static isTypeObj = (...arr) => arr.every((el) => typeof el === "object")
-	static isTypeBool = (...arr) => arr.every((el) => typeof el === "boolean")
-	static isTypeBig = (...arr) => arr.every((el) => typeof el === "bigint")
-	static isTypeSym = (...arr) => arr.every((el) => typeof el === "symbol")
-	static isTypeUnd = (...arr) => arr.every((el) => typeof el === "undefined")
-	static isLen = (...arr) => arr.every((el) => typeof el?.length === "number")
-	static isDefined = (...arr) => arr.every((el) => el !== null && el !== undefined)
-	static isTypeObjTruthy = (...arr) => arr.every((el) => !!el && this.isTypeObj(el))
-	static isTypeOfValue = (...arr) => this.isTypeStr(...arr) && arr.every((el) => this.TYPEOF_VALUES.includes(el))
-	static toTypeOf = (v) => (this.isTypeOfValue(v) ? v : typeof v)
-	static isType = (v1, v2) => this.toTypeOf(v1) === this.toTypeOf(v2)
-	static isEvery = (v, ...arr) => (_isArray(v) ? v.every((el) => arr.includes(el)) : arr.every((el) => el === v))
-	static isSome = (v, ...arr) => (_isArray(v) ? v.some((el) => arr.includes(el)) : arr.some((el) => el === v))
+	static is = (...a) => a.every((v) => !!v)
+	static isLen = (...a) => a.every((v) => typeof v?.length === "number")
+	static isNum = (...a) => a.every((v) => typeof v === "number")
+	static isStr = (...a) => a.every((v) => typeof v === "string")
+	static isFunc = (...a) => a.every((v) => typeof v === "function")
+	static isBool = (...a) => a.every((v) => typeof v === "boolean")
+	static isBig = (...a) => a.every((v) => typeof v === "bigint")
+	static isSym = (...a) => a.every((v) => typeof v === "symbol")
+	static isUnd = (...a) => a.every((v) => typeof v === "undefined")
+	static isObjTruthy = (...a) => a.every((v) => !!v && typeof v === "object")
+	static isArr = (...a) => a.every((v) => _isArr(v))
+	static isObj = (...a) => a.every((v) => this.isObjTruthy(v) && !_isArr(v))
+	static isExist = (...a) => a.every((v) => v !== null && v !== undefined)
+	static isType = (v1, v2) => typeof v1 === typeof v2
+	static isEvery = (a1, ...a2) => isArr(a1, a2) && a1.every((v1) => a2.includes(v1))
+	static isSome = (a1, ...a2) => isArr(a1, a2) && a1.some((v1) => a2.includes(v1))
 	static getTimeStamp = () => new Date().toLocaleString()
 	static getSource = (msg = "") => `\n\t${__filename}\n\t${this.getTimeStamp()}\n\t${msg}\n`
 
@@ -141,14 +223,22 @@ class Helpers {
 	static PATH_LOG_FILE = path.join(this.PATH_LOG_DIR, this.LOG_FILE)
 	static CHAR_CODE_MULT = 256
 	static MAX_ENCODED_SIZE = 100
-	static toMaxLen = (v, max = this.MAX_LENGTH) => (this.isLen(v) && v.length > max ? v.slice(0, max) : v)
-	static toMinLen = (v, min = this.MIN_LENGTH) =>
-		this.isLen(v) && v.length < min ? [...v, ...this.genArr(v.length - min, 0)] : v
+	static toMaxLen = (v, max = this.MAX) => (this.isLen(v) && v.length > max ? v.slice(0, max) : v)
+	static toMinLen = (v, min = this.MIN) => {
+		if (!this.isLen(v)) return false
+		const l = v.length
+		if (l > min) return true
+		const diff = l - min
+		const arr = Array(diff).fill(" ")
+		if (_isArr(v)) return [...v, ...arr]
+		return v + arr.join("")
+	}
+
 	static toMatchLen = (v, l) => (this.isLen(v) && v.length === l ? v : this.toMaxLen(this.toMinLen(v, l), l))
-	static toCharCode = (char) => this.isTypeStr(char) && char.charCodeAt(0) / this.CHAR_CODE_MULT
-	static toCharFromCode = (code) => this.isTypeNum(code) && _fromCharCode(code) * this.CHAR_CODE_MULT
+	static toCharCode = (char) => this.isStr(char) && char.charCodeAt(0) / this.CHAR_CODE_MULT
+	static toCharFromCode = (code) => this.isNum(code) && _fromCharCode(code) * this.CHAR_CODE_MULT
 	static toCharCodeFromText = (text) => {
-		if (!this.isTypeStr(text)) return false
+		if (!this.isStr(text)) return false
 		const values = text.split("").reduce((acc, v) => [...acc, this.toCharCode(v)], [])
 		return this.toMaxLen(values, this.MAX_ENCODED_SIZE)
 	}
@@ -180,12 +270,12 @@ class Helpers {
 	//* Constants
 	static MIN = 1
 	static MAX = 100
-	static MIN_LENGTH = 1
-	static MAX_LENGTH = 2000
+	static MIN = 1
+	static MAX = 2000
 	static MIN_CHAR_CODE = _min(...this.CHAR_CODE_VALUES)
 	static MAX_CHAR_CODE = _max(...this.CHAR_CODE_VALUES)
 	static RANGE = [this.MIN, this.MAX]
-	static RANGE_LENGTH = [this.MIN_LENGTH, this.MAX_LENGTH]
+	static RANGE_LENGTH = [this.MIN, this.MAX]
 	static RANGE_CHAR_CODE = [this.MIN_CHAR_CODE, this.MAX_CHAR_CODE]
 	static ARRAY_SIZE = 10
 	static LIKE_DIFF = 0.1
@@ -209,25 +299,25 @@ class Helpers {
 		logPeriod: this.LOG_PERIOD,
 		callback: _info
 	}
+
 	static filePath = (...sArr) => path.join(__dirname, ...sArr)
-	static fileList = (s = this.LOG_DIR) => _readdir(this.filePath(s))
-	static fileRead = (s = this.LOG_FILE) => _readFile(this.filePath(s), this.OPTIONS_FS).toString()
-	static fileWrite = (file, data = this.getSource()) =>
-		this.isStr(file) && _writeFile(this.filePath(file), data, this.OPTIONS_FS)
-	static fileAppend = (file, data = this.getSource()) =>
-		this.isStr(file) && _appendFile(this.filePath(file), data, this.OPTIONS_FS)
+	static fileList = (s = this.LOG_DIR) => this.isStr(s) && _readdir(this.filePath(s))
+	static fileRead = (s = this.LOG_FILE) => this.isStr(s) && _readFile(this.filePath(s), this.OPTIONS_FS).toString()
+	static fileWrite = (file, data = "") => this.isStr(file) && _writeFile(this.filePath(file), data, this.OPTIONS_FS)
+	static fileAppend = (file, data = "") => this.isStr(file) && _appendFile(this.filePath(file), data, this.OPTIONS_FS)
 	static fileCreateDir = (dir = this.NAME_TEMP) => this.isStr(dir) && _mkdir(dir)
 
 	//* this.Generate Value Helpers
 	static gen = (max = null) => (max ? _random() * max : _random())
+	static genStr = () => _random().toString(36).substring(7)
+	static genObj = (size = this.ARRAY_SIZE) => _from(this.genArr(size).map(() => [this.genStr(), _random()]))
 	static genBool = () => this.gen() > 0.5
-	static genInt = (max = this.MAX, min = this.MIN) =>
-		this.isTypeNum(max, min) ? ~~(this.gen() * max - min) + min : ~~(this.gen() * MAX)
+	static genInt = (max = this.MAX, min = this.MIN) => ~~(this.gen() * max - min) + min
 	static genCoin = (v1 = true, v2 = false) => (this.genBool() ? v1 : v2)
 	static genId = () => `${parseInt(`${this.genInt()}`, 36)}`
 	static genKey = () => this.genId().repeat(5).replace(/[a-z]/gim, "")
 	static genArr = (l = this.ARRAY_SIZE, v = 1) => Array(~~l).fill(v)
-	static genMany = (l = this.ARRAY_SIZE, cb = this.gen) => this.genArr(l).map(this.isTypeFunc(cb) ? cb : () => cb)
+	static genMany = (l = this.ARRAY_SIZE, cb = this.gen) => this.genArr(l).map(this.isFunc(cb) ? cb : () => cb)
 	static genSort = () => this.genCoin(1, -1)
 	static genIndex = (v) => (this.isLen(v) && v.length > 2 ? this.genInt(v.length - 1, 0) : this.genCoin(1, 0))
 	static genElement = (v) => this.isLen(v) && v[this.genIndex(v)]
@@ -241,51 +331,31 @@ class Helpers {
 	static genCharCode = () => this.genElement(this.CHAR_CODE_VALUES)
 	static genCharCodeLatin = () => this.genInt(122, 97)
 	static genCharCodeKyrillic = () => this.genInt(1103, 1072)
-	static genRgb = (hex) => {
-		const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
-		hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-			return r + r + g + g + b + b
-		})
-		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-		return result
-			? {
-					r: _round(parseInt(result[1], 16) / 2.55) / 100,
-					g: _round(parseInt(result[2], 16) / 2.55) / 100,
-					b: _round(parseInt(result[3], 16) / 2.55) / 100
-			  }
-			: null
-	}
+
 	static isRxp = (v) => v instanceof RegExp
-	static toCallback = (v) => (this.isTypeFunc(v) ? v : () => v)
-	static toLen = (v1) => (this.isLen(v1) ? v1.length : -1)
-	static isLenMin = (v, l = this.MIN_LENGTH) => this.isLen(v) && v.length >= l
-	static isLenMax = (v, l = this.MAX_LENGTH) => this.isLen(v) && v.length <= l
-	static isLenEqual = (v1, v2) => this.isLen(v1, v2) && v1.length === v2.length
-	static isLenRange = (v1, min = 0, max = this.MAX_VALUE) => this.isLen(v1) && v1.length > min && v1.length < max
-	static isNum = (v1, min = 0, max = this.MAX_VALUE) => this.isTypeNum(v1) && v1 >= min && v1 < max
-	static isStr = (v1, min = 0, max = this.MAX_VALUE) => this.isTypeStr(v1) && this.isLenRange(v1, min, max)
-	static isArr = (v1, min = 0, max = this.MAX_VALUE) =>
-		this.isTypeObj(v1) && _isArray(v1) && this.isLenRange(v1, min, max)
-	static isObj = (v) => this.isTypeObj(v) && !_isArray(v) && this.is(v)
-	static isCharLatin = (ch) => this.isTypeStr(ch) && this.CHARS_ENG.includes(ch.toLowerCase())
-	static isCharKyrrylic = (ch) => this.isTypeStr(ch) && this.CHARS_RUS.includes(ch.toLowerCase())
-	static isCharNum = (ch) => this.isTypeStr(ch) && this.CHARS_NUM.includes(ch.toLowerCase())
-	static isCharSpecial = (ch) => this.isTypeStr(ch) && this.CHARS_SPECIAL.includes(ch.toLowerCase())
-	static isCharValid = (ch) => this.isTypeStr(ch) && this.CHARS_VALID.includes(ch.toLowerCase())
-	static isNumLike = (v1, v2, d = this.LIKE_DIFF) => this.isTypeNum(v1, v2, d) && v1 < v2 + d && v1 > v2 - d
-	static filterStr = (...values) => values.filter(String)
-	static filterNum = (...values) => values.filter(Number)
-	static filterArr = (...values) => values.filter(Array)
-	static filterBool = (...values) => values.filter(Boolean)
-	static filterFunc = (...values) => values.filter(Function)
+	static toCallback = (v) => (typeof v === "function" ? v : () => v)
+	static isLenMin = (v, l = this.MIN) => v?.length >= l
+	static isLenMax = (v, l = this.MAX) => v?.length <= l
+	static isLenRange = (v1, min = 0, max = this.MAX) => v1?.length > min && v1?.length < max
+	static isCharLatin = (ch) => this.isStr(ch) && this.CHARS_ENG.includes(ch.toLowerCase())
+	static isCharKyrrylic = (ch) => this.isStr(ch) && this.CHARS_RUS.includes(ch.toLowerCase())
+	static isCharNum = (ch) => this.isStr(ch) && this.CHARS_NUM.includes(ch.toLowerCase())
+	static isCharSpecial = (ch) => this.isStr(ch) && this.CHARS_SPECIAL.includes(ch.toLowerCase())
+	static isCharValid = (ch) => this.isStr(ch) && this.CHARS_VALID.includes(ch.toLowerCase())
+	static isNumLike = (v1, v2, d = this.LIKE_DIFF) => this.isNum(v1, v2, d) && v1 < v2 + d && v1 > v2 - d
+	static filterStr = (...v) => _isArr(v) && v.filter(String)
+	static filterNum = (...v) => _isArr(v) && v.filter(Number)
+	static filterArr = (...v) => _isArr(v) && v.filter(Array)
+	static filterBool = (...v) => _isArr(v) && v.filter(Boolean)
+	static filterFunc = (...v) => _isArr(v) && v.filter(Function)
 
 	//* this.Get Value Helpers
 	static or = (v1, v2) => v1 || v2
 	static and = (v1, v2) => v1 && v2
-	static like = (v1, ...values) => values.filter((el) => el == v1 || typeof el == typeof v1)
-	static not = (v1, ...values) => values.filter((el) => el !== v1 && typeof el !== typeof v1)
-	static getIndexLast = (v) => this.isLen(v) && _max(0, v.length - 1)
-	static getElementLast = (v) => this.isLen(v) && v?.[this.getIndexLast(v)]
+	static like = (v1, ...values) => _isArr(values) && values.filter((el) => typeof el == typeof v1)
+	static not = (v1, ...values) => _isArr(values) && values.filter((el) => typeof el !== typeof v1 && el !== v1)
+	static getIndexLast = (v) => _isArr(v) && this.arrLastIndex(v)
+	static getElementLast = (v) => _isArr(v) && v[this.arrLastIndex(v)]
 	static getSlice = (v, i1 = 0, i2 = null) => {
 		if (!this.isLen(v)) return false
 		const last = this.getIndexLast(v)
@@ -333,14 +403,14 @@ class Helpers {
 		this.isArr(a) && this.isStr(s) && a.filter((el) => this.isStr(el) && el.startsWith(s))
 	static getPhrasesByLength = (a, l = this.RANGE_LENGTH) => {
 		if (!this.isArr(a)) return false
-		if (this.isTypeNum(l)) return a.filter((el) => el === l)
+		if (this.isNum(l)) return a.filter((el) => el === l)
 		if (this.isArr(l)) return a.filter((el) => this.isLenRange(el, _min(...l), _max(...l)))
 		return a.filter(String)
 	}
 	static getPhrasesByIndex = (a, l = this.RANGE_LENGTH) => {
 		if (!this.isArr(a)) return false
 		if (this.isArr(l)) return a.filter((el, i) => this.isLenRange(i, _min(...l), _max(...l)))
-		if (this.isTypeNum(l)) return a.filter((el, i) => i === l)
+		if (this.isNum(l)) return a.filter((el, i) => i === l)
 		return a.filter(String)
 	}
 
@@ -357,27 +427,23 @@ class Helpers {
 	static reduceElementEntries = (a, v) => (this.isObj(v) ? [...a, _entries(v)] : a)
 
 	//* Converters
-	static _toObj = (...v) => ({ values: v })
-	static _toArr = (...v) => v
-	static _toStr = (...v) => _stringify(this._toObj(...v), null, 2)
-	static toArr = (v) => (this.isArr(v) ? v : [v])
-	static toObj = (v) => (this.isObj(v) ? v : { value: v })
-	static toText = (v) => _stringify(this.toObj(v), null, 2)
-	static toKeys = (v) => (this.isObj(v) ? _keys(v) : [])
+	static toArr = (...v) => (this.isArr(v) ? v : [v])
+	static toObj = (...v) => (this.isObj(v) ? v : { value: v })
+	static toKeys = (v) => this.isObj(v) && _keys(v)
 	static toNumDiff = (...v) => _max(...v) - _min(...v)
 	static toNumRange = (...v) => [_min(...v), _max(...v)]
-	static toTrim = (v) => (this.isTypeStr(v) ? v : this.toText(v)).trim()
-	static toTrimLine = (v = "") => this.isTypeStr(v) && v.replace(/\n/gim, " ")
+	static toTrim = (v) => (this.isStr(v) ? v : this._json(v)).trim()
+	static toTrimLine = (v = "") => this.isStr(v) && v.replace(/\n/gim, " ")
 	static toUnical = (v) => (this.isArr(v) ? [...new Set([...v])] : [v])
-	static toJoin = (v, ch = "\n") => (this.isArr(v) ? v.join(this.isTypeStr(ch) ? ch : "\n") : this.toText(v))
-	static toRepeat = (v, r = 2) => (this.isTypeStr(v) ? v : this.toText(v)).repeat(this.isNum(r, 2) ? r : 2)
-	static toReversed = (v) => (this.isArr(v) ? v.reverse() : this.toText(v).split("").reverse().join(""))
+	static toJoin = (v, ch = "\n") => (this.isArr(v) ? v.join(this.isStr(ch) ? ch : "\n") : this._json(v))
+	static toRepeat = (v, r = 2) => (this.isStr(v) ? v : this._json(v)).repeat(this.isNum(r, 2) ? r : 2)
+	static toReversed = (v) => (this.isArr(v) ? v.reverse() : this._json(v).split("").reverse().join(""))
 	static toBuffer = (v) => this.is(v) && Buffer.from(v)
-	static toFloatFixed = (v, l = 2) => (this.isTypeNum(v) ? Number(v.toFixed(~~l)) : 0)
+	static toFloatFixed = (v, l = 2) => (this.isNum(v) ? Number(v.toFixed(~~l)) : 0)
 	static toTrainingData = (input, output, ...other) => ({ input, output, other })
-	static toFormatted = (s, r = "") => this.isTypeStr(s, r) && s.replace(/[^а-я\s\n]+/gim, r)
-	static toPercent = (v1, v2) => this.isTypeNum(v1, v2) && v2 / (v1 / 100)
-	static toResultStats = (v) => this.toText(v)
+	static toFormatted = (s, r = "") => this.isStr(s, r) && s.replace(/[^а-я\s\n]+/gim, r)
+	static toPercent = (v1, v2) => this.isNum(v1, v2) && v2 / (v1 / 100)
+	static toResultStats = (v) => this._json(v)
 	static toResultProps = (v) => _assign({}, this.toObj(v), { desc: this.toResultStats(v) })
 	static toTitleCase = (s) => {
 		if (!this.isStr(s, 1)) return false
@@ -385,7 +451,7 @@ class Helpers {
 		return str.slice(0, 1).toUpperCase() + str.slice(1)
 	}
 	static jsonParse = (v) => (this.isStr(v, 1) ? _parse(v) : false)
-	static jsonCreate = (...v) => _stringify(v, null, 2)
+	static jsonCreate = (...v) => _json(v, null, 2)
 	static toAverage = (...v) => {
 		const a = v.flat().filter(Number)
 		return a.length ? a.reduce(this.reduceSum) / a.length : 0
@@ -442,7 +508,7 @@ class Helpers {
 		return result?.[1] ?? ""
 	}
 	static toArrValues = (arr) =>
-		this.isArr(arr, 1) && arr.map((value, index) => ({ value, index, text: value ? this.toText(value) : typeof value }))
+		this.isArr(arr, 1) && arr.map((value, index) => ({ value, index, text: value ? this._json(value) : typeof value }))
 	static toNotUnical = (arr) => {
 		if (!this.isArr(arr, 1)) return []
 		const unical = this.toUnical(arr)
@@ -487,13 +553,6 @@ class Helpers {
 		const end = _min(index + size, arr.length - 1)
 		return arr.slice(start, end)
 	}
-	static msToTimeDesc = (ms) => {
-		const seconds = ~~(ms / 1000)
-		const minutes = ~~(seconds / 60)
-		const hours = ~~(minutes / 60)
-		const days = ~~(hours / 24)
-		return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
-	}
 	static toFixed = (v, l = 2) => Number(Number(v).toFixed(l))
 	static sliceToSize = (v, l) => this.isLen(v, 1) && (v.length > l ? v.slice(0, l) : v)
 	static encode = (value, size = this.MAX_ENCODED_SIZE) => {
@@ -515,13 +574,28 @@ class Helpers {
 		}
 		return this.toCharFromCode(value)
 	}
-	static isStrEqual = (s1, s2) => this.isTypeStr(s1, s2) && s1 === s2
+	static isStrEqual = (s1, s2) => this.isStr(s1, s2) && s1 === s2
 	static isLineBreak = (v) => v === "\n"
 	static isSharp = (v) => v === "#"
 	static isSpace = (v) => v === " "
 	static isStar = (v) => v === "*"
 	static character = (s) => (this.isStr(s) ? s.trim().split("").map(this.isSharp) : [])
-
+	static msToTimeDesc = (ms) => {
+		if (!this.isNum(ms)) return ""
+		const seconds = ms / 1000
+		const minutes = seconds / 60
+		const hours = minutes / 60
+		const days = hours / 24
+		const years = days / 365
+		return `
+Years: ${years.toFixed(2)}
+Days: ${days.toFixed(2)}
+Hours: ${hours.toFixed(2)}
+Minutes: ${minutes.toFixed(2)}
+Seconds: ${seconds.toFixed(2)}
+Ms: ${ms.toFixed(2)}
+`
+	}
 	//* Shortcuts
 	static _now = _now
 	static _MAX_SAFE_INTEGER = _MAX_SAFE_INTEGER
@@ -531,9 +605,9 @@ class Helpers {
 	static _cwd = _cwd
 	static _env = _env
 	static _parse = _parse
-	static _stringify = _stringify
+	static _json = _json
 	static _format = _format
-	static _isEqual = _isEqual
+	static _isDeepEqual = _isDeepEqual
 	static _log = _log
 	static _warn = _warn
 	static _info = _info
@@ -549,7 +623,7 @@ class Helpers {
 	static _entries = _entries
 	static _assign = _assign
 	static _names = _names
-	static _isArray = _isArray
+	static _isArr = _isArr
 	static _fromCharCode = _fromCharCode
 	static _readdir = _readdir
 	static _readFile = _readFile

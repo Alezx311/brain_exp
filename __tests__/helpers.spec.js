@@ -17,7 +17,7 @@ const RESULTS = [
 	{ desc: "isTypeObjTruthy", result: Helpers.isTypeObjTruthy() },
 	{ desc: "isTypeOfValue", result: Helpers.isTypeOfValue() },
 	{ desc: "toTypeOf", result: Helpers.toTypeOf() },
-	{ desc: "isType", result: Helpers.isType() },
+	{ desc: "isType", result: Helpers.isTypeEq() },
 	{ desc: "isEvery", result: Helpers.isEvery() },
 	{ desc: "isSome", result: Helpers.isSome() },
 	{ desc: "getTimeStamp", result: Helpers.getTimeStamp() },
