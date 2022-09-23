@@ -5,6 +5,7 @@ const cowsay = require("cowsay")
 const gradientString = require("gradient-string")
 const chalk = require("chalk")
 const { rainbow, print } = require("lolcats")
+
 const { now: _now } = Date
 const { cwd: _cwd, env: _env } = process
 const { parse: _parse, stringify: _stringify } = JSON
