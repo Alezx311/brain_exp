@@ -1,429 +1,544 @@
 import * as fs from "fs"
 import * as path from "path"
-import { N, S, A, O, U, R } from "./types"
+import * as util from "util"
+import * as cowsay from "cowsay"
 
-//* Shorthands
-export const { promises: fsPromises } = fs
-export const { now: _now } = Date
-export const { log: _log, warn: _warn, info: _info, error: _error } = console
-export const { random: _random, min: _min, max: _max, floor: _floor, ceil: _ceil, round: _round, abs: _abs } = Math
+// import * as gradientString from "gradient-string"
+// import * as lolcats from "lolcats"
+
+const gradientString = require("gradient-string")
+const lolcats = require("lolcats")
+import chalk from "chalk"
+const { rainbow, print } = lolcats
+import { A, S } from "./types"
 export const {
-	keys: _keys,
-	values: _values,
-	entries: _entries,
-	assign: _assign,
-	fromEntries: _from,
-	getOwnPropertyNames: _names,
-	getOwnPropertyDescriptors: _descriptors
-} = Object
+	readdirSync: _readdir,
+	readFileSync: _readFile,
+	writeFileSync: _writeFile,
+	appendFileSync: _appendFile,
+	mkdirSync: _mkdir
+} = fs
+export const { now: _now } = Date
+export const { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, MAX_VALUE, MIN_VALUE } = Number
+export const { cwd: _cwd, env: _env } = process
+export const { parse: _parse, stringify: _stringify } = JSON
+export const { format: _format, isDeepStrictEqual: _isEqual } = util
+export const { log: _log, warn: _warn, info: _info, error: _error, table: _table, timeStamp: _timeStamp } = console
+export const { random: _random, min: _min, max: _max, abs: _abs, round: _round } = Math
+export const { keys: _keys, values: _values, entries: _entries, assign: _assign, getOwnPropertyNames: _names } = Object
+export const { isArray: _isArray } = Array
+export const { fromCharCode: _fromCharCode } = String
+export const UND = undefined
+export const NULL = null
+export const STR = "Some string value"
+export const ERR = new Error(STR)
+export const RND = _random()
+export const NUM = ~~(RND * 1000)
+export const BLN = RND > 0.5
+export const ARR = [STR, NUM]
+export const OBJ = { STR, NUM }
+export const SYM = Symbol("Symbol example")
+export const BIG = NUM * MAX_VALUE
+export const FUNC = (...v: any) => v
+export const VALUES_SOURCES = [
+	{ value: UND, desc: "UND" },
+	{ value: NULL, desc: "NULL" },
+	{ value: STR, desc: "STR" },
+	{ value: ERR, desc: "ERR" },
+	{ value: RND, desc: "RND" },
+	{ value: NUM, desc: "NUM" },
+	{ value: BLN, desc: "BLN" },
+	{ value: ARR, desc: "ARR" },
+	{ value: OBJ, desc: "OBJ" },
+	{ value: SYM, desc: "SYM" },
+	{ value: BIG, desc: "BIG" },
+	{ value: FUNC, desc: "FUNC" }
+].map((src, index) => ({ ...src, index, type: typeof src.value, callback: () => src.value }))
+export const VALUES = VALUES_SOURCES.reduce((acc: A, v) => [...acc, v.value], [])
+export const TYPEOF_VALUES = ["string", "number", "function", "object", "boolean", "bigint", "symbol", "undefined"]
+export const CONSOLE_METHODS = ["log", "info", "warn", "error", "dir", "debug"]
+export const GRADIENT_METHODS = [
+	"atlas",
+	"cristal",
+	"teen",
+	"mind",
+	"morning",
+	"vice",
+	"passion",
+	"fruit",
+	"instagram",
+	"retro",
+	"summer",
+	"rainbow",
+	"pastel"
+]
+export const COLOR_METHODS = [
+	"blue",
+	"red",
+	"blue",
+	"blue",
+	"red",
+	"underline",
+	"green",
+	"blue",
+	"red",
+	"green",
+	"yellow"
+]
+export const CONSOLE_SOURCES = CONSOLE_METHODS.map((desc: any) => {
+	const callback = console[desc as keyof typeof console]
+	const logger = callback
+	return { desc, callback, logger }
+})
+export const GRADIENTS_SOURCES = GRADIENT_METHODS.map((desc) => {
+	const callback = gradientString[desc]
+	const logger = (...v: any) => _log(callback(...v))
+	return { desc, callback, logger }
+})
+export const COLORED_SOURCES = COLOR_METHODS.map((desc) => {
+	const callback = chalk[desc as keyof typeof chalk] as (...v: any) => any
+	const logger = (...v: any) => _log(callback(...v))
+	return { desc, callback, logger }
+})
+export const CONSOLE_OTHER_SOURCES = [
+	{ desc: "lolcat_print", callback: print, logger: print },
+	{ desc: "lolcat_rainbow", callback: rainbow, logger: (...v: any) => _log(rainbow(toText(v))) },
+	{ desc: "cow_say", callback: cowsay.say, logger: (...v: any) => _log(cowsay.say({ text: toText(v) })) },
+	{ desc: "cow_think", callback: cowsay.think, logger: (...v: any) => _log(cowsay.think({ text: toText(v) })) }
+]
+export const LOGGER_SOURCES = [...CONSOLE_SOURCES, ...GRADIENTS_SOURCES, ...COLORED_SOURCES, ...CONSOLE_OTHER_SOURCES]
+export const _logGradient = (LOGGER_SOURCES.find((el: any) => el.desc === "atlas") as any).logger
+export const _logColored = (LOGGER_SOURCES.find((el: any) => el.desc === "green") as any).logger
+export const _logLolcatPrint = (LOGGER_SOURCES.find((el: any) => el.desc === "lolcat_print") as any).logger
+export const _logLolcatRainbow = (LOGGER_SOURCES.find((el: any) => el.desc === "lolcat_rainbow") as any).logger
+export const _logCowSay = (LOGGER_SOURCES.find((el: any) => el.desc === "cow_say") as any).logger
+export const _logCowThink = (LOGGER_SOURCES.find((el: any) => el.desc === "cow_think") as any).logger
+export const _logDefault = _logCowSay
+export const _logJson = (...values: any) => _logDefault(values)
+export const _logValues = (...values: any) => _logDefault(values)
+export const _logExamples = (msg = SOURCE) => {
+	_log("Simple console log message", msg)
+	_logGradient("_logGradient example", msg)
+	_logColored("_logColored example", msg)
+	_logLolcatPrint("_logLolcatPrint example", msg)
+	_logLolcatRainbow("_logLolcatRainbow example", msg)
+	_logCowSay("_logCowSay example", msg)
+	_logCowThink("_logCowThink example", msg)
+	_logJson("_logJson example", msg)
+	_logValues("_logValues example", msg)
+	LOGGER_SOURCES.map(({ logger, desc }) => logger(`${desc} example`, msg))
+}
+
+//* Validators
+export const is = (...arr: any) => arr.every((el: any) => !!el)
+export const isTypeStr = (...arr: any) => arr.every((el: any) => typeof el === "string")
+export const isTypeNum = (...arr: any) => arr.every((el: any) => typeof el === "number")
+export const isTypeFunc = (...arr: any) => arr.every((el: any) => typeof el === "function")
+export const isTypeObj = (...arr: any) => arr.every((el: any) => typeof el === "object")
+export const isTypeBool = (...arr: any) => arr.every((el: any) => typeof el === "boolean")
+export const isTypeBig = (...arr: any) => arr.every((el: any) => typeof el === "bigint")
+export const isTypeSym = (...arr: any) => arr.every((el: any) => typeof el === "symbol")
+export const isTypeUnd = (...arr: any) => arr.every((el: any) => typeof el === "undefined")
+export const isLen = (...arr: any) => arr.every((el: any) => typeof el?.length === "number")
+export const isDefined = (...arr: any) => arr.every((el: any) => el !== null && el !== undefined)
+export const isTypeObjTruthy = (...arr: any) => arr.every((el: any) => !!el && isTypeObj(el))
+export const isTypeOfValue = (...arr: any) => isTypeStr(...arr) && arr.every((el: any) => TYPEOF_VALUES.includes(el))
+export const toTypeOf = (v: any) => (isTypeOfValue(v) ? v : typeof v)
+export const isType = (v1: any, v2: any) => toTypeOf(v1) === toTypeOf(v2)
+export const isEvery = (v: any, ...arr: any) =>
+	_isArray(v) ? v.every((el: any) => arr.includes(el)) : arr.every((el: any) => el === v)
+export const isSome = (v: any, ...arr: any) =>
+	_isArray(v) ? v.some((el: any) => arr.includes(el)) : arr.some((el: any) => el === v)
+export const getTimeStamp = () => new Date().toLocaleString()
+export const getSource = (msg = "") => `\n\t${__filename}\n\t${getTimeStamp()}\n\t${msg}\n`
+
+//* File System Helpers
+export const TIME = getTimeStamp()
+export const SOURCE = getSource()
+export const ROOT = _cwd()
+export const DIR = __dirname
+export const FILE = __filename
+export const NAME_TEMP = `logs_temp`
+export const LOG_DIR = "logs"
+export const LOG_FILE = NAME_TEMP + ".log"
+export const PATH_LOG_DIR = path.join(__dirname, "./", LOG_DIR)
+export const PATH_LOG_FILE = path.join(PATH_LOG_DIR, LOG_FILE)
+export const CHAR_CODE_MULT = 256
+export const MAX_ENCODED_SIZE = 100
+export const toMaxLen = (v: any, max = MAX_LENGTH) => (isLen(v) && v.length > max ? v.slice(0, max) : v)
+export const toMinLen = (v: any, min = MIN_LENGTH) =>
+	isLen(v) && v.length < min ? [...v, ...genArr(v.length - min, 0)] : v
+export const toMatchLen = (v: any, l: any) => (isLen(v) && v.length === l ? v : toMaxLen(toMinLen(v, l), l))
+export const toCharCode = (char: any) => isTypeStr(char) && char.charCodeAt(0) / CHAR_CODE_MULT
+export const toCharFromCode = (code: any) => isTypeNum(code) && (_fromCharCode(code) as any) * CHAR_CODE_MULT
+export const toCharCodeFromText = (text: any) => {
+	if (!isTypeStr(text)) return false
+	const values = text.split("").reduce((acc: any, v: any) => [...acc, toCharCode(v)], [])
+	return toMaxLen(values, MAX_ENCODED_SIZE)
+}
+
+//* Chars
+export const CHAR_LINE = "\n"
+export const CHAR_TAB = "\t"
+export const CHAR_SPACE = " "
+export const CHAR_COMMA = ","
+export const CHAR_DOT = "."
+export const CHAR_DIV = "#"
+export const CHARS_ENG = "abcdefghijklmnopqrstuvwxyz"
+export const CHARS_RUS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+export const CHARS_NUM = "0123456789"
+export const CHARS_SIMPLE = CHARS_ENG + CHARS_RUS + CHARS_NUM
+export const CHARS_SPECIAL = CHAR_LINE + CHAR_TAB + CHAR_SPACE + CHAR_COMMA + CHAR_DOT + CHAR_DIV
+export const CHARS_VALID = CHARS_SIMPLE + CHARS_SPECIAL
+export const CHAR_CODE_SOURCES = CHARS_VALID.split("").map((char) => ({ char, code: toCharCode(char) }))
+export const CHAR_CODE_VALUES = [
+	...new Set([...CHAR_CODE_SOURCES.reduce((acc: any, v) => [...acc, v.code], []).filter(Number)])
+]
+
+//* Dividers
+export const DIV_CONTENT = `\n${CHAR_DIV.repeat(30)}\n`
+export const DIV_LINE = `\n${CHAR_DIV.repeat(20)}\n`
+export const DIV_TITLE = `\t${CHAR_DIV.repeat(5)}\t`
 
 //* Constants
-export const MAGIC = _random() * _now()
 export const MIN = 1
 export const MAX = 100
+export const MIN_LENGTH = 1
+export const MAX_LENGTH = 2000
+export const MIN_CHAR_CODE = _min(...CHAR_CODE_VALUES)
+export const MAX_CHAR_CODE = _max(...CHAR_CODE_VALUES)
+export const RANGE = [MIN, MAX]
+export const RANGE_LENGTH = [MIN_LENGTH, MAX_LENGTH]
+export const RANGE_CHAR_CODE = [MIN_CHAR_CODE, MAX_CHAR_CODE]
 export const ARRAY_SIZE = 10
 export const LIKE_DIFF = 0.1
-export const MIN_LENGTH = 3
-export const MAX_LENGTH = 16
-export const RANGE = [MIN, MAX]
-export const VALUES_NOT_TRUTHY = [null, undefined, false, 0, "", {}, []]
 export const INPUT_SIZE = 1
 export const HIDDEN_SIZE = 3
 export const OUTPUT_SIZE = 1
 export const TRAIN_SET_SIZE = 1000
 export const LEARNING_RATE = 0.05
+
+//* Options
 export const OPTIONS_FS = { encoding: "utf-8" }
-export const OPTIONS_BRAIN_LSTM = { learningRate: LEARNING_RATE, log: true }
+export const OPTIONS_BRAIN_LSTM = { log: true }
+export const ITERATIONS = 1000
+export const ERROR_THRESHOLD = 0.005
+export const LOG_PERIOD = 100
 export const OPTIONS_BRAIN_TRAIN = {
-	...OPTIONS_BRAIN_LSTM,
-	iterations: 1000,
-	errorThresh: 0.005,
-	logPeriod: 10,
-	momentum: 0.1,
-	callback: console.info,
-	callbackPeriod: 10
+	log: true,
+	learningRate: LEARNING_RATE,
+	iterations: ITERATIONS,
+	errorThresh: ERROR_THRESHOLD,
+	logPeriod: LOG_PERIOD,
+	callback: _info
 }
+export const filePath = (...sArr: any) => path.join(__dirname, ...sArr)
+export const fileList = (s = LOG_DIR) => _readdir(filePath(s))
+export const fileRead = (s = LOG_FILE) => _readFile(filePath(s), OPTIONS_FS as any).toString()
+export const fileWrite = (file: any, data = getSource()) =>
+	isStr(file) && _writeFile(filePath(file), data, OPTIONS_FS as any)
+export const fileAppend = (file: any, data = getSource()) =>
+	isStr(file) && _appendFile(filePath(file), data, OPTIONS_FS as any)
+export const fileCreateDir = (dir = NAME_TEMP) => isStr(dir) && _mkdir(dir)
 
-//* Files
-export const FILENAME_OUTPUT = "output.txt"
-export const FILENAME_INPUT = "input.txt"
-export const FILENAME_LOG = "log.log"
-export const PATH_FILES = path.join(__dirname, "./files/")
-export const PATH_RESULTS = path.join(__dirname, "./results/")
-export const PATH_NETWORKS = path.join(__dirname, "./networks/")
-export const PATH_TRAINING = path.join(__dirname, "./training/")
-export const CONTENT_FILES = fs.readdirSync(PATH_FILES)
-export const CONTENT_RESULTS = fs.readdirSync(PATH_RESULTS)
-export const CONTENT_NETWORKS = fs.readdirSync(PATH_NETWORKS)
-export const CONTENT_TRAINING = fs.readdirSync(PATH_TRAINING)
-export const PATH_OUTPUT = path.join(PATH_FILES, FILENAME_OUTPUT)
-export const PATH_INPUT = path.join(PATH_FILES, FILENAME_INPUT)
-export const PATH_LOG = path.join(PATH_FILES, FILENAME_LOG)
-export const PATH_CURRENT = path.join(__dirname, "./")
-export const PATH_CWD = path.join(process.cwd(), "./")
-
-//* Chars
-export const LINE = "\n"
-export const TAB = "\t"
-export const SPACE = " "
-export const COMMA = ","
-export const DOT = "."
-export const CHAR_DIV = "#"
-export const CHARS_NUM = "0123456789"
-export const CHARS_ENG = "abcdefghijklmnopqrstuvwxyz"
-export const CHARS_RUS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-export const CHARS_SPECIAL = [LINE, TAB, SPACE, COMMA, DOT].join("")
-export const CHARS_LETTERS = CHARS_ENG + CHARS_RUS
-export const CHARS_VALID = CHARS_LETTERS + CHARS_NUM + CHARS_SPECIAL
-export const DIV_LINE = `\n${CHAR_DIV.repeat(20)}\n`
-export const DIV_TITLE = `\t${CHAR_DIV.repeat(5)}\t`
-
-//* Loggers
-export const log = (...v: any) => _log(v)
-export const info = (...v: any) => _info(v)
-export const warn = (...v: any) => _warn(v)
-export const error = (...v: any) => _error(v)
-
-//* Objects
-export const objKeys = (src: O) => _keys(src)
-export const objValues = (src: O) => _values(src)
-export const objEntries = (src: O) => _entries(src)
-export const objAssign = (...src: A<O>) => _assign({}, ...src)
-export const objNames = (src: O) => _names(src)
-export const objDescriptors = (src: O) => _descriptors(src)
-export const objFrom = <T extends A<[S, any]>>(src: T) => _from(src)
-
-//* File Helpers
-export const filePath = (...s: A<S>) => path.join(__dirname, ...s)
-export const fileList = (s: S = "./") => fs.readdirSync(filePath(s))
-export const fileRead = (s: S = PATH_LOG) => fs.readFileSync(filePath(s), "utf-8").toString()
-export const fileWrite = (file: S = PATH_LOG, data: S = "") => fs.writeFileSync(filePath(file), data)
-export const fileAppend = (file: S = PATH_LOG, data: S = "") => fs.appendFileSync(filePath(file), data)
-
-//* Generate random values
-export const gen = () => _random()
-export const genBool = () => gen() > 0.5
-export const genInt = (max: N = MAX, min: N = MIN) => ~~(gen() * max - min) + min
+//* Generate Value Helpers
+export const genBool = () => _random() > 0.5
+export const gen = (max = null) => (max ? _random() * max : _random())
+export const genInt = (max = MAX, min = MIN) =>
+	isTypeNum(max, min) ? ~~(_random() * max - min) + min : ~~(_random() * MAX)
 export const genCoin = (v1: any = true, v2: any = false) => (genBool() ? v1 : v2)
 export const genId = () => `${parseInt(`${genInt()}`, 36)}`
-export const genDice = (v: N = 11) => ~~(_random() * v) + 1
-export const genDice6 = () => ~~(_random() * 5) + 1
-export const genDice21 = () => ~~(_random() * 20) + 1
-export const genDice100 = () => ~~(_random() * 100) + 1
 export const genKey = () => genId().repeat(5).replace(/[a-z]/gim, "")
-export const genArr = (l: N = ARRAY_SIZE, v: N = 1) => Array(~~l).fill(v)
-export const genMany = (l: N = ARRAY_SIZE, fn: any = gen) => genArr(l).map(() => (fn instanceof Function ? fn() : fn))
+export const genArr = (l = ARRAY_SIZE, v = 1) => Array(~~l).fill(v)
+export const genMany = (l = ARRAY_SIZE, cb = _random) => genArr(l).map(isTypeFunc(cb) ? (cb as any) : () => cb)
 export const genSort = () => genCoin(1, -1)
-export const genIndex = (v: A | S) => (~~v?.length > 0 ? genInt(getIndexLast(v), 0) : v?.length)
-export const genElement = (v: A | S) => v?.[genIndex(v)] ?? false
-export const genElementsMany = (v: A | S, l = ARRAY_SIZE) => genMany(l, () => genElement(v))
-export const genObjName = (v: O) => genElement([...objNames(v)])
-export const genObjKey = (v: O) => genElement([...objKeys(v)])
-export const genObjValue = (v: O) => genElement([...objValues(v)])
-export const genObjEntry = (v: O) => genElement([...objEntries(v)])
+export const genIndex = (v: any) => (isLen(v) && v.length > 2 ? genInt(v.length - 1, 0) : genCoin(1, 0))
+export const genElement = (v: any) => isLen(v) && v[genIndex(v) as any]
+export const genElementsMany = (v: any, l = ARRAY_SIZE) => genMany(l, () => genElement(v))
+export const genObjKey = (v: any) => isObj(v) && genElement(_keys(v))
+export const genObjValue = (v: any) => isObj(v) && genElement(_values(v))
+export const genObjEntry = (v: any) => isObj(v) && genElement(_entries(v))
+export const genChar = () => genElement(CHARS_VALID)
+export const genCharLatin = () => genElement(CHARS_ENG)
+export const genCharKyrillic = () => genElement(CHARS_RUS)
+export const genCharCode = () => genElement(CHAR_CODE_VALUES)
+export const genCharCodeLatin = () => genInt(122, 97)
+export const genCharCodeKyrillic = () => genInt(1103, 1072)
+export const genRgb = (hex: any) => {
+	const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+	hex = hex.replace(shorthandRegex, function (m: any, r: any, g: any, b: any) {
+		return r + r + g + g + b + b
+	})
+	const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+	return result
+		? {
+				r: _round(parseInt(result[1], 16) / 2.55) / 100,
+				g: _round(parseInt(result[2], 16) / 2.55) / 100,
+				b: _round(parseInt(result[3], 16) / 2.55) / 100
+		  }
+		: null
+}
+export const isRxp = (v: any) => v instanceof RegExp
+export const toCallback = (v: any) => (isTypeFunc(v) ? v : () => v)
+export const toLen = (v1: any) => (isLen(v1) ? v1.length : -1)
+export const isLenMin = (v: any, l = MIN_LENGTH) => isLen(v) && v.length >= l
+export const isLenMax = (v: any, l = MAX_LENGTH) => isLen(v) && v.length <= l
+export const isLenEqual = (v1: any, v2: any) => isLen(v1, v2) && v1.length === v2.length
+export const isLenRange = (v1: any, min = 0, max = MAX_VALUE) => isLen(v1) && v1.length > min && v1.length < max
+export const isNum = (v1: any, min = 0, max = MAX_VALUE) => isTypeNum(v1) && v1 >= min && v1 < max
+export const isStr = (v1: any, min = 0, max = MAX_VALUE) => isTypeStr(v1) && isLenRange(v1, min, max)
+export const isArr = (v1: any, min = 0, max = MAX_VALUE) => isTypeObj(v1) && _isArray(v1) && isLenRange(v1, min, max)
+export const isObj = (v: any) => isTypeObj(v) && !_isArray(v) && is(v)
+export const isCharLatin = (ch: any) => isTypeStr(ch) && CHARS_ENG.includes(ch.toLowerCase())
+export const isCharKyrrylic = (ch: any) => isTypeStr(ch) && CHARS_RUS.includes(ch.toLowerCase())
+export const isCharNum = (ch: any) => isTypeStr(ch) && CHARS_NUM.includes(ch.toLowerCase())
+export const isCharSpecial = (ch: any) => isTypeStr(ch) && CHARS_SPECIAL.includes(ch.toLowerCase())
+export const isCharValid = (ch: any) => isTypeStr(ch) && CHARS_VALID.includes(ch.toLowerCase())
+export const isNumLike = (v1: any, v2: any, d = LIKE_DIFF) => isTypeNum(v1, v2, d) && v1 < v2 + d && v1 > v2 - d
+export const filterStr = (...values: any) => values.filter(String)
+export const filterNum = (...values: any) => values.filter(Number)
+export const filterArr = (...values: any) => values.filter(Array)
+export const filterBool = (...values: any) => values.filter(Boolean)
+export const filterFunc = (...values: any) => values.filter(Function)
 
-//* Validators
-export const is = (v: any) => !!v
-export const isExist = (v: any) => v !== null && v !== undefined
-export const isType = (v1: any, v2: any) => typeof v1 === typeof v2
-export const isLen = (v: any, l: N = 0): v is S | A => ~~v?.length > l
-export const isKey = (v: any, p: S) => _names(v).includes(p)
-export const isFunc = (fn: any): fn is (...v: any) => any => typeof fn === "function"
-export const isNum = (v: any, l = 0): v is N => typeof v === "number" && v >= l
-export const isStr = (v: any, l = 0): v is S => typeof v === "string" && v.length > l
-export const isArr = (v: any, l = 0): v is A => typeof v === "object" && Array.isArray(v) && v.length > l
-export const isObj = (v: any): v is O => typeof v === "object" && !Array.isArray(v)
-export const isEqual = (v1: any, v2: any) => JSON.stringify(v1) === JSON.stringify(v2)
-export const isNumBetween = (v: N, range: A<N> = RANGE) => {
-	if (!isNum(v)) {
-		return false
-	}
-	const minValue = _min(...range)
-	const maxValue = _max(...range)
-	return v > minValue && v < maxValue
+//* Get Value Helpers
+export const or = (v1: any, v2: any) => v1 || v2
+export const and = (v1: any, v2: any) => v1 && v2
+export const like = (v1: any, ...values: any) => values.filter((el: any) => el == v1 || typeof el == typeof v1)
+export const not = (v1: any, ...values: any) => values.filter((el: any) => el !== v1 && typeof el !== typeof v1)
+export const getIndexLast = (v: any) => isLen(v) && _max(0, v.length - 1)
+export const getElementLast = (v: any) => isLen(v) && v?.[getIndexLast(v)]
+export const getSlice = (v: any, i1 = 0, i2 = null) => {
+	if (!isLen(v)) return false
+	const last = getIndexLast(v)
+	const start = isNum(i1, last) ? i1 : genInt(last)
+	const end = isNum(i2, last) ? i1 : genInt(last)
+	return v.slice(start, end)
+}
+export const getElementNeighbours = (arr: A, el: any, l = 1) => {
+	if (!isLen(arr) || !arr.includes(el)) return false
+	const i = arr.indexOf(el)
+	const last = getIndexLast(arr)
+	const start = i > 0 ? i - 1 : 0
+	const end = i < last ? i + 1 : last
+	return arr.slice(start, end)
+}
+export const getElementNext = (arr: A, el = 0) => {
+	if (!isLen(arr) || !arr.includes(el)) return false
+	const i = arr.indexOf(el)
+	const last = getIndexLast(arr)
+	return i < last ? arr[i + 1] : arr[0]
+}
+export const getSplitted = (s: any, ch: any = "", min: any = false) => {
+	if (!isStr(s, ch)) return false
+	const arr = s.split(ch).filter(String)
+	return min ? arr.filter((el: any) => isLenMin(el, min)) : arr
+}
+export const getChars = (s: any) => getSplitted(s, "")
+export const getWords = (s: any, min = 1) => getSplitted(s, " ", min)
+export const getPhrases = (s: any, min = 1) => getSplitted(s, ".", min)
+export const getLines = (s: any, min = 1) => getSplitted(s, "\n", min)
+export const getWordFirst = (s: any) => getWords(s)?.[0]
+export const getWordLast = (s: any) => getWords(s).reverse()?.[0]
+export const genPhraseFromWords = (words: any, size: any = ARRAY_SIZE) => {
+	if (!isArr(words, 1)) return false
+	return genElementsMany(words, size).join(" ")
+}
+export const getPhrasesWithWord = (a: any, w: any) =>
+	isArr(a) && isStr(w) && a.filter((el: any) => isStr(el) && el.includes(w))
+export const getPhrasesWithoutWord = (a: any, w: any) =>
+	isArr(a) && isStr(w) && a.filter((el: any) => isStr(el) && !el.includes(w))
+export const getPhrasesEndsWith = (a: any, s: any) =>
+	isArr(a) && isStr(s) && a.filter((el: any) => isStr(el) && el.endsWith(s))
+export const getPhrasesStartsWith = (a: any, s: any) =>
+	isArr(a) && isStr(s) && a.filter((el: any) => isStr(el) && el.startsWith(s))
+export const getPhrasesByLength = (a: any, l = RANGE_LENGTH) => {
+	if (!isArr(a)) return false
+	if (isTypeNum(l)) return a.filter((el: any) => el === l)
+	if (isArr(l)) return a.filter((el: any) => isLenRange(el, _min(...l), _max(...l)))
+	return a.filter(String)
+}
+export const getPhrasesByIndex = (a: any, l = RANGE_LENGTH) => {
+	if (!isArr(a)) return false
+	if (isArr(l)) return a.filter((el: any, i: any) => isLenRange(i, _min(...l), _max(...l)))
+	if (isTypeNum(l)) return a.filter((el: any, i: any) => i === l)
+	return a.filter(String)
 }
 
-//* Properties
-export const getIf = (v?: any, v1?: any, v2?: any) => (!!v ? v1 : v2)
-export const getLength = (v: any) => !!v?.length && ~~v?.length
-export const getName = (v: any) => `${v?.name ?? v?.prototype?.name}`
-export const getTimestamp = () => new Date().toLocaleString()
-export const getSource = (desc = __filename) => `\t${desc} at ${getTimestamp()}\t`
-export const getIndexLast = (v: S | A) => (v?.length > 0 ? v?.length - 1 : v?.length)
-export const getElementLast = (v: S | A) => is(v?.length) && v?.[getIndexLast(v)]
-export const getPart = (v: S | A, i1?: N, i2?: N) => v.slice(i1 || genIndex(v), i2 || genIndex(v))
-export const getPartNeighbours = (v: S | A, i = genIndex(v), l = 1) => getPart(v, i - l, i + l)
-export const getPartNext = (v: S | A, i = 0, l = 1) => getPart(v, i, i + l)
-export const getSplitted = (s: S, ch: S, l = 1) => s.split(ch).filter((v) => isLen(v, l))
-export const getChars = (s: S) => getSplitted(s, "", 1)
-export const getWords = (s: S, l = MIN_LENGTH) => getSplitted(s, " ", l).map(toTrimLine)
-export const getPhrases = (s: S, l = MIN_LENGTH) => getSplitted(s, DOT, l).map(toTrimLine)
-export const getLines = (s: S, l = MIN_LENGTH) => getSplitted(s, LINE, l).map(toTrimLine)
-export const getWordFirst = (s: S) => getWords(s)?.[0]
-export const getWordLast = (s: S) => getWords(s).reverse()?.[0]
-export const genPhraseFromWords = (arr: A<S>, l: N = genInt(10, 3)) => genElementsMany(arr, l).reduce(reduceText)
-export const getPhrasesWithoutWord = (arr: A<S>, w: S) => arr.filter((s) => !s.includes(w))
-export const getPhrasesWithWord = (arr: A<S>, w: S) => arr.filter((s) => s.includes(w))
-export const getPhrasesEndsWith = (arr: A<S>, w: S) => arr.filter((s) => s.endsWith(w))
-export const getPhrasesStartsWith = (arr: A<S>, w: S) => arr.filter((s) => s.startsWith(w))
-
-//* Reducers
-export const reduceText = (a: S, v: S) => `${a} ${v}`
-export const reduceSum = (a: N, v: N) => a + v
-export const reduceMult = (a: N, v: N) => a + v * 2
-export const reduceObj = (a: A, value: any, index: N) => [...a, { value, index }]
+//* Array Reducers
+export const reduceText = (a: any, v: any) => `${a} ${v}`
+export const reduceSum = (a: any, v: any) => a + v
+export const reduceMult = (a: any, v: any) => a + v * 2
+export const reduceObj = (a: any, v: any, i: any) => [...a, { value: v, index: i }]
+export const reducePropValue = (a: any, v: any) => (is(v?.value) ? [...a, v?.value] : a)
+export const reducePropDesc = (a: any, v: any) => (is(v?.desc) ? [...a, v.desc] : a)
+export const reduceElementStats = (a: any, v: any) => a + "\n" + toResultStats(v)
+export const reduceElementKeys = (a: any, v: any) => (isObj(v) ? [...a, _keys(v)] : a)
+export const reduceElementValues = (a: any, v: any) => (isObj(v) ? [...a, _values(v)] : a)
+export const reduceElementEntries = (a: any, v: any) => (isObj(v) ? [...a, _entries(v)] : a)
 
 //* Converters
-export const toArray = (v?: any) => (isArr(v) ? v : [v])
-export const toObj = (v?: any) => (isObj(v) ? v : objAssign({ value: v }))
-export const toText = (v?: any) => (isObj(v) ? toJson(v) : isArr(v) ? v.join(LINE) : `${v}`)
-export const toKeys = (v?: any) => (isObj(v) ? _keys(v) : Object.getOwnPropertyNames(v)) || []
-export const toPercent = (v1: N = 100, v2: N = 1) => ~~(v2 / (~~v1 / 100))
-export const toNumDiff = (...v: A<N>) => _max(...v) - _min(...v)
-export const toNumRange = (...v: A<N>) => [_min(...v), _max(...v)]
-export const toNumLike = (v: N = 0, coff: N = LIKE_DIFF) => [v - coff, v + coff]
-export const toTrim = (v: S) => (typeof v === "string" ? v : `${v}`).trim()
-export const toTrimLine = (v: S) => v.replace("\n", " ")
-export const toJoin = (v: A) => v.join(LINE)
-export const toUnical = (v: A) => [...new Set([...v])]
-export const toRepeat = (v: S, r = 2) => toTrim(v).repeat(r)
-export const toReversed = (v: A | S) => (isArr(v) ? v.reverse() : toText(v).split("").reverse().join(""))
-export const toBuffer = (v: any) => Buffer.from(v)
-export const toFloatFixed = (v: N, l = 2) => Number((typeof v === "number" ? v : 0).toFixed(l))
-export const toTrainingData = <T>(input: T, output: T, ...other: any) => ({ input, output, other })
-export const toFormatted = (s: S, r: S = "") => toTrim(s).replace(/[^а-я\s\n]+/gim, r)
-export const toResultStats = (v?: any) => `Expected: ${v?.output}, Received: ${v?.result}, Values: ${v?.input}`.trim()
-export const toResultProps = (v: O) => isObj(v) && { ...v, desc: toResultStats(v) }
-export const toJson = (v: any) => JSON.stringify(toObj(v), null, 2)
-export const toAverage = (...v: A<N>) => {
-	const nums = isArr(v, 1) ? v.filter(Number) : [0, 0]
-	return nums.reduce(reduceSum) / nums.length
+export const _toObj = (...v: any) => ({ values: v })
+export const _toArr = (...v: any) => v
+export const _toStr = (...v: any) => _stringify(_toObj(...v), null, 2)
+export const toArr = (v: any) => (isArr(v) ? v : [v])
+export const toObj = (v: any) => (isObj(v) ? v : { value: v })
+export const toText = (v: any) => _stringify(toObj(v), null, 2)
+export const toKeys = (v: any) => (isObj(v) ? _keys(v) : [])
+export const toNumDiff = (...v: any) => _max(...v) - _min(...v)
+export const toNumRange = (...v: any) => [_min(...v), _max(...v)]
+export const toTrim = (v: any) => (isTypeStr(v) ? v : toText(v)).trim()
+export const toTrimLine = (v = "") => isTypeStr(v) && v.replace(/\n/gim, " ")
+export const toUnical = (v: any) => (isArr(v) ? [...new Set([...v])] : [v])
+export const toJoin = (v: any, ch = "\n") => (isArr(v) ? v.join(isTypeStr(ch) ? ch : "\n") : toText(v))
+export const toRepeat = (v: any, r = 2) => (isTypeStr(v) ? v : toText(v)).repeat(isNum(r, 2) ? r : 2)
+export const toReversed = (v: any) => (isArr(v) ? v.reverse() : toText(v).split("").reverse().join(""))
+export const toBuffer = (v: any) => is(v) && Buffer.from(v)
+export const toFloatFixed = (v: any, l = 2) => (isTypeNum(v) ? Number(v.toFixed(~~l)) : 0)
+export const toTrainingData = (input: any, output: any, ...other: any) => ({ input, output, other })
+export const toFormatted = (s: any, r: any = "") => isTypeStr(s, r) && s.replace(/[^а-я\s\n]+/gim, r)
+export const toPercent = (v1: any, v2: any) => isTypeNum(v1, v2) && v2 / (v1 / 100)
+export const toResultStats = (v: any) => toText(v)
+export const toResultProps = (v: any) => _assign({}, toObj(v), { desc: toResultStats(v) })
+export const toTitleCase = (s: any) => {
+	if (!isStr(s, 1)) return false
+	const trimmed = s.trim().toLowerCase()
+	return trimmed.slice(0, 1).toUpperCase() + trimmed.slice(1)
 }
-export const toTitleCase = (s: S) => {
-	const first = s.slice(0, 1).toUpperCase()
-	const other = s.slice(1).toLowerCase()
-	return first + other
+export const jsonParse = (v: any) => (isStr(v, 1) ? _parse(v) : false)
+export const jsonCreate = (...v: any) => _stringify(v, null, 2)
+export const toAverage = (...v: any) => {
+	const a = v.flat().filter(Number)
+	return a.length ? a.reduce(reduceSum) / a.length : 0
 }
 
-//* Summary objects
-export const toRxp = (s: S = "", f?: S) => new RegExp(s, f)
-export const toRxpNext = (w: S = "", t: N = 1) => toRxp(w + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(t), "i")
-export const toMatchLineWithWord = (s: S = "", w: S = "") => toTrim(s).match(toRxp(`^.{0,}${w}[^$]+$`))
-export const toMatchWordLast = (s: S = "") => toTrim(s).match(/(\B[а-яa-z]+\B)$/i)
-export const toMatchWordSequence = (s: S = "", w: S = "", l: N = 1) => toTrim(s).match(toRxpNext(w, l))
-export const toMatchChars = (s: S = "") => toTrim(s).match(/\B([а-яa-z])\B/gim)
-export const toMatchWords = (s: S = "") => toTrim(s).match(/\B([а-яa-z]+)\B/gim)
-export const toMatchPhrases = (s: S = "") => toTrim(s).match(/.+\.|.+$/gim)
-export const toMatchLines = (s: S = "") => toTrim(s).match(/.+\n|^.+$/gim)
-export const toMatchNextWord = (s: S = "", w: S = "") => s.match(new RegExp(w + "\\s(\\w+)"))?.[1]
-export const toArrValues = (arr: A) => arr.map((value, index) => ({ value, index, text: toText(value) }))
-export const replaceChars = (str: S, chars: S | R = /[^а-яa-z\s,.]/gim, rep = "") => str.replace(chars, rep)
-export const getIndexAll = (arr: A, el: any) => arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
-export const getIndex = (v: A, el: any) => is(v?.length) && v.indexOf(el)
-export const getMatch = (v: S, el: any) => is(v?.length) && v.match(new RegExp(el, "im"))
-export const getMatchAll = (v: S, el: any) => is(v?.length) && v.match(new RegExp(el, "gim"))
-export const getFind = (v: A, el: any) => is(v?.length) && v.find(el)
-export const getFindAll = (v: A, el: any) => is(v?.length) && v.filter(el)
-export const getElementsSequence = (arr: A, word: S, size: N = genDice6()) => {
-	const index = ~~getIndex(arr, word)
-	const values = arr.slice(index, index + size)
-	const text = toTitleCase(values.join(" "))
-		.replace(/[^а-яa-z,.\s]/gim, " ")
-		.replace(/\s+/, " ")
-		.trim()
-	return { word, index, values, text }
+//* Regular Expressions
+export const toRxp = (s = "", flags = "im") => new RegExp(s, flags)
+export const toRxpNext = (word = "", rep = 1) => {
+	const rxpString = word + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(rep)
+	return new RegExp(rxpString, "gim")
 }
-export const toNotUnical = (arr: A) => {
+export const toMatchWordFirst = (s = "") => s.match(/^(\w+)\b/i)
+export const toMatchWordLast = (s = "") => s.match(/\b(\w+)$/i)
+export const toMatchLineWithWord = (s = "", word = "") => {
+	if (!isStr(s)) return ""
+	const rxp = toRxp(`^.+${word}.+$`, "im")
+	const result = rxp.exec(s) ?? ""
+	return result
+}
+export const toMatchChars = (s = "") => {
+	if (!isStr(s)) return []
+	return s.split("").filter(String)
+}
+export const toMatchWords = (s = "") => {
+	if (!isStr(s)) return []
+	return s
+		.split(/\s|\n|\t|\b/gim)
+		.filter((s: any) => isLenMin(s, 1))
+		.map((s: any) => s.replace(/\s|\n|\t/, "").trim())
+}
+export const toMatchPhrases = (s = "") => {
+	if (!isStr(s)) return []
+	return s
+		.split(".")
+		.filter((s: any) => isLenMin(s, 1))
+		.map((s: any) => s.replace("\n", "").trim())
+}
+export const toMatchLines = (s = "") => {
+	if (!isStr(s)) return []
+	return s
+		.split("\n")
+		.filter((s: any) => isLenMin(s, 1))
+		.map((s: any) => s.replace("\n", "").trim())
+}
+export const toMatchDividered = (s = "", div = CHAR_DIV) => {
+	if (!isStr(s)) return []
+	return s.split(div).filter((s: any) => isLenMin(s, 1))
+}
+export const toMatchNextWords = (s = "", word = "", size = 2) => {
+	if (!isStr(s) || !isStr(word) || !s.includes(word)) return ""
+	const rxpString = word + ".\\b\\w+\\b".repeat(size)
+	const rxp = new RegExp(rxpString, "im")
+	const result = rxp.exec(s)
+	return result?.[1] ?? ""
+}
+export const toArrValues = (arr: any) =>
+	isArr(arr, 1) && arr.map((value: any, index: any) => ({ value, index, text: value ? toText(value) : typeof value }))
+export const toNotUnical = (arr: any) => {
+	if (!isArr(arr, 1)) return []
 	const unical = toUnical(arr)
-	return unical && arr.filter((v) => unical.includes(v))
+	return arr.filter((v: any) => unical.includes(v))
 }
-
-//* Summary Objects
-export const _OPTIONS = {
-	MAGIC,
-	MIN,
-	MAX,
-	ARRAY_SIZE,
-	LIKE_DIFF,
-	MIN_LENGTH,
-	MAX_LENGTH,
-	RANGE,
-	VALUES_NOT_TRUTHY,
-	INPUT_SIZE,
-	HIDDEN_SIZE,
-	OUTPUT_SIZE,
-	TRAIN_SET_SIZE,
-	LEARNING_RATE,
-	OPTIONS_FS,
-	OPTIONS_BRAIN_LSTM,
-	OPTIONS_BRAIN_TRAIN
+export const isUnical = (el: any, arr: any) => {
+	const notUnical = toNotUnical(arr)
+	return notUnical.includes(el)
 }
-export const _FOLDERS = {
-	PATH_FILES,
-	PATH_RESULTS,
-	PATH_NETWORKS,
-	PATH_TRAINING,
-	CONTENT_FILES,
-	CONTENT_RESULTS,
-	CONTENT_NETWORKS,
-	CONTENT_TRAINING
+export const replaceManyChars = (s: any) => {
+	if (!isStr(s)) return false
+	return s.replace(/\s+|\t+/gim, " ").replace(/\n+/gim, "\n")
 }
-export const _FILES = {
-	PATH_OUTPUT,
-	PATH_INPUT,
-	PATH_LOG,
-	PATH_CURRENT,
-	PATH_CWD
+export const replaceChars = (s: any) => {
+	if (!isStr(s)) return false
+	const replaced = s.replace(/[^а-яa-z\s\n,.]/gim, " ")
+	return replaceManyChars(replaced)
 }
-export const _CHARS = {
-	LINE,
-	TAB,
-	SPACE,
-	COMMA,
-	DOT,
-	CHAR_DIV,
-	CHARS_NUM,
-	CHARS_ENG,
-	CHARS_RUS,
-	CHARS_SPECIAL,
-	CHARS_LETTERS,
-	CHARS_VALID,
-	DIV_LINE,
-	DIV_TITLE
+export const getIndex = (src: any = "", el: any = "") => {
+	if (!isLenMin(src) || !el) return -1
+	return src.indexOf(el)
 }
-export const _OBJECTS = {
-	objKeys,
-	objValues,
-	objEntries,
-	objAssign,
-	objNames,
-	objDescriptors,
-	objFrom
+export const getIndexAll = (arr: A, el: any) => {
+	if (!isArr(arr) || !el) return []
+	return arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
 }
-export const _FILE = {
-	filePath,
-	fileList,
-	fileRead,
-	fileWrite,
-	fileAppend
+export const getMatch = (v: any = "", el: any = "") => {
+	if (!isStr(v) || !el) return []
+	const rxp = isRxp(el) ? el : new RegExp(el, "im")
+	return v.match(rxp) ?? []
 }
-export const _GENERATE = {
-	gen,
-	genBool,
-	genInt,
-	genCoin,
-	genId,
-	genDice,
-	genDice6,
-	genDice21,
-	genDice100,
-	genKey,
-	genArr,
-	genMany,
-	genSort,
-	genIndex,
-	genElement,
-	genElementsMany,
-	genObjName,
-	genObjKey,
-	genObjValue,
-	genObjEntry
+export const getMatchAll = (v: any = "", el: any = "") => {
+	if (!isStr(v) || !el) return []
+	const rxp = isRxp(el) ? el : new RegExp(el, "gim")
+	return v.match(rxp) ?? []
 }
-export const _VALIDATORS = {
-	is,
-	isExist,
-	isType,
-	isLen,
-	isKey,
-	isFunc,
-	isNum,
-	isStr,
-	isArr,
-	isObj,
-	isEqual,
-	isNumBetween
+export const getElementsSequence = (arr: A, el: any, size: any = 3) => {
+	if (!isArr(arr) || !el || !arr.includes(el)) {
+		return []
+	}
+	const start = _max(arr.indexOf(el), 0)
+	const end = _min(start + size, arr.length - 1)
+	return arr.slice(start, end)
 }
-export const _GET = {
-	getIf,
-	getLength,
-	getName,
-	getTimestamp,
-	getSource,
-	getIndexLast,
-	getElementLast,
-	getPart,
-	getPartNeighbours,
-	getPartNext,
-	getSplitted,
-	getChars,
-	getWords,
-	getPhrases,
-	getLines,
-	getWordFirst,
-	getWordLast,
-	genPhraseFromWords,
-	getPhrasesWithoutWord,
-	getPhrasesWithWord,
-	getPhrasesEndsWith,
-	getPhrasesStartsWith
+export const msToTimeDesc = (ms: any) => {
+	const seconds = ~~(ms / 1000)
+	const minutes = ~~(seconds / 60)
+	const hours = ~~(minutes / 60)
+	const days = ~~(hours / 24)
+	return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
 }
-export const _CONVERTERS = {
-	toArray,
-	toObj,
-	toText,
-	toKeys,
-	toPercent,
-	toNumDiff,
-	toNumRange,
-	toNumLike,
-	toTrim,
-	toTrimLine,
-	toJoin,
-	toUnical,
-	toRepeat,
-	toReversed,
-	toBuffer,
-	toFloatFixed,
-	toTrainingData,
-	toFormatted,
-	toResultStats,
-	toResultProps,
-	toJson,
-	toAverage,
-	toTitleCase
+export const toFixed = (v: any, l = 2) => Number(Number(v).toFixed(l))
+export const sliceToSize = (v: any, l: any) => isLen(v, 1) && (v.length > l ? v.slice(0, l) : v)
+export const encode = (value: any, size = MAX_ENCODED_SIZE) => {
+	let elements
+	if (isNum(value)) {
+		elements = [value]
+	} else if (isStr(value)) {
+		elements = toCharCodeFromText(value)
+	} else if (isArr(value)) {
+		elements = value.filter(String).reduce((a: any, v: any) => [...a, ...toCharCodeFromText(v)], [])
+	}
+	return sliceToSize(elements, size)
 }
-export const _REGULAR = {
-	toRxp,
-	toRxpNext,
-	toMatchLineWithWord,
-	toMatchWordLast,
-	toMatchWordSequence,
-	toMatchChars,
-	toMatchWords,
-	toMatchPhrases,
-	toMatchLines,
-	toMatchNextWord,
-	toArrValues,
-	replaceChars,
-	getIndexAll,
-	getIndex,
-	getMatch,
-	getMatchAll,
-	getFind,
-	getFindAll,
-	getElementsSequence,
-	toNotUnical
+export const decode = (value: any) => {
+	if (isNum(value)) {
+		return toCharFromCode(value) as any
+	} else if (isArr(value)) {
+		return value.map(toCharFromCode).filter(Boolean).join("")
+	}
+	return toCharFromCode(value)
 }
-export const _SUMMARY = {
-	..._OPTIONS,
-	..._FOLDERS,
-	..._FILES,
-	..._CHARS,
-	..._OBJECTS,
-	..._FILE,
-	..._GENERATE,
-	..._CONVERTERS,
-	..._VALIDATORS,
-	..._GET,
-	..._REGULAR
-}
+export const isStrEqual = (s1: any, s2: any) => isTypeStr(s1, s2) && s1 === s2
+export const isLineBreak = (v: any) => v === "\n"
+export const isSharp = (v: any) => v === "#"
+export const isSpace = (v: any) => v === " "
+export const isStar = (v: any) => v === "*"
+export const character = (s: any) => (isStr(s) ? s.trim().split("").map(isSharp) : [])
