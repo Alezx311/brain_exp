@@ -5,13 +5,7 @@ const cowsay = require("cowsay")
 const gradientString = require("gradient-string")
 const chalk = require("chalk")
 const { rainbow, print } = require("lolcats")
-const {
-	readdirSync: _readdir,
-	readFileSync: _readFile,
-	writeFileSync: _writeFile,
-	appendFileSync: _appendFile,
-	mkdirSync: _mkdir
-} = fs
+
 const { now: _now } = Date
 const { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, MAX_VALUE, MIN_VALUE } = Number
 const { cwd: _cwd, env: _env } = process
@@ -22,6 +16,13 @@ const { random: _random, min: _min, max: _max, abs: _abs, round: _round } = Math
 const { keys: _keys, values: _values, entries: _entries, assign: _assign, getOwnPropertyNames: _names } = Object
 const { isArray: _isArray } = Array
 const { fromCharCode: _fromCharCode } = String
+const {
+	readdirSync: _readdir,
+	readFileSync: _readFile,
+	writeFileSync: _writeFile,
+	appendFileSync: _appendFile,
+	mkdirSync: _mkdir
+} = fs
 
 const UND = undefined
 const NULL = null
@@ -93,27 +94,8 @@ const CONSOLE_OTHER_SOURCES = [
 ]
 const LOGGER_SOURCES = [...CONSOLE_SOURCES, ...GRADIENTS_SOURCES, ...COLORED_SOURCES, ...CONSOLE_OTHER_SOURCES]
 
-const _logGradient = LOGGER_SOURCES.find((el) => el.desc === "atlas").logger
-const _logColored = LOGGER_SOURCES.find((el) => el.desc === "green").logger
-const _logLolcatPrint = LOGGER_SOURCES.find((el) => el.desc === "lolcat_print").logger
-const _logLolcatRainbow = LOGGER_SOURCES.find((el) => el.desc === "lolcat_rainbow").logger
-const _logCowSay = LOGGER_SOURCES.find((el) => el.desc === "cow_say").logger
-const _logCowThink = LOGGER_SOURCES.find((el) => el.desc === "cow_think").logger
-const _logDefault = _logCowSay
-const _logJson = (...values) => _logDefault(values)
-const _logValues = (...values) => _logDefault(values)
-const _logExamples = (msg = SOURCE) => {
-	_log("Simple console log message", msg)
-	_logGradient("_logGradient example", msg)
-	_logColored("_logColored example", msg)
-	_logLolcatPrint("_logLolcatPrint example", msg)
-	_logLolcatRainbow("_logLolcatRainbow example", msg)
-	_logCowSay("_logCowSay example", msg)
-	_logCowThink("_logCowThink example", msg)
-	_logJson("_logJson example", msg)
-	_logValues("_logValues example", msg)
-	LOGGER_SOURCES.map(({ logger, desc }) => logger(`${desc} example`, msg))
-}
+const _logExamples = (msg = SOURCE) =>
+	LOGGER_SOURCES.map(({ logger, desc }) => logger({ text: `${desc} log message example\n${msg}` }))
 
 //* Validators
 
@@ -557,15 +539,6 @@ class Helpers {
 	static COLORED_SOURCES = COLORED_SOURCES
 	static CONSOLE_OTHER_SOURCES = CONSOLE_OTHER_SOURCES
 	static LOGGER_SOURCES = LOGGER_SOURCES
-	static _logGradient = _logGradient
-	static _logColored = _logColored
-	static _logLolcatPrint = _logLolcatPrint
-	static _logLolcatRainbow = _logLolcatRainbow
-	static _logCowSay = _logCowSay
-	static _logCowThink = _logCowThink
-	static _logDefault = _logDefault
-	static _logJson = _logJson
-	static _logValues = _logValues
 	static _logExamples = _logExamples
 	static NAME_TEMP = NAME_TEMP
 	static LOG_DIR = LOG_DIR
