@@ -176,11 +176,11 @@ const SUMMARY = Object.keys(Helpers)
 describe("Helpers summary", () => {
 	SUMMARY.map((v) => {
 		it(v.desc, () => {
-			expect(v.index).toBeDefined()
 			expect(v.desc).toBeDefined()
 			expect(v.value).toBeDefined()
 			expect(v.type).toBeDefined()
 			expect(v.result).toBeDefined()
+			expect(v.index).toBeDefined()
 			expect(Helpers).toHaveProperty(v.desc)
 		})
 	})
@@ -192,8 +192,6 @@ describe("Helpers constants", () => {
 			expect(v.desc).toBeDefined()
 			expect(v.value).toBeDefined()
 			expect(v.type).toBeDefined()
-			expect(v.desc).toBeDefined()
-			expect(v.value).toBeDefined()
 			expect(v.result).toBeDefined()
 			expect(v.index).toBeDefined()
 			expect(Helpers).toHaveProperty(v.desc)
@@ -204,11 +202,11 @@ describe("Helpers constants", () => {
 describe("Helpers functions", () => {
 	SUMMARY.filter((v) => v.type === "function").map((v) => {
 		it(v.desc, () => {
-			expect(v.index).toBeDefined()
-			expect(v.type).toBeDefined()
 			expect(v.desc).toBeDefined()
 			expect(v.value).toBeDefined()
+			expect(v.type).toBeDefined()
 			expect(v.result).toBeDefined()
+			expect(v.index).toBeDefined()
 			expect(Helpers).toHaveProperty(v.desc)
 		})
 	})
