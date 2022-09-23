@@ -1,5 +1,5 @@
-const { toMatchLines } = require("./helpers")
-const Helpers = require("./helpers")
+const { toMatchLines } = require("./helpersOld")
+const Helpers = require("./helpersOld")
 
 class TrainingDataPoetry {
 	static TEXT = Helpers.fileRead("./files/poetry.txt").toLowerCase().trim()

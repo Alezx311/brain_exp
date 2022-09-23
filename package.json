@@ -17,7 +17,7 @@
 		"brain-pact": "^1.0.3",
 		"brain-text": "^1.1.30",
 		"brain.js": "^2.0.0-beta.15",
-		"chalk": "^5.0.1",
+		"chalk": "4.1.2",
 		"concurrently": "^7.4.0",
 		"cowsay": "^1.5.0",
 		"gpu.js": "1.4.9",

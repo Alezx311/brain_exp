@@ -1,0 +1,7682 @@
+{
+  "EXAMPLES_SOURCES": [
+    {
+      "desc": "UND",
+      "index": 0,
+      "isFunc": false,
+      "text": "0. Name: UND, Type: undefined"
+    },
+    {
+      "desc": "NULL",
+      "value": null,
+      "index": 1,
+      "isFunc": false,
+      "text": "1. Name: NULL, Type: object",
+      "example": null
+    },
+    {
+      "desc": "STR",
+      "value": "Some string value",
+      "index": 2,
+      "isFunc": false,
+      "text": "2. Name: STR, Type: string",
+      "example": "Some string value"
+    },
+    {
+      "desc": "ERR",
+      "value": {},
+      "index": 3,
+      "isFunc": false,
+      "text": "3. Name: ERR, Type: object",
+      "example": {}
+    },
+    {
+      "desc": "RND",
+      "value": 0.6383302082520825,
+      "index": 4,
+      "isFunc": false,
+      "text": "4. Name: RND, Type: number",
+      "example": 0.6383302082520825
+    },
+    {
+      "desc": "NUM",
+      "value": 638,
+      "index": 5,
+      "isFunc": false,
+      "text": "5. Name: NUM, Type: number",
+      "example": 638
+    },
+    {
+      "desc": "BLN",
+      "value": true,
+      "index": 6,
+      "isFunc": false,
+      "text": "6. Name: BLN, Type: boolean",
+      "example": true
+    },
+    {
+      "desc": "ARR",
+      "value": [
+        "Some string value",
+        638
+      ],
+      "index": 7,
+      "isFunc": false,
+      "text": "7. Name: ARR, Type: object",
+      "example": [
+        "Some string value",
+        638
+      ]
+    },
+    {
+      "desc": "OBJ",
+      "value": {
+        "STR": "Some string value",
+        "NUM": 638
+      },
+      "index": 8,
+      "isFunc": false,
+      "text": "8. Name: OBJ, Type: object",
+      "example": {
+        "STR": "Some string value",
+        "NUM": 638
+      }
+    },
+    {
+      "desc": "SYM",
+      "index": 9,
+      "isFunc": false,
+      "text": "9. Name: SYM, Type: symbol"
+    },
+    {
+      "desc": "BIG",
+      "value": null,
+      "index": 10,
+      "isFunc": false,
+      "text": "10. Name: BIG, Type: number",
+      "example": null
+    },
+    {
+      "desc": "FUNC",
+      "index": 11,
+      "isFunc": true,
+      "text": "11. Name: FUNC, Type: function"
+    },
+    {
+      "desc": "VALUES",
+      "value": [
+        null,
+        null,
+        "Some string value",
+        {},
+        0.6383302082520825,
+        638,
+        true,
+        [
+          "Some string value",
+          638
+        ],
+        {
+          "STR": "Some string value",
+          "NUM": 638
+        },
+        null,
+        null,
+        null
+      ],
+      "index": 12,
+      "isFunc": false,
+      "text": "12. Name: VALUES, Type: object",
+      "example": [
+        null,
+        null,
+        "Some string value",
+        {},
+        0.6383302082520825,
+        638,
+        true,
+        [
+          "Some string value",
+          638
+        ],
+        {
+          "STR": "Some string value",
+          "NUM": 638
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "desc": "VALUES_SOURCES",
+      "value": [
+        {
+          "desc": "UND",
+          "index": 0,
+          "type": "undefined"
+        },
+        {
+          "value": null,
+          "desc": "NULL",
+          "index": 1,
+          "type": "object"
+        },
+        {
+          "value": "Some string value",
+          "desc": "STR",
+          "index": 2,
+          "type": "string"
+        },
+        {
+          "value": {},
+          "desc": "ERR",
+          "index": 3,
+          "type": "object"
+        },
+        {
+          "value": 0.6383302082520825,
+          "desc": "RND",
+          "index": 4,
+          "type": "number"
+        },
+        {
+          "value": 638,
+          "desc": "NUM",
+          "index": 5,
+          "type": "number"
+        },
+        {
+          "value": true,
+          "desc": "BLN",
+          "index": 6,
+          "type": "boolean"
+        },
+        {
+          "value": [
+            "Some string value",
+            638
+          ],
+          "desc": "ARR",
+          "index": 7,
+          "type": "object"
+        },
+        {
+          "value": {
+            "STR": "Some string value",
+            "NUM": 638
+          },
+          "desc": "OBJ",
+          "index": 8,
+          "type": "object"
+        },
+        {
+          "desc": "SYM",
+          "index": 9,
+          "type": "symbol"
+        },
+        {
+          "value": null,
+          "desc": "BIG",
+          "index": 10,
+          "type": "number"
+        },
+        {
+          "desc": "FUNC",
+          "index": 11,
+          "type": "function"
+        }
+      ],
+      "index": 13,
+      "isFunc": false,
+      "text": "13. Name: VALUES_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "UND",
+          "index": 0,
+          "type": "undefined"
+        },
+        {
+          "value": null,
+          "desc": "NULL",
+          "index": 1,
+          "type": "object"
+        },
+        {
+          "value": "Some string value",
+          "desc": "STR",
+          "index": 2,
+          "type": "string"
+        },
+        {
+          "value": {},
+          "desc": "ERR",
+          "index": 3,
+          "type": "object"
+        },
+        {
+          "value": 0.6383302082520825,
+          "desc": "RND",
+          "index": 4,
+          "type": "number"
+        },
+        {
+          "value": 638,
+          "desc": "NUM",
+          "index": 5,
+          "type": "number"
+        },
+        {
+          "value": true,
+          "desc": "BLN",
+          "index": 6,
+          "type": "boolean"
+        },
+        {
+          "value": [
+            "Some string value",
+            638
+          ],
+          "desc": "ARR",
+          "index": 7,
+          "type": "object"
+        },
+        {
+          "value": {
+            "STR": "Some string value",
+            "NUM": 638
+          },
+          "desc": "OBJ",
+          "index": 8,
+          "type": "object"
+        },
+        {
+          "desc": "SYM",
+          "index": 9,
+          "type": "symbol"
+        },
+        {
+          "value": null,
+          "desc": "BIG",
+          "index": 10,
+          "type": "number"
+        },
+        {
+          "desc": "FUNC",
+          "index": 11,
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "desc": "TYPEOF_VALUES",
+      "value": [
+        "string",
+        "number",
+        "function",
+        "object",
+        "boolean",
+        "bigint",
+        "symbol",
+        "undefined"
+      ],
+      "index": 14,
+      "isFunc": false,
+      "text": "14. Name: TYPEOF_VALUES, Type: object",
+      "example": [
+        "string",
+        "number",
+        "function",
+        "object",
+        "boolean",
+        "bigint",
+        "symbol",
+        "undefined"
+      ]
+    },
+    {
+      "desc": "CONSOLE_METHODS",
+      "value": [
+        "log",
+        "info",
+        "warn",
+        "error",
+        "dir",
+        "debug"
+      ],
+      "index": 15,
+      "isFunc": false,
+      "text": "15. Name: CONSOLE_METHODS, Type: object",
+      "example": [
+        "log",
+        "info",
+        "warn",
+        "error",
+        "dir",
+        "debug"
+      ]
+    },
+    {
+      "desc": "GRADIENT_METHODS",
+      "value": [
+        "atlas",
+        "cristal",
+        "teen",
+        "mind",
+        "morning",
+        "vice",
+        "passion",
+        "fruit",
+        "instagram",
+        "retro",
+        "summer",
+        "rainbow",
+        "pastel"
+      ],
+      "index": 16,
+      "isFunc": false,
+      "text": "16. Name: GRADIENT_METHODS, Type: object",
+      "example": [
+        "atlas",
+        "cristal",
+        "teen",
+        "mind",
+        "morning",
+        "vice",
+        "passion",
+        "fruit",
+        "instagram",
+        "retro",
+        "summer",
+        "rainbow",
+        "pastel"
+      ]
+    },
+    {
+      "desc": "COLOR_METHODS",
+      "value": [
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "underline",
+        "green",
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ],
+      "index": 17,
+      "isFunc": false,
+      "text": "17. Name: COLOR_METHODS, Type: object",
+      "example": [
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "underline",
+        "green",
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ]
+    },
+    {
+      "desc": "CONSOLE_SOURCES",
+      "value": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        }
+      ],
+      "index": 18,
+      "isFunc": false,
+      "text": "18. Name: CONSOLE_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        }
+      ]
+    },
+    {
+      "desc": "GRADIENTS_SOURCES",
+      "value": [
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        }
+      ],
+      "index": 19,
+      "isFunc": false,
+      "text": "19. Name: GRADIENTS_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        }
+      ]
+    },
+    {
+      "desc": "COLORED_SOURCES",
+      "value": [
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        }
+      ],
+      "index": 20,
+      "isFunc": false,
+      "text": "20. Name: COLORED_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        }
+      ]
+    },
+    {
+      "desc": "CONSOLE_OTHER_SOURCES",
+      "value": [
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ],
+      "index": 21,
+      "isFunc": false,
+      "text": "21. Name: CONSOLE_OTHER_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ]
+    },
+    {
+      "desc": "LOGGER_SOURCES",
+      "value": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        },
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        },
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ],
+      "index": 22,
+      "isFunc": false,
+      "text": "22. Name: LOGGER_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        },
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        },
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ]
+    },
+    {
+      "desc": "_logGradient",
+      "index": 23,
+      "isFunc": true,
+      "text": "23. Name: _logGradient, Type: function"
+    },
+    {
+      "desc": "_logColored",
+      "index": 24,
+      "isFunc": true,
+      "text": "24. Name: _logColored, Type: function"
+    },
+    {
+      "desc": "_logLolcatPrint",
+      "index": 25,
+      "isFunc": true,
+      "text": "25. Name: _logLolcatPrint, Type: function"
+    },
+    {
+      "desc": "_logLolcatRainbow",
+      "index": 26,
+      "isFunc": true,
+      "text": "26. Name: _logLolcatRainbow, Type: function"
+    },
+    {
+      "desc": "_logCowSay",
+      "index": 27,
+      "isFunc": true,
+      "text": "27. Name: _logCowSay, Type: function"
+    },
+    {
+      "desc": "_logCowThink",
+      "index": 28,
+      "isFunc": true,
+      "text": "28. Name: _logCowThink, Type: function"
+    },
+    {
+      "desc": "_logDefault",
+      "index": 29,
+      "isFunc": true,
+      "text": "29. Name: _logDefault, Type: function"
+    },
+    {
+      "desc": "_logJson",
+      "index": 30,
+      "isFunc": true,
+      "text": "30. Name: _logJson, Type: function"
+    },
+    {
+      "desc": "_logValues",
+      "index": 31,
+      "isFunc": true,
+      "text": "31. Name: _logValues, Type: function"
+    },
+    {
+      "desc": "_logExamples",
+      "index": 32,
+      "isFunc": true,
+      "text": "32. Name: _logExamples, Type: function"
+    },
+    {
+      "desc": "NAME_TEMP",
+      "value": "logs_temp",
+      "index": 33,
+      "isFunc": false,
+      "text": "33. Name: NAME_TEMP, Type: string",
+      "example": "logs_temp"
+    },
+    {
+      "desc": "LOG_DIR",
+      "value": "logs",
+      "index": 34,
+      "isFunc": false,
+      "text": "34. Name: LOG_DIR, Type: string",
+      "example": "logs"
+    },
+    {
+      "desc": "LOG_FILE",
+      "value": "logs_temp.log",
+      "index": 35,
+      "isFunc": false,
+      "text": "35. Name: LOG_FILE, Type: string",
+      "example": "logs_temp.log"
+    },
+    {
+      "desc": "PATH_LOG_DIR",
+      "value": "/Users/alex/js/brain_exp/logs",
+      "index": 36,
+      "isFunc": false,
+      "text": "36. Name: PATH_LOG_DIR, Type: string",
+      "example": "/Users/alex/js/brain_exp/logs"
+    },
+    {
+      "desc": "PATH_LOG_FILE",
+      "value": "/Users/alex/js/brain_exp/logs/logs_temp.log",
+      "index": 37,
+      "isFunc": false,
+      "text": "37. Name: PATH_LOG_FILE, Type: string",
+      "example": "/Users/alex/js/brain_exp/logs/logs_temp.log"
+    },
+    {
+      "desc": "CHAR_CODE_MULT",
+      "value": 256,
+      "index": 38,
+      "isFunc": false,
+      "text": "38. Name: CHAR_CODE_MULT, Type: number",
+      "example": 256
+    },
+    {
+      "desc": "MAX_ENCODED_SIZE",
+      "value": 100,
+      "index": 39,
+      "isFunc": false,
+      "text": "39. Name: MAX_ENCODED_SIZE, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "CHAR_LINE",
+      "value": "\n",
+      "index": 40,
+      "isFunc": false,
+      "text": "40. Name: CHAR_LINE, Type: string",
+      "example": "\n"
+    },
+    {
+      "desc": "CHAR_TAB",
+      "value": "\t",
+      "index": 41,
+      "isFunc": false,
+      "text": "41. Name: CHAR_TAB, Type: string",
+      "example": "\t"
+    },
+    {
+      "desc": "CHAR_SPACE",
+      "value": " ",
+      "index": 42,
+      "isFunc": false,
+      "text": "42. Name: CHAR_SPACE, Type: string",
+      "example": " "
+    },
+    {
+      "desc": "CHAR_COMMA",
+      "value": ",",
+      "index": 43,
+      "isFunc": false,
+      "text": "43. Name: CHAR_COMMA, Type: string",
+      "example": ","
+    },
+    {
+      "desc": "CHAR_DOT",
+      "value": ".",
+      "index": 44,
+      "isFunc": false,
+      "text": "44. Name: CHAR_DOT, Type: string",
+      "example": "."
+    },
+    {
+      "desc": "CHAR_DIV",
+      "value": "#",
+      "index": 45,
+      "isFunc": false,
+      "text": "45. Name: CHAR_DIV, Type: string",
+      "example": "#"
+    },
+    {
+      "desc": "CHARS_ENG",
+      "value": "abcdefghijklmnopqrstuvwxyz",
+      "index": 46,
+      "isFunc": false,
+      "text": "46. Name: CHARS_ENG, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "desc": "CHARS_RUS",
+      "value": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+      "index": 47,
+      "isFunc": false,
+      "text": "47. Name: CHARS_RUS, Type: string",
+      "example": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    },
+    {
+      "desc": "CHARS_NUM",
+      "value": "0123456789",
+      "index": 48,
+      "isFunc": false,
+      "text": "48. Name: CHARS_NUM, Type: string",
+      "example": "0123456789"
+    },
+    {
+      "desc": "CHARS_SIMPLE",
+      "value": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789",
+      "index": 49,
+      "isFunc": false,
+      "text": "49. Name: CHARS_SIMPLE, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789"
+    },
+    {
+      "desc": "CHARS_SPECIAL",
+      "value": "\n\t ,.#",
+      "index": 50,
+      "isFunc": false,
+      "text": "50. Name: CHARS_SPECIAL, Type: string",
+      "example": "\n\t ,.#"
+    },
+    {
+      "desc": "CHARS_VALID",
+      "value": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\n\t ,.#",
+      "index": 51,
+      "isFunc": false,
+      "text": "51. Name: CHARS_VALID, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\n\t ,.#"
+    },
+    {
+      "desc": "CHAR_CODE_SOURCES",
+      "value": [
+        {
+          "char": "a",
+          "code": 0.37890625
+        },
+        {
+          "char": "b",
+          "code": 0.3828125
+        },
+        {
+          "char": "c",
+          "code": 0.38671875
+        },
+        {
+          "char": "d",
+          "code": 0.390625
+        },
+        {
+          "char": "e",
+          "code": 0.39453125
+        },
+        {
+          "char": "f",
+          "code": 0.3984375
+        },
+        {
+          "char": "g",
+          "code": 0.40234375
+        },
+        {
+          "char": "h",
+          "code": 0.40625
+        },
+        {
+          "char": "i",
+          "code": 0.41015625
+        },
+        {
+          "char": "j",
+          "code": 0.4140625
+        },
+        {
+          "char": "k",
+          "code": 0.41796875
+        },
+        {
+          "char": "l",
+          "code": 0.421875
+        },
+        {
+          "char": "m",
+          "code": 0.42578125
+        },
+        {
+          "char": "n",
+          "code": 0.4296875
+        },
+        {
+          "char": "o",
+          "code": 0.43359375
+        },
+        {
+          "char": "p",
+          "code": 0.4375
+        },
+        {
+          "char": "q",
+          "code": 0.44140625
+        },
+        {
+          "char": "r",
+          "code": 0.4453125
+        },
+        {
+          "char": "s",
+          "code": 0.44921875
+        },
+        {
+          "char": "t",
+          "code": 0.453125
+        },
+        {
+          "char": "u",
+          "code": 0.45703125
+        },
+        {
+          "char": "v",
+          "code": 0.4609375
+        },
+        {
+          "char": "w",
+          "code": 0.46484375
+        },
+        {
+          "char": "x",
+          "code": 0.46875
+        },
+        {
+          "char": "y",
+          "code": 0.47265625
+        },
+        {
+          "char": "z",
+          "code": 0.4765625
+        },
+        {
+          "char": "а",
+          "code": 4.1875
+        },
+        {
+          "char": "б",
+          "code": 4.19140625
+        },
+        {
+          "char": "в",
+          "code": 4.1953125
+        },
+        {
+          "char": "г",
+          "code": 4.19921875
+        },
+        {
+          "char": "д",
+          "code": 4.203125
+        },
+        {
+          "char": "е",
+          "code": 4.20703125
+        },
+        {
+          "char": "ё",
+          "code": 4.31640625
+        },
+        {
+          "char": "ж",
+          "code": 4.2109375
+        },
+        {
+          "char": "з",
+          "code": 4.21484375
+        },
+        {
+          "char": "и",
+          "code": 4.21875
+        },
+        {
+          "char": "й",
+          "code": 4.22265625
+        },
+        {
+          "char": "к",
+          "code": 4.2265625
+        },
+        {
+          "char": "л",
+          "code": 4.23046875
+        },
+        {
+          "char": "м",
+          "code": 4.234375
+        },
+        {
+          "char": "н",
+          "code": 4.23828125
+        },
+        {
+          "char": "о",
+          "code": 4.2421875
+        },
+        {
+          "char": "п",
+          "code": 4.24609375
+        },
+        {
+          "char": "р",
+          "code": 4.25
+        },
+        {
+          "char": "с",
+          "code": 4.25390625
+        },
+        {
+          "char": "т",
+          "code": 4.2578125
+        },
+        {
+          "char": "у",
+          "code": 4.26171875
+        },
+        {
+          "char": "ф",
+          "code": 4.265625
+        },
+        {
+          "char": "х",
+          "code": 4.26953125
+        },
+        {
+          "char": "ц",
+          "code": 4.2734375
+        },
+        {
+          "char": "ч",
+          "code": 4.27734375
+        },
+        {
+          "char": "ш",
+          "code": 4.28125
+        },
+        {
+          "char": "щ",
+          "code": 4.28515625
+        },
+        {
+          "char": "ъ",
+          "code": 4.2890625
+        },
+        {
+          "char": "ы",
+          "code": 4.29296875
+        },
+        {
+          "char": "ь",
+          "code": 4.296875
+        },
+        {
+          "char": "э",
+          "code": 4.30078125
+        },
+        {
+          "char": "ю",
+          "code": 4.3046875
+        },
+        {
+          "char": "я",
+          "code": 4.30859375
+        },
+        {
+          "char": "0",
+          "code": 0.1875
+        },
+        {
+          "char": "1",
+          "code": 0.19140625
+        },
+        {
+          "char": "2",
+          "code": 0.1953125
+        },
+        {
+          "char": "3",
+          "code": 0.19921875
+        },
+        {
+          "char": "4",
+          "code": 0.203125
+        },
+        {
+          "char": "5",
+          "code": 0.20703125
+        },
+        {
+          "char": "6",
+          "code": 0.2109375
+        },
+        {
+          "char": "7",
+          "code": 0.21484375
+        },
+        {
+          "char": "8",
+          "code": 0.21875
+        },
+        {
+          "char": "9",
+          "code": 0.22265625
+        },
+        {
+          "char": "\n",
+          "code": 0.0390625
+        },
+        {
+          "char": "\t",
+          "code": 0.03515625
+        },
+        {
+          "char": " ",
+          "code": 0.125
+        },
+        {
+          "char": ",",
+          "code": 0.171875
+        },
+        {
+          "char": ".",
+          "code": 0.1796875
+        },
+        {
+          "char": "#",
+          "code": 0.13671875
+        }
+      ],
+      "index": 52,
+      "isFunc": false,
+      "text": "52. Name: CHAR_CODE_SOURCES, Type: object",
+      "example": [
+        {
+          "char": "a",
+          "code": 0.37890625
+        },
+        {
+          "char": "b",
+          "code": 0.3828125
+        },
+        {
+          "char": "c",
+          "code": 0.38671875
+        },
+        {
+          "char": "d",
+          "code": 0.390625
+        },
+        {
+          "char": "e",
+          "code": 0.39453125
+        },
+        {
+          "char": "f",
+          "code": 0.3984375
+        },
+        {
+          "char": "g",
+          "code": 0.40234375
+        },
+        {
+          "char": "h",
+          "code": 0.40625
+        },
+        {
+          "char": "i",
+          "code": 0.41015625
+        },
+        {
+          "char": "j",
+          "code": 0.4140625
+        },
+        {
+          "char": "k",
+          "code": 0.41796875
+        },
+        {
+          "char": "l",
+          "code": 0.421875
+        },
+        {
+          "char": "m",
+          "code": 0.42578125
+        },
+        {
+          "char": "n",
+          "code": 0.4296875
+        },
+        {
+          "char": "o",
+          "code": 0.43359375
+        },
+        {
+          "char": "p",
+          "code": 0.4375
+        },
+        {
+          "char": "q",
+          "code": 0.44140625
+        },
+        {
+          "char": "r",
+          "code": 0.4453125
+        },
+        {
+          "char": "s",
+          "code": 0.44921875
+        },
+        {
+          "char": "t",
+          "code": 0.453125
+        },
+        {
+          "char": "u",
+          "code": 0.45703125
+        },
+        {
+          "char": "v",
+          "code": 0.4609375
+        },
+        {
+          "char": "w",
+          "code": 0.46484375
+        },
+        {
+          "char": "x",
+          "code": 0.46875
+        },
+        {
+          "char": "y",
+          "code": 0.47265625
+        },
+        {
+          "char": "z",
+          "code": 0.4765625
+        },
+        {
+          "char": "а",
+          "code": 4.1875
+        },
+        {
+          "char": "б",
+          "code": 4.19140625
+        },
+        {
+          "char": "в",
+          "code": 4.1953125
+        },
+        {
+          "char": "г",
+          "code": 4.19921875
+        },
+        {
+          "char": "д",
+          "code": 4.203125
+        },
+        {
+          "char": "е",
+          "code": 4.20703125
+        },
+        {
+          "char": "ё",
+          "code": 4.31640625
+        },
+        {
+          "char": "ж",
+          "code": 4.2109375
+        },
+        {
+          "char": "з",
+          "code": 4.21484375
+        },
+        {
+          "char": "и",
+          "code": 4.21875
+        },
+        {
+          "char": "й",
+          "code": 4.22265625
+        },
+        {
+          "char": "к",
+          "code": 4.2265625
+        },
+        {
+          "char": "л",
+          "code": 4.23046875
+        },
+        {
+          "char": "м",
+          "code": 4.234375
+        },
+        {
+          "char": "н",
+          "code": 4.23828125
+        },
+        {
+          "char": "о",
+          "code": 4.2421875
+        },
+        {
+          "char": "п",
+          "code": 4.24609375
+        },
+        {
+          "char": "р",
+          "code": 4.25
+        },
+        {
+          "char": "с",
+          "code": 4.25390625
+        },
+        {
+          "char": "т",
+          "code": 4.2578125
+        },
+        {
+          "char": "у",
+          "code": 4.26171875
+        },
+        {
+          "char": "ф",
+          "code": 4.265625
+        },
+        {
+          "char": "х",
+          "code": 4.26953125
+        },
+        {
+          "char": "ц",
+          "code": 4.2734375
+        },
+        {
+          "char": "ч",
+          "code": 4.27734375
+        },
+        {
+          "char": "ш",
+          "code": 4.28125
+        },
+        {
+          "char": "щ",
+          "code": 4.28515625
+        },
+        {
+          "char": "ъ",
+          "code": 4.2890625
+        },
+        {
+          "char": "ы",
+          "code": 4.29296875
+        },
+        {
+          "char": "ь",
+          "code": 4.296875
+        },
+        {
+          "char": "э",
+          "code": 4.30078125
+        },
+        {
+          "char": "ю",
+          "code": 4.3046875
+        },
+        {
+          "char": "я",
+          "code": 4.30859375
+        },
+        {
+          "char": "0",
+          "code": 0.1875
+        },
+        {
+          "char": "1",
+          "code": 0.19140625
+        },
+        {
+          "char": "2",
+          "code": 0.1953125
+        },
+        {
+          "char": "3",
+          "code": 0.19921875
+        },
+        {
+          "char": "4",
+          "code": 0.203125
+        },
+        {
+          "char": "5",
+          "code": 0.20703125
+        },
+        {
+          "char": "6",
+          "code": 0.2109375
+        },
+        {
+          "char": "7",
+          "code": 0.21484375
+        },
+        {
+          "char": "8",
+          "code": 0.21875
+        },
+        {
+          "char": "9",
+          "code": 0.22265625
+        },
+        {
+          "char": "\n",
+          "code": 0.0390625
+        },
+        {
+          "char": "\t",
+          "code": 0.03515625
+        },
+        {
+          "char": " ",
+          "code": 0.125
+        },
+        {
+          "char": ",",
+          "code": 0.171875
+        },
+        {
+          "char": ".",
+          "code": 0.1796875
+        },
+        {
+          "char": "#",
+          "code": 0.13671875
+        }
+      ]
+    },
+    {
+      "desc": "CHAR_CODE_VALUES",
+      "value": [
+        0.37890625,
+        0.3828125,
+        0.38671875,
+        0.390625,
+        0.39453125,
+        0.3984375,
+        0.40234375,
+        0.40625,
+        0.41015625,
+        0.4140625,
+        0.41796875,
+        0.421875,
+        0.42578125,
+        0.4296875,
+        0.43359375,
+        0.4375,
+        0.44140625,
+        0.4453125,
+        0.44921875,
+        0.453125,
+        0.45703125,
+        0.4609375,
+        0.46484375,
+        0.46875,
+        0.47265625,
+        0.4765625,
+        4.1875,
+        4.19140625,
+        4.1953125,
+        4.19921875,
+        4.203125,
+        4.20703125,
+        4.31640625,
+        4.2109375,
+        4.21484375,
+        4.21875,
+        4.22265625,
+        4.2265625,
+        4.23046875,
+        4.234375,
+        4.23828125,
+        4.2421875,
+        4.24609375,
+        4.25,
+        4.25390625,
+        4.2578125,
+        4.26171875,
+        4.265625,
+        4.26953125,
+        4.2734375,
+        4.27734375,
+        4.28125,
+        4.28515625,
+        4.2890625,
+        4.29296875,
+        4.296875,
+        4.30078125,
+        4.3046875,
+        4.30859375,
+        0.1875,
+        0.19140625,
+        0.1953125,
+        0.19921875,
+        0.203125,
+        0.20703125,
+        0.2109375,
+        0.21484375,
+        0.21875,
+        0.22265625,
+        0.0390625,
+        0.03515625,
+        0.125,
+        0.171875,
+        0.1796875,
+        0.13671875
+      ],
+      "index": 53,
+      "isFunc": false,
+      "text": "53. Name: CHAR_CODE_VALUES, Type: object",
+      "example": [
+        0.37890625,
+        0.3828125,
+        0.38671875,
+        0.390625,
+        0.39453125,
+        0.3984375,
+        0.40234375,
+        0.40625,
+        0.41015625,
+        0.4140625,
+        0.41796875,
+        0.421875,
+        0.42578125,
+        0.4296875,
+        0.43359375,
+        0.4375,
+        0.44140625,
+        0.4453125,
+        0.44921875,
+        0.453125,
+        0.45703125,
+        0.4609375,
+        0.46484375,
+        0.46875,
+        0.47265625,
+        0.4765625,
+        4.1875,
+        4.19140625,
+        4.1953125,
+        4.19921875,
+        4.203125,
+        4.20703125,
+        4.31640625,
+        4.2109375,
+        4.21484375,
+        4.21875,
+        4.22265625,
+        4.2265625,
+        4.23046875,
+        4.234375,
+        4.23828125,
+        4.2421875,
+        4.24609375,
+        4.25,
+        4.25390625,
+        4.2578125,
+        4.26171875,
+        4.265625,
+        4.26953125,
+        4.2734375,
+        4.27734375,
+        4.28125,
+        4.28515625,
+        4.2890625,
+        4.29296875,
+        4.296875,
+        4.30078125,
+        4.3046875,
+        4.30859375,
+        0.1875,
+        0.19140625,
+        0.1953125,
+        0.19921875,
+        0.203125,
+        0.20703125,
+        0.2109375,
+        0.21484375,
+        0.21875,
+        0.22265625,
+        0.0390625,
+        0.03515625,
+        0.125,
+        0.171875,
+        0.1796875,
+        0.13671875
+      ]
+    },
+    {
+      "desc": "DIV_CONTENT",
+      "value": "\n##############################\n",
+      "index": 54,
+      "isFunc": false,
+      "text": "54. Name: DIV_CONTENT, Type: string",
+      "example": "\n##############################\n"
+    },
+    {
+      "desc": "DIV_LINE",
+      "value": "\n####################\n",
+      "index": 55,
+      "isFunc": false,
+      "text": "55. Name: DIV_LINE, Type: string",
+      "example": "\n####################\n"
+    },
+    {
+      "desc": "DIV_TITLE",
+      "value": "\t#####\t",
+      "index": 56,
+      "isFunc": false,
+      "text": "56. Name: DIV_TITLE, Type: string",
+      "example": "\t#####\t"
+    },
+    {
+      "desc": "MIN_LENGTH",
+      "value": 1,
+      "index": 57,
+      "isFunc": false,
+      "text": "57. Name: MIN_LENGTH, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "MAX_LENGTH",
+      "value": 2000,
+      "index": 58,
+      "isFunc": false,
+      "text": "58. Name: MAX_LENGTH, Type: number",
+      "example": 2000
+    },
+    {
+      "desc": "MIN_CHAR_CODE",
+      "value": 0.03515625,
+      "index": 59,
+      "isFunc": false,
+      "text": "59. Name: MIN_CHAR_CODE, Type: number",
+      "example": 0.03515625
+    },
+    {
+      "desc": "MAX_CHAR_CODE",
+      "value": 4.31640625,
+      "index": 60,
+      "isFunc": false,
+      "text": "60. Name: MAX_CHAR_CODE, Type: number",
+      "example": 4.31640625
+    },
+    {
+      "desc": "RANGE_LENGTH",
+      "value": [
+        1,
+        2000
+      ],
+      "index": 61,
+      "isFunc": false,
+      "text": "61. Name: RANGE_LENGTH, Type: object",
+      "example": [
+        1,
+        2000
+      ]
+    },
+    {
+      "desc": "RANGE_CHAR_CODE",
+      "value": [
+        0.03515625,
+        4.31640625
+      ],
+      "index": 62,
+      "isFunc": false,
+      "text": "62. Name: RANGE_CHAR_CODE, Type: object",
+      "example": [
+        0.03515625,
+        4.31640625
+      ]
+    },
+    {
+      "desc": "ARRAY_SIZE",
+      "value": 10,
+      "index": 63,
+      "isFunc": false,
+      "text": "63. Name: ARRAY_SIZE, Type: number",
+      "example": 10
+    },
+    {
+      "desc": "LIKE_DIFF",
+      "value": 0.1,
+      "index": 64,
+      "isFunc": false,
+      "text": "64. Name: LIKE_DIFF, Type: number",
+      "example": 0.1
+    },
+    {
+      "desc": "INPUT_SIZE",
+      "value": 1,
+      "index": 65,
+      "isFunc": false,
+      "text": "65. Name: INPUT_SIZE, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "HIDDEN_SIZE",
+      "value": 3,
+      "index": 66,
+      "isFunc": false,
+      "text": "66. Name: HIDDEN_SIZE, Type: number",
+      "example": 3
+    },
+    {
+      "desc": "OUTPUT_SIZE",
+      "value": 1,
+      "index": 67,
+      "isFunc": false,
+      "text": "67. Name: OUTPUT_SIZE, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "TRAIN_SET_SIZE",
+      "value": 1000,
+      "index": 68,
+      "isFunc": false,
+      "text": "68. Name: TRAIN_SET_SIZE, Type: number",
+      "example": 1000
+    },
+    {
+      "desc": "LEARNING_RATE",
+      "value": 0.05,
+      "index": 69,
+      "isFunc": false,
+      "text": "69. Name: LEARNING_RATE, Type: number",
+      "example": 0.05
+    },
+    {
+      "desc": "OPTIONS_FS",
+      "value": {
+        "encoding": "utf-8"
+      },
+      "index": 70,
+      "isFunc": false,
+      "text": "70. Name: OPTIONS_FS, Type: object",
+      "example": {
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "desc": "OPTIONS_BRAIN_LSTM",
+      "value": {
+        "log": true
+      },
+      "index": 71,
+      "isFunc": false,
+      "text": "71. Name: OPTIONS_BRAIN_LSTM, Type: object",
+      "example": {
+        "log": true
+      }
+    },
+    {
+      "desc": "ERROR_THRESHOLD",
+      "value": 0.005,
+      "index": 72,
+      "isFunc": false,
+      "text": "72. Name: ERROR_THRESHOLD, Type: number",
+      "example": 0.005
+    },
+    {
+      "desc": "LOG_PERIOD",
+      "value": 100,
+      "index": 73,
+      "isFunc": false,
+      "text": "73. Name: LOG_PERIOD, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "OPTIONS_BRAIN_TRAIN",
+      "value": {
+        "log": true,
+        "learningRate": 0.05,
+        "iterations": 1000,
+        "errorThresh": 0.005,
+        "logPeriod": 100
+      },
+      "index": 74,
+      "isFunc": false,
+      "text": "74. Name: OPTIONS_BRAIN_TRAIN, Type: object",
+      "example": {
+        "log": true,
+        "learningRate": 0.05,
+        "iterations": 1000,
+        "errorThresh": 0.005,
+        "logPeriod": 100
+      }
+    },
+    {
+      "desc": "is",
+      "index": 75,
+      "isFunc": true,
+      "text": "75. Name: is, Type: function"
+    },
+    {
+      "desc": "isTypeStr",
+      "index": 76,
+      "isFunc": true,
+      "text": "76. Name: isTypeStr, Type: function"
+    },
+    {
+      "desc": "isTypeNum",
+      "index": 77,
+      "isFunc": true,
+      "text": "77. Name: isTypeNum, Type: function"
+    },
+    {
+      "desc": "isTypeFunc",
+      "index": 78,
+      "isFunc": true,
+      "text": "78. Name: isTypeFunc, Type: function"
+    },
+    {
+      "desc": "isTypeObj",
+      "index": 79,
+      "isFunc": true,
+      "text": "79. Name: isTypeObj, Type: function"
+    },
+    {
+      "desc": "isTypeBool",
+      "index": 80,
+      "isFunc": true,
+      "text": "80. Name: isTypeBool, Type: function"
+    },
+    {
+      "desc": "isTypeBig",
+      "index": 81,
+      "isFunc": true,
+      "text": "81. Name: isTypeBig, Type: function"
+    },
+    {
+      "desc": "isTypeSym",
+      "index": 82,
+      "isFunc": true,
+      "text": "82. Name: isTypeSym, Type: function"
+    },
+    {
+      "desc": "isTypeUnd",
+      "index": 83,
+      "isFunc": true,
+      "text": "83. Name: isTypeUnd, Type: function"
+    },
+    {
+      "desc": "isLen",
+      "index": 84,
+      "isFunc": true,
+      "text": "84. Name: isLen, Type: function"
+    },
+    {
+      "desc": "isDefined",
+      "index": 85,
+      "isFunc": true,
+      "text": "85. Name: isDefined, Type: function"
+    },
+    {
+      "desc": "isTypeObjTruthy",
+      "index": 86,
+      "isFunc": true,
+      "text": "86. Name: isTypeObjTruthy, Type: function"
+    },
+    {
+      "desc": "isTypeOfValue",
+      "index": 87,
+      "isFunc": true,
+      "text": "87. Name: isTypeOfValue, Type: function"
+    },
+    {
+      "desc": "toTypeOf",
+      "index": 88,
+      "isFunc": true,
+      "text": "88. Name: toTypeOf, Type: function"
+    },
+    {
+      "desc": "isType",
+      "index": 89,
+      "isFunc": true,
+      "text": "89. Name: isType, Type: function"
+    },
+    {
+      "desc": "isEvery",
+      "index": 90,
+      "isFunc": true,
+      "text": "90. Name: isEvery, Type: function"
+    },
+    {
+      "desc": "isSome",
+      "index": 91,
+      "isFunc": true,
+      "text": "91. Name: isSome, Type: function"
+    },
+    {
+      "desc": "getTimeStamp",
+      "index": 92,
+      "isFunc": true,
+      "text": "92. Name: getTimeStamp, Type: function"
+    },
+    {
+      "desc": "getSource",
+      "index": 93,
+      "isFunc": true,
+      "text": "93. Name: getSource, Type: function"
+    },
+    {
+      "desc": "TIME",
+      "value": "9/23/2022, 4:18:26 AM",
+      "index": 94,
+      "isFunc": false,
+      "text": "94. Name: TIME, Type: string",
+      "example": "9/23/2022, 4:18:26 AM"
+    },
+    {
+      "desc": "SOURCE",
+      "value": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:18:26 AM\n\t\n",
+      "index": 95,
+      "isFunc": false,
+      "text": "95. Name: SOURCE, Type: string",
+      "example": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:18:26 AM\n\t\n"
+    },
+    {
+      "desc": "ROOT",
+      "value": "/Users/alex/js/brain_exp",
+      "index": 96,
+      "isFunc": false,
+      "text": "96. Name: ROOT, Type: string",
+      "example": "/Users/alex/js/brain_exp"
+    },
+    {
+      "desc": "DIR",
+      "value": "/Users/alex/js/brain_exp",
+      "index": 97,
+      "isFunc": false,
+      "text": "97. Name: DIR, Type: string",
+      "example": "/Users/alex/js/brain_exp"
+    },
+    {
+      "desc": "FILE",
+      "value": "/Users/alex/js/brain_exp/helpersPlain.js",
+      "index": 98,
+      "isFunc": false,
+      "text": "98. Name: FILE, Type: string",
+      "example": "/Users/alex/js/brain_exp/helpersPlain.js"
+    },
+    {
+      "desc": "toMaxLen",
+      "index": 99,
+      "isFunc": true,
+      "text": "99. Name: toMaxLen, Type: function"
+    },
+    {
+      "desc": "toMinLen",
+      "index": 100,
+      "isFunc": true,
+      "text": "100. Name: toMinLen, Type: function"
+    },
+    {
+      "desc": "toMatchLen",
+      "index": 101,
+      "isFunc": true,
+      "text": "101. Name: toMatchLen, Type: function"
+    },
+    {
+      "desc": "toCharCode",
+      "index": 102,
+      "isFunc": true,
+      "text": "102. Name: toCharCode, Type: function"
+    },
+    {
+      "desc": "toCharFromCode",
+      "index": 103,
+      "isFunc": true,
+      "text": "103. Name: toCharFromCode, Type: function"
+    },
+    {
+      "desc": "toCharCodeFromText",
+      "index": 104,
+      "isFunc": true,
+      "text": "104. Name: toCharCodeFromText, Type: function"
+    },
+    {
+      "desc": "MIN",
+      "value": 1,
+      "index": 105,
+      "isFunc": false,
+      "text": "105. Name: MIN, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "MAX",
+      "value": 100,
+      "index": 106,
+      "isFunc": false,
+      "text": "106. Name: MAX, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "RANGE",
+      "value": [
+        1,
+        100
+      ],
+      "index": 107,
+      "isFunc": false,
+      "text": "107. Name: RANGE, Type: object",
+      "example": [
+        1,
+        100
+      ]
+    },
+    {
+      "desc": "ITERATIONS",
+      "value": 1000,
+      "index": 108,
+      "isFunc": false,
+      "text": "108. Name: ITERATIONS, Type: number",
+      "example": 1000
+    },
+    {
+      "desc": "filePath",
+      "index": 109,
+      "isFunc": true,
+      "text": "109. Name: filePath, Type: function"
+    },
+    {
+      "desc": "fileList",
+      "index": 110,
+      "isFunc": true,
+      "text": "110. Name: fileList, Type: function"
+    },
+    {
+      "desc": "fileRead",
+      "index": 111,
+      "isFunc": true,
+      "text": "111. Name: fileRead, Type: function"
+    },
+    {
+      "desc": "fileWrite",
+      "index": 112,
+      "isFunc": true,
+      "text": "112. Name: fileWrite, Type: function"
+    },
+    {
+      "desc": "fileAppend",
+      "index": 113,
+      "isFunc": true,
+      "text": "113. Name: fileAppend, Type: function"
+    },
+    {
+      "desc": "fileCreateDir",
+      "index": 114,
+      "isFunc": true,
+      "text": "114. Name: fileCreateDir, Type: function"
+    },
+    {
+      "desc": "genBool",
+      "index": 115,
+      "isFunc": true,
+      "text": "115. Name: genBool, Type: function"
+    },
+    {
+      "desc": "gen",
+      "index": 116,
+      "isFunc": true,
+      "text": "116. Name: gen, Type: function"
+    },
+    {
+      "desc": "genInt",
+      "index": 117,
+      "isFunc": true,
+      "text": "117. Name: genInt, Type: function"
+    },
+    {
+      "desc": "genCoin",
+      "index": 118,
+      "isFunc": true,
+      "text": "118. Name: genCoin, Type: function"
+    },
+    {
+      "desc": "genId",
+      "index": 119,
+      "isFunc": true,
+      "text": "119. Name: genId, Type: function"
+    },
+    {
+      "desc": "genKey",
+      "index": 120,
+      "isFunc": true,
+      "text": "120. Name: genKey, Type: function"
+    },
+    {
+      "desc": "genArr",
+      "index": 121,
+      "isFunc": true,
+      "text": "121. Name: genArr, Type: function"
+    },
+    {
+      "desc": "genMany",
+      "index": 122,
+      "isFunc": true,
+      "text": "122. Name: genMany, Type: function"
+    },
+    {
+      "desc": "genSort",
+      "index": 123,
+      "isFunc": true,
+      "text": "123. Name: genSort, Type: function"
+    },
+    {
+      "desc": "genIndex",
+      "index": 124,
+      "isFunc": true,
+      "text": "124. Name: genIndex, Type: function"
+    },
+    {
+      "desc": "genElement",
+      "index": 125,
+      "isFunc": true,
+      "text": "125. Name: genElement, Type: function"
+    },
+    {
+      "desc": "genElementsMany",
+      "index": 126,
+      "isFunc": true,
+      "text": "126. Name: genElementsMany, Type: function"
+    },
+    {
+      "desc": "genObjKey",
+      "index": 127,
+      "isFunc": true,
+      "text": "127. Name: genObjKey, Type: function"
+    },
+    {
+      "desc": "genObjValue",
+      "index": 128,
+      "isFunc": true,
+      "text": "128. Name: genObjValue, Type: function"
+    },
+    {
+      "desc": "genObjEntry",
+      "index": 129,
+      "isFunc": true,
+      "text": "129. Name: genObjEntry, Type: function"
+    },
+    {
+      "desc": "genChar",
+      "index": 130,
+      "isFunc": true,
+      "text": "130. Name: genChar, Type: function"
+    },
+    {
+      "desc": "genCharLatin",
+      "index": 131,
+      "isFunc": true,
+      "text": "131. Name: genCharLatin, Type: function"
+    },
+    {
+      "desc": "genCharKyrillic",
+      "index": 132,
+      "isFunc": true,
+      "text": "132. Name: genCharKyrillic, Type: function"
+    },
+    {
+      "desc": "genCharCode",
+      "index": 133,
+      "isFunc": true,
+      "text": "133. Name: genCharCode, Type: function"
+    },
+    {
+      "desc": "genCharCodeLatin",
+      "index": 134,
+      "isFunc": true,
+      "text": "134. Name: genCharCodeLatin, Type: function"
+    },
+    {
+      "desc": "genCharCodeKyrillic",
+      "index": 135,
+      "isFunc": true,
+      "text": "135. Name: genCharCodeKyrillic, Type: function"
+    },
+    {
+      "desc": "genRgb",
+      "index": 136,
+      "isFunc": true,
+      "text": "136. Name: genRgb, Type: function"
+    },
+    {
+      "desc": "isRxp",
+      "index": 137,
+      "isFunc": true,
+      "text": "137. Name: isRxp, Type: function"
+    },
+    {
+      "desc": "toCallback",
+      "index": 138,
+      "isFunc": true,
+      "text": "138. Name: toCallback, Type: function"
+    },
+    {
+      "desc": "toLen",
+      "index": 139,
+      "isFunc": true,
+      "text": "139. Name: toLen, Type: function"
+    },
+    {
+      "desc": "isLenMin",
+      "index": 140,
+      "isFunc": true,
+      "text": "140. Name: isLenMin, Type: function"
+    },
+    {
+      "desc": "isLenMax",
+      "index": 141,
+      "isFunc": true,
+      "text": "141. Name: isLenMax, Type: function"
+    },
+    {
+      "desc": "isLenEqual",
+      "index": 142,
+      "isFunc": true,
+      "text": "142. Name: isLenEqual, Type: function"
+    },
+    {
+      "desc": "isLenRange",
+      "index": 143,
+      "isFunc": true,
+      "text": "143. Name: isLenRange, Type: function"
+    },
+    {
+      "desc": "isNum",
+      "index": 144,
+      "isFunc": true,
+      "text": "144. Name: isNum, Type: function"
+    },
+    {
+      "desc": "isStr",
+      "index": 145,
+      "isFunc": true,
+      "text": "145. Name: isStr, Type: function"
+    },
+    {
+      "desc": "isArr",
+      "index": 146,
+      "isFunc": true,
+      "text": "146. Name: isArr, Type: function"
+    },
+    {
+      "desc": "isObj",
+      "index": 147,
+      "isFunc": true,
+      "text": "147. Name: isObj, Type: function"
+    },
+    {
+      "desc": "isCharLatin",
+      "index": 148,
+      "isFunc": true,
+      "text": "148. Name: isCharLatin, Type: function"
+    },
+    {
+      "desc": "isCharKyrrylic",
+      "index": 149,
+      "isFunc": true,
+      "text": "149. Name: isCharKyrrylic, Type: function"
+    },
+    {
+      "desc": "isCharNum",
+      "index": 150,
+      "isFunc": true,
+      "text": "150. Name: isCharNum, Type: function"
+    },
+    {
+      "desc": "isCharSpecial",
+      "index": 151,
+      "isFunc": true,
+      "text": "151. Name: isCharSpecial, Type: function"
+    },
+    {
+      "desc": "isCharValid",
+      "index": 152,
+      "isFunc": true,
+      "text": "152. Name: isCharValid, Type: function"
+    },
+    {
+      "desc": "isNumLike",
+      "index": 153,
+      "isFunc": true,
+      "text": "153. Name: isNumLike, Type: function"
+    },
+    {
+      "desc": "filterStr",
+      "index": 154,
+      "isFunc": true,
+      "text": "154. Name: filterStr, Type: function"
+    },
+    {
+      "desc": "filterNum",
+      "index": 155,
+      "isFunc": true,
+      "text": "155. Name: filterNum, Type: function"
+    },
+    {
+      "desc": "filterArr",
+      "index": 156,
+      "isFunc": true,
+      "text": "156. Name: filterArr, Type: function"
+    },
+    {
+      "desc": "filterBool",
+      "index": 157,
+      "isFunc": true,
+      "text": "157. Name: filterBool, Type: function"
+    },
+    {
+      "desc": "filterFunc",
+      "index": 158,
+      "isFunc": true,
+      "text": "158. Name: filterFunc, Type: function"
+    },
+    {
+      "desc": "or",
+      "index": 159,
+      "isFunc": true,
+      "text": "159. Name: or, Type: function"
+    },
+    {
+      "desc": "and",
+      "index": 160,
+      "isFunc": true,
+      "text": "160. Name: and, Type: function"
+    },
+    {
+      "desc": "like",
+      "index": 161,
+      "isFunc": true,
+      "text": "161. Name: like, Type: function"
+    },
+    {
+      "desc": "not",
+      "index": 162,
+      "isFunc": true,
+      "text": "162. Name: not, Type: function"
+    },
+    {
+      "desc": "getIndexLast",
+      "index": 163,
+      "isFunc": true,
+      "text": "163. Name: getIndexLast, Type: function"
+    },
+    {
+      "desc": "getElementLast",
+      "index": 164,
+      "isFunc": true,
+      "text": "164. Name: getElementLast, Type: function"
+    },
+    {
+      "desc": "getSlice",
+      "index": 165,
+      "isFunc": true,
+      "text": "165. Name: getSlice, Type: function"
+    },
+    {
+      "desc": "getElementNeighbours",
+      "index": 166,
+      "isFunc": true,
+      "text": "166. Name: getElementNeighbours, Type: function"
+    },
+    {
+      "desc": "getElementNext",
+      "index": 167,
+      "isFunc": true,
+      "text": "167. Name: getElementNext, Type: function"
+    },
+    {
+      "desc": "getSplitted",
+      "index": 168,
+      "isFunc": true,
+      "text": "168. Name: getSplitted, Type: function"
+    },
+    {
+      "desc": "getChars",
+      "index": 169,
+      "isFunc": true,
+      "text": "169. Name: getChars, Type: function"
+    },
+    {
+      "desc": "getWords",
+      "index": 170,
+      "isFunc": true,
+      "text": "170. Name: getWords, Type: function"
+    },
+    {
+      "desc": "getPhrases",
+      "index": 171,
+      "isFunc": true,
+      "text": "171. Name: getPhrases, Type: function"
+    },
+    {
+      "desc": "getLines",
+      "index": 172,
+      "isFunc": true,
+      "text": "172. Name: getLines, Type: function"
+    },
+    {
+      "desc": "getWordFirst",
+      "index": 173,
+      "isFunc": true,
+      "text": "173. Name: getWordFirst, Type: function"
+    },
+    {
+      "desc": "getWordLast",
+      "index": 174,
+      "isFunc": true,
+      "text": "174. Name: getWordLast, Type: function"
+    },
+    {
+      "desc": "genPhraseFromWords",
+      "index": 175,
+      "isFunc": true,
+      "text": "175. Name: genPhraseFromWords, Type: function"
+    },
+    {
+      "desc": "getPhrasesWithWord",
+      "index": 176,
+      "isFunc": true,
+      "text": "176. Name: getPhrasesWithWord, Type: function"
+    },
+    {
+      "desc": "getPhrasesWithoutWord",
+      "index": 177,
+      "isFunc": true,
+      "text": "177. Name: getPhrasesWithoutWord, Type: function"
+    },
+    {
+      "desc": "getPhrasesEndsWith",
+      "index": 178,
+      "isFunc": true,
+      "text": "178. Name: getPhrasesEndsWith, Type: function"
+    },
+    {
+      "desc": "getPhrasesStartsWith",
+      "index": 179,
+      "isFunc": true,
+      "text": "179. Name: getPhrasesStartsWith, Type: function"
+    },
+    {
+      "desc": "getPhrasesByLength",
+      "index": 180,
+      "isFunc": true,
+      "text": "180. Name: getPhrasesByLength, Type: function"
+    },
+    {
+      "desc": "getPhrasesByIndex",
+      "index": 181,
+      "isFunc": true,
+      "text": "181. Name: getPhrasesByIndex, Type: function"
+    },
+    {
+      "desc": "reduceText",
+      "index": 182,
+      "isFunc": true,
+      "text": "182. Name: reduceText, Type: function"
+    },
+    {
+      "desc": "reduceSum",
+      "index": 183,
+      "isFunc": true,
+      "text": "183. Name: reduceSum, Type: function"
+    },
+    {
+      "desc": "reduceMult",
+      "index": 184,
+      "isFunc": true,
+      "text": "184. Name: reduceMult, Type: function"
+    },
+    {
+      "desc": "reduceObj",
+      "index": 185,
+      "isFunc": true,
+      "text": "185. Name: reduceObj, Type: function"
+    },
+    {
+      "desc": "reducePropValue",
+      "index": 186,
+      "isFunc": true,
+      "text": "186. Name: reducePropValue, Type: function"
+    },
+    {
+      "desc": "reducePropDesc",
+      "index": 187,
+      "isFunc": true,
+      "text": "187. Name: reducePropDesc, Type: function"
+    },
+    {
+      "desc": "reduceElementStats",
+      "index": 188,
+      "isFunc": true,
+      "text": "188. Name: reduceElementStats, Type: function"
+    },
+    {
+      "desc": "reduceElementKeys",
+      "index": 189,
+      "isFunc": true,
+      "text": "189. Name: reduceElementKeys, Type: function"
+    },
+    {
+      "desc": "reduceElementValues",
+      "index": 190,
+      "isFunc": true,
+      "text": "190. Name: reduceElementValues, Type: function"
+    },
+    {
+      "desc": "reduceElementEntries",
+      "index": 191,
+      "isFunc": true,
+      "text": "191. Name: reduceElementEntries, Type: function"
+    },
+    {
+      "desc": "toArr",
+      "index": 192,
+      "isFunc": true,
+      "text": "192. Name: toArr, Type: function"
+    },
+    {
+      "desc": "toObj",
+      "index": 193,
+      "isFunc": true,
+      "text": "193. Name: toObj, Type: function"
+    },
+    {
+      "desc": "toText",
+      "index": 194,
+      "isFunc": true,
+      "text": "194. Name: toText, Type: function"
+    },
+    {
+      "desc": "toKeys",
+      "index": 195,
+      "isFunc": true,
+      "text": "195. Name: toKeys, Type: function"
+    },
+    {
+      "desc": "toNumDiff",
+      "index": 196,
+      "isFunc": true,
+      "text": "196. Name: toNumDiff, Type: function"
+    },
+    {
+      "desc": "toNumRange",
+      "index": 197,
+      "isFunc": true,
+      "text": "197. Name: toNumRange, Type: function"
+    },
+    {
+      "desc": "toTrim",
+      "index": 198,
+      "isFunc": true,
+      "text": "198. Name: toTrim, Type: function"
+    },
+    {
+      "desc": "toTrimLine",
+      "index": 199,
+      "isFunc": true,
+      "text": "199. Name: toTrimLine, Type: function"
+    },
+    {
+      "desc": "toUnical",
+      "index": 200,
+      "isFunc": true,
+      "text": "200. Name: toUnical, Type: function"
+    },
+    {
+      "desc": "toJoin",
+      "index": 201,
+      "isFunc": true,
+      "text": "201. Name: toJoin, Type: function"
+    },
+    {
+      "desc": "toRepeat",
+      "index": 202,
+      "isFunc": true,
+      "text": "202. Name: toRepeat, Type: function"
+    },
+    {
+      "desc": "toReversed",
+      "index": 203,
+      "isFunc": true,
+      "text": "203. Name: toReversed, Type: function"
+    },
+    {
+      "desc": "toBuffer",
+      "index": 204,
+      "isFunc": true,
+      "text": "204. Name: toBuffer, Type: function"
+    },
+    {
+      "desc": "toFloatFixed",
+      "index": 205,
+      "isFunc": true,
+      "text": "205. Name: toFloatFixed, Type: function"
+    },
+    {
+      "desc": "toTrainingData",
+      "index": 206,
+      "isFunc": true,
+      "text": "206. Name: toTrainingData, Type: function"
+    },
+    {
+      "desc": "toFormatted",
+      "index": 207,
+      "isFunc": true,
+      "text": "207. Name: toFormatted, Type: function"
+    },
+    {
+      "desc": "toPercent",
+      "index": 208,
+      "isFunc": true,
+      "text": "208. Name: toPercent, Type: function"
+    },
+    {
+      "desc": "toResultStats",
+      "index": 209,
+      "isFunc": true,
+      "text": "209. Name: toResultStats, Type: function"
+    },
+    {
+      "desc": "toResultProps",
+      "index": 210,
+      "isFunc": true,
+      "text": "210. Name: toResultProps, Type: function"
+    },
+    {
+      "desc": "toTitleCase",
+      "index": 211,
+      "isFunc": true,
+      "text": "211. Name: toTitleCase, Type: function"
+    },
+    {
+      "desc": "jsonParse",
+      "index": 212,
+      "isFunc": true,
+      "text": "212. Name: jsonParse, Type: function"
+    },
+    {
+      "desc": "jsonCreate",
+      "index": 213,
+      "isFunc": true,
+      "text": "213. Name: jsonCreate, Type: function"
+    },
+    {
+      "desc": "toAverage",
+      "index": 214,
+      "isFunc": true,
+      "text": "214. Name: toAverage, Type: function"
+    },
+    {
+      "desc": "toRxp",
+      "index": 215,
+      "isFunc": true,
+      "text": "215. Name: toRxp, Type: function"
+    },
+    {
+      "desc": "toRxpNext",
+      "index": 216,
+      "isFunc": true,
+      "text": "216. Name: toRxpNext, Type: function"
+    },
+    {
+      "desc": "toMatchWordFirst",
+      "index": 217,
+      "isFunc": true,
+      "text": "217. Name: toMatchWordFirst, Type: function"
+    },
+    {
+      "desc": "toMatchWordLast",
+      "index": 218,
+      "isFunc": true,
+      "text": "218. Name: toMatchWordLast, Type: function"
+    },
+    {
+      "desc": "toMatchLineWithWord",
+      "index": 219,
+      "isFunc": true,
+      "text": "219. Name: toMatchLineWithWord, Type: function"
+    },
+    {
+      "desc": "toMatchChars",
+      "index": 220,
+      "isFunc": true,
+      "text": "220. Name: toMatchChars, Type: function"
+    },
+    {
+      "desc": "toMatchWords",
+      "index": 221,
+      "isFunc": true,
+      "text": "221. Name: toMatchWords, Type: function"
+    },
+    {
+      "desc": "toMatchPhrases",
+      "index": 222,
+      "isFunc": true,
+      "text": "222. Name: toMatchPhrases, Type: function"
+    },
+    {
+      "desc": "toMatchLines",
+      "index": 223,
+      "isFunc": true,
+      "text": "223. Name: toMatchLines, Type: function"
+    },
+    {
+      "desc": "toMatchDividered",
+      "index": 224,
+      "isFunc": true,
+      "text": "224. Name: toMatchDividered, Type: function"
+    },
+    {
+      "desc": "toMatchNextWords",
+      "index": 225,
+      "isFunc": true,
+      "text": "225. Name: toMatchNextWords, Type: function"
+    },
+    {
+      "desc": "toArrValues",
+      "index": 226,
+      "isFunc": true,
+      "text": "226. Name: toArrValues, Type: function"
+    },
+    {
+      "desc": "toNotUnical",
+      "index": 227,
+      "isFunc": true,
+      "text": "227. Name: toNotUnical, Type: function"
+    },
+    {
+      "desc": "replaceManyChars",
+      "index": 228,
+      "isFunc": true,
+      "text": "228. Name: replaceManyChars, Type: function"
+    },
+    {
+      "desc": "replaceChars",
+      "index": 229,
+      "isFunc": true,
+      "text": "229. Name: replaceChars, Type: function"
+    },
+    {
+      "desc": "getIndex",
+      "index": 230,
+      "isFunc": true,
+      "text": "230. Name: getIndex, Type: function"
+    },
+    {
+      "desc": "getIndexAll",
+      "index": 231,
+      "isFunc": true,
+      "text": "231. Name: getIndexAll, Type: function"
+    },
+    {
+      "desc": "getMatch",
+      "index": 232,
+      "isFunc": true,
+      "text": "232. Name: getMatch, Type: function"
+    },
+    {
+      "desc": "getMatchAll",
+      "index": 233,
+      "isFunc": true,
+      "text": "233. Name: getMatchAll, Type: function"
+    },
+    {
+      "desc": "getElementsSequence",
+      "index": 234,
+      "isFunc": true,
+      "text": "234. Name: getElementsSequence, Type: function"
+    },
+    {
+      "desc": "msToTimeDesc",
+      "index": 235,
+      "isFunc": true,
+      "text": "235. Name: msToTimeDesc, Type: function"
+    },
+    {
+      "desc": "toFixed",
+      "index": 236,
+      "isFunc": true,
+      "text": "236. Name: toFixed, Type: function"
+    },
+    {
+      "desc": "sliceToSize",
+      "index": 237,
+      "isFunc": true,
+      "text": "237. Name: sliceToSize, Type: function"
+    },
+    {
+      "desc": "encode",
+      "index": 238,
+      "isFunc": true,
+      "text": "238. Name: encode, Type: function"
+    },
+    {
+      "desc": "decode",
+      "index": 239,
+      "isFunc": true,
+      "text": "239. Name: decode, Type: function"
+    },
+    {
+      "desc": "isStrEqual",
+      "index": 240,
+      "isFunc": true,
+      "text": "240. Name: isStrEqual, Type: function"
+    },
+    {
+      "desc": "isLineBreak",
+      "index": 241,
+      "isFunc": true,
+      "text": "241. Name: isLineBreak, Type: function"
+    },
+    {
+      "desc": "isSharp",
+      "index": 242,
+      "isFunc": true,
+      "text": "242. Name: isSharp, Type: function"
+    },
+    {
+      "desc": "isSpace",
+      "index": 243,
+      "isFunc": true,
+      "text": "243. Name: isSpace, Type: function"
+    },
+    {
+      "desc": "isStar",
+      "index": 244,
+      "isFunc": true,
+      "text": "244. Name: isStar, Type: function"
+    },
+    {
+      "desc": "character",
+      "index": 245,
+      "isFunc": true,
+      "text": "245. Name: character, Type: function"
+    },
+    {
+      "desc": "_toObj",
+      "index": 246,
+      "isFunc": true,
+      "text": "246. Name: _toObj, Type: function"
+    },
+    {
+      "desc": "_toArr",
+      "index": 247,
+      "isFunc": true,
+      "text": "247. Name: _toArr, Type: function"
+    },
+    {
+      "desc": "_toStr",
+      "index": 248,
+      "isFunc": true,
+      "text": "248. Name: _toStr, Type: function"
+    }
+  ],
+  "EXAMPLES_CONSTANTS": [
+    {
+      "desc": "UND",
+      "index": 0,
+      "isFunc": false,
+      "text": "0. Name: UND, Type: undefined"
+    },
+    {
+      "desc": "NULL",
+      "value": null,
+      "index": 1,
+      "isFunc": false,
+      "text": "1. Name: NULL, Type: object",
+      "example": null
+    },
+    {
+      "desc": "STR",
+      "value": "Some string value",
+      "index": 2,
+      "isFunc": false,
+      "text": "2. Name: STR, Type: string",
+      "example": "Some string value"
+    },
+    {
+      "desc": "ERR",
+      "value": {},
+      "index": 3,
+      "isFunc": false,
+      "text": "3. Name: ERR, Type: object",
+      "example": {}
+    },
+    {
+      "desc": "RND",
+      "value": 0.6383302082520825,
+      "index": 4,
+      "isFunc": false,
+      "text": "4. Name: RND, Type: number",
+      "example": 0.6383302082520825
+    },
+    {
+      "desc": "NUM",
+      "value": 638,
+      "index": 5,
+      "isFunc": false,
+      "text": "5. Name: NUM, Type: number",
+      "example": 638
+    },
+    {
+      "desc": "BLN",
+      "value": true,
+      "index": 6,
+      "isFunc": false,
+      "text": "6. Name: BLN, Type: boolean",
+      "example": true
+    },
+    {
+      "desc": "ARR",
+      "value": [
+        "Some string value",
+        638
+      ],
+      "index": 7,
+      "isFunc": false,
+      "text": "7. Name: ARR, Type: object",
+      "example": [
+        "Some string value",
+        638
+      ]
+    },
+    {
+      "desc": "OBJ",
+      "value": {
+        "STR": "Some string value",
+        "NUM": 638
+      },
+      "index": 8,
+      "isFunc": false,
+      "text": "8. Name: OBJ, Type: object",
+      "example": {
+        "STR": "Some string value",
+        "NUM": 638
+      }
+    },
+    {
+      "desc": "SYM",
+      "index": 9,
+      "isFunc": false,
+      "text": "9. Name: SYM, Type: symbol"
+    },
+    {
+      "desc": "BIG",
+      "value": null,
+      "index": 10,
+      "isFunc": false,
+      "text": "10. Name: BIG, Type: number",
+      "example": null
+    },
+    {
+      "desc": "VALUES",
+      "value": [
+        null,
+        null,
+        "Some string value",
+        {},
+        0.6383302082520825,
+        638,
+        true,
+        [
+          "Some string value",
+          638
+        ],
+        {
+          "STR": "Some string value",
+          "NUM": 638
+        },
+        null,
+        null,
+        null
+      ],
+      "index": 12,
+      "isFunc": false,
+      "text": "12. Name: VALUES, Type: object",
+      "example": [
+        null,
+        null,
+        "Some string value",
+        {},
+        0.6383302082520825,
+        638,
+        true,
+        [
+          "Some string value",
+          638
+        ],
+        {
+          "STR": "Some string value",
+          "NUM": 638
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "desc": "VALUES_SOURCES",
+      "value": [
+        {
+          "desc": "UND",
+          "index": 0,
+          "type": "undefined"
+        },
+        {
+          "value": null,
+          "desc": "NULL",
+          "index": 1,
+          "type": "object"
+        },
+        {
+          "value": "Some string value",
+          "desc": "STR",
+          "index": 2,
+          "type": "string"
+        },
+        {
+          "value": {},
+          "desc": "ERR",
+          "index": 3,
+          "type": "object"
+        },
+        {
+          "value": 0.6383302082520825,
+          "desc": "RND",
+          "index": 4,
+          "type": "number"
+        },
+        {
+          "value": 638,
+          "desc": "NUM",
+          "index": 5,
+          "type": "number"
+        },
+        {
+          "value": true,
+          "desc": "BLN",
+          "index": 6,
+          "type": "boolean"
+        },
+        {
+          "value": [
+            "Some string value",
+            638
+          ],
+          "desc": "ARR",
+          "index": 7,
+          "type": "object"
+        },
+        {
+          "value": {
+            "STR": "Some string value",
+            "NUM": 638
+          },
+          "desc": "OBJ",
+          "index": 8,
+          "type": "object"
+        },
+        {
+          "desc": "SYM",
+          "index": 9,
+          "type": "symbol"
+        },
+        {
+          "value": null,
+          "desc": "BIG",
+          "index": 10,
+          "type": "number"
+        },
+        {
+          "desc": "FUNC",
+          "index": 11,
+          "type": "function"
+        }
+      ],
+      "index": 13,
+      "isFunc": false,
+      "text": "13. Name: VALUES_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "UND",
+          "index": 0,
+          "type": "undefined"
+        },
+        {
+          "value": null,
+          "desc": "NULL",
+          "index": 1,
+          "type": "object"
+        },
+        {
+          "value": "Some string value",
+          "desc": "STR",
+          "index": 2,
+          "type": "string"
+        },
+        {
+          "value": {},
+          "desc": "ERR",
+          "index": 3,
+          "type": "object"
+        },
+        {
+          "value": 0.6383302082520825,
+          "desc": "RND",
+          "index": 4,
+          "type": "number"
+        },
+        {
+          "value": 638,
+          "desc": "NUM",
+          "index": 5,
+          "type": "number"
+        },
+        {
+          "value": true,
+          "desc": "BLN",
+          "index": 6,
+          "type": "boolean"
+        },
+        {
+          "value": [
+            "Some string value",
+            638
+          ],
+          "desc": "ARR",
+          "index": 7,
+          "type": "object"
+        },
+        {
+          "value": {
+            "STR": "Some string value",
+            "NUM": 638
+          },
+          "desc": "OBJ",
+          "index": 8,
+          "type": "object"
+        },
+        {
+          "desc": "SYM",
+          "index": 9,
+          "type": "symbol"
+        },
+        {
+          "value": null,
+          "desc": "BIG",
+          "index": 10,
+          "type": "number"
+        },
+        {
+          "desc": "FUNC",
+          "index": 11,
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "desc": "TYPEOF_VALUES",
+      "value": [
+        "string",
+        "number",
+        "function",
+        "object",
+        "boolean",
+        "bigint",
+        "symbol",
+        "undefined"
+      ],
+      "index": 14,
+      "isFunc": false,
+      "text": "14. Name: TYPEOF_VALUES, Type: object",
+      "example": [
+        "string",
+        "number",
+        "function",
+        "object",
+        "boolean",
+        "bigint",
+        "symbol",
+        "undefined"
+      ]
+    },
+    {
+      "desc": "CONSOLE_METHODS",
+      "value": [
+        "log",
+        "info",
+        "warn",
+        "error",
+        "dir",
+        "debug"
+      ],
+      "index": 15,
+      "isFunc": false,
+      "text": "15. Name: CONSOLE_METHODS, Type: object",
+      "example": [
+        "log",
+        "info",
+        "warn",
+        "error",
+        "dir",
+        "debug"
+      ]
+    },
+    {
+      "desc": "GRADIENT_METHODS",
+      "value": [
+        "atlas",
+        "cristal",
+        "teen",
+        "mind",
+        "morning",
+        "vice",
+        "passion",
+        "fruit",
+        "instagram",
+        "retro",
+        "summer",
+        "rainbow",
+        "pastel"
+      ],
+      "index": 16,
+      "isFunc": false,
+      "text": "16. Name: GRADIENT_METHODS, Type: object",
+      "example": [
+        "atlas",
+        "cristal",
+        "teen",
+        "mind",
+        "morning",
+        "vice",
+        "passion",
+        "fruit",
+        "instagram",
+        "retro",
+        "summer",
+        "rainbow",
+        "pastel"
+      ]
+    },
+    {
+      "desc": "COLOR_METHODS",
+      "value": [
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "underline",
+        "green",
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ],
+      "index": 17,
+      "isFunc": false,
+      "text": "17. Name: COLOR_METHODS, Type: object",
+      "example": [
+        "blue",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "underline",
+        "green",
+        "blue",
+        "red",
+        "green",
+        "yellow"
+      ]
+    },
+    {
+      "desc": "CONSOLE_SOURCES",
+      "value": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        }
+      ],
+      "index": 18,
+      "isFunc": false,
+      "text": "18. Name: CONSOLE_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        }
+      ]
+    },
+    {
+      "desc": "GRADIENTS_SOURCES",
+      "value": [
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        }
+      ],
+      "index": 19,
+      "isFunc": false,
+      "text": "19. Name: GRADIENTS_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        }
+      ]
+    },
+    {
+      "desc": "COLORED_SOURCES",
+      "value": [
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        }
+      ],
+      "index": 20,
+      "isFunc": false,
+      "text": "20. Name: COLORED_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        }
+      ]
+    },
+    {
+      "desc": "CONSOLE_OTHER_SOURCES",
+      "value": [
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ],
+      "index": 21,
+      "isFunc": false,
+      "text": "21. Name: CONSOLE_OTHER_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ]
+    },
+    {
+      "desc": "LOGGER_SOURCES",
+      "value": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        },
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        },
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ],
+      "index": 22,
+      "isFunc": false,
+      "text": "22. Name: LOGGER_SOURCES, Type: object",
+      "example": [
+        {
+          "desc": "log"
+        },
+        {
+          "desc": "info"
+        },
+        {
+          "desc": "warn"
+        },
+        {
+          "desc": "error"
+        },
+        {
+          "desc": "dir"
+        },
+        {
+          "desc": "debug"
+        },
+        {
+          "desc": "atlas"
+        },
+        {
+          "desc": "cristal"
+        },
+        {
+          "desc": "teen"
+        },
+        {
+          "desc": "mind"
+        },
+        {
+          "desc": "morning"
+        },
+        {
+          "desc": "vice"
+        },
+        {
+          "desc": "passion"
+        },
+        {
+          "desc": "fruit"
+        },
+        {
+          "desc": "instagram"
+        },
+        {
+          "desc": "retro"
+        },
+        {
+          "desc": "summer"
+        },
+        {
+          "desc": "rainbow"
+        },
+        {
+          "desc": "pastel"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "underline"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "blue"
+        },
+        {
+          "desc": "red"
+        },
+        {
+          "desc": "green"
+        },
+        {
+          "desc": "yellow"
+        },
+        {
+          "desc": "lolcat_print"
+        },
+        {
+          "desc": "lolcat_rainbow"
+        },
+        {
+          "desc": "cow_say"
+        },
+        {
+          "desc": "cow_think"
+        }
+      ]
+    },
+    {
+      "desc": "NAME_TEMP",
+      "value": "logs_temp",
+      "index": 33,
+      "isFunc": false,
+      "text": "33. Name: NAME_TEMP, Type: string",
+      "example": "logs_temp"
+    },
+    {
+      "desc": "LOG_DIR",
+      "value": "logs",
+      "index": 34,
+      "isFunc": false,
+      "text": "34. Name: LOG_DIR, Type: string",
+      "example": "logs"
+    },
+    {
+      "desc": "LOG_FILE",
+      "value": "logs_temp.log",
+      "index": 35,
+      "isFunc": false,
+      "text": "35. Name: LOG_FILE, Type: string",
+      "example": "logs_temp.log"
+    },
+    {
+      "desc": "PATH_LOG_DIR",
+      "value": "/Users/alex/js/brain_exp/logs",
+      "index": 36,
+      "isFunc": false,
+      "text": "36. Name: PATH_LOG_DIR, Type: string",
+      "example": "/Users/alex/js/brain_exp/logs"
+    },
+    {
+      "desc": "PATH_LOG_FILE",
+      "value": "/Users/alex/js/brain_exp/logs/logs_temp.log",
+      "index": 37,
+      "isFunc": false,
+      "text": "37. Name: PATH_LOG_FILE, Type: string",
+      "example": "/Users/alex/js/brain_exp/logs/logs_temp.log"
+    },
+    {
+      "desc": "CHAR_CODE_MULT",
+      "value": 256,
+      "index": 38,
+      "isFunc": false,
+      "text": "38. Name: CHAR_CODE_MULT, Type: number",
+      "example": 256
+    },
+    {
+      "desc": "MAX_ENCODED_SIZE",
+      "value": 100,
+      "index": 39,
+      "isFunc": false,
+      "text": "39. Name: MAX_ENCODED_SIZE, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "CHAR_LINE",
+      "value": "\n",
+      "index": 40,
+      "isFunc": false,
+      "text": "40. Name: CHAR_LINE, Type: string",
+      "example": "\n"
+    },
+    {
+      "desc": "CHAR_TAB",
+      "value": "\t",
+      "index": 41,
+      "isFunc": false,
+      "text": "41. Name: CHAR_TAB, Type: string",
+      "example": "\t"
+    },
+    {
+      "desc": "CHAR_SPACE",
+      "value": " ",
+      "index": 42,
+      "isFunc": false,
+      "text": "42. Name: CHAR_SPACE, Type: string",
+      "example": " "
+    },
+    {
+      "desc": "CHAR_COMMA",
+      "value": ",",
+      "index": 43,
+      "isFunc": false,
+      "text": "43. Name: CHAR_COMMA, Type: string",
+      "example": ","
+    },
+    {
+      "desc": "CHAR_DOT",
+      "value": ".",
+      "index": 44,
+      "isFunc": false,
+      "text": "44. Name: CHAR_DOT, Type: string",
+      "example": "."
+    },
+    {
+      "desc": "CHAR_DIV",
+      "value": "#",
+      "index": 45,
+      "isFunc": false,
+      "text": "45. Name: CHAR_DIV, Type: string",
+      "example": "#"
+    },
+    {
+      "desc": "CHARS_ENG",
+      "value": "abcdefghijklmnopqrstuvwxyz",
+      "index": 46,
+      "isFunc": false,
+      "text": "46. Name: CHARS_ENG, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyz"
+    },
+    {
+      "desc": "CHARS_RUS",
+      "value": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+      "index": 47,
+      "isFunc": false,
+      "text": "47. Name: CHARS_RUS, Type: string",
+      "example": "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    },
+    {
+      "desc": "CHARS_NUM",
+      "value": "0123456789",
+      "index": 48,
+      "isFunc": false,
+      "text": "48. Name: CHARS_NUM, Type: string",
+      "example": "0123456789"
+    },
+    {
+      "desc": "CHARS_SIMPLE",
+      "value": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789",
+      "index": 49,
+      "isFunc": false,
+      "text": "49. Name: CHARS_SIMPLE, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789"
+    },
+    {
+      "desc": "CHARS_SPECIAL",
+      "value": "\n\t ,.#",
+      "index": 50,
+      "isFunc": false,
+      "text": "50. Name: CHARS_SPECIAL, Type: string",
+      "example": "\n\t ,.#"
+    },
+    {
+      "desc": "CHARS_VALID",
+      "value": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\n\t ,.#",
+      "index": 51,
+      "isFunc": false,
+      "text": "51. Name: CHARS_VALID, Type: string",
+      "example": "abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789\n\t ,.#"
+    },
+    {
+      "desc": "CHAR_CODE_SOURCES",
+      "value": [
+        {
+          "char": "a",
+          "code": 0.37890625
+        },
+        {
+          "char": "b",
+          "code": 0.3828125
+        },
+        {
+          "char": "c",
+          "code": 0.38671875
+        },
+        {
+          "char": "d",
+          "code": 0.390625
+        },
+        {
+          "char": "e",
+          "code": 0.39453125
+        },
+        {
+          "char": "f",
+          "code": 0.3984375
+        },
+        {
+          "char": "g",
+          "code": 0.40234375
+        },
+        {
+          "char": "h",
+          "code": 0.40625
+        },
+        {
+          "char": "i",
+          "code": 0.41015625
+        },
+        {
+          "char": "j",
+          "code": 0.4140625
+        },
+        {
+          "char": "k",
+          "code": 0.41796875
+        },
+        {
+          "char": "l",
+          "code": 0.421875
+        },
+        {
+          "char": "m",
+          "code": 0.42578125
+        },
+        {
+          "char": "n",
+          "code": 0.4296875
+        },
+        {
+          "char": "o",
+          "code": 0.43359375
+        },
+        {
+          "char": "p",
+          "code": 0.4375
+        },
+        {
+          "char": "q",
+          "code": 0.44140625
+        },
+        {
+          "char": "r",
+          "code": 0.4453125
+        },
+        {
+          "char": "s",
+          "code": 0.44921875
+        },
+        {
+          "char": "t",
+          "code": 0.453125
+        },
+        {
+          "char": "u",
+          "code": 0.45703125
+        },
+        {
+          "char": "v",
+          "code": 0.4609375
+        },
+        {
+          "char": "w",
+          "code": 0.46484375
+        },
+        {
+          "char": "x",
+          "code": 0.46875
+        },
+        {
+          "char": "y",
+          "code": 0.47265625
+        },
+        {
+          "char": "z",
+          "code": 0.4765625
+        },
+        {
+          "char": "а",
+          "code": 4.1875
+        },
+        {
+          "char": "б",
+          "code": 4.19140625
+        },
+        {
+          "char": "в",
+          "code": 4.1953125
+        },
+        {
+          "char": "г",
+          "code": 4.19921875
+        },
+        {
+          "char": "д",
+          "code": 4.203125
+        },
+        {
+          "char": "е",
+          "code": 4.20703125
+        },
+        {
+          "char": "ё",
+          "code": 4.31640625
+        },
+        {
+          "char": "ж",
+          "code": 4.2109375
+        },
+        {
+          "char": "з",
+          "code": 4.21484375
+        },
+        {
+          "char": "и",
+          "code": 4.21875
+        },
+        {
+          "char": "й",
+          "code": 4.22265625
+        },
+        {
+          "char": "к",
+          "code": 4.2265625
+        },
+        {
+          "char": "л",
+          "code": 4.23046875
+        },
+        {
+          "char": "м",
+          "code": 4.234375
+        },
+        {
+          "char": "н",
+          "code": 4.23828125
+        },
+        {
+          "char": "о",
+          "code": 4.2421875
+        },
+        {
+          "char": "п",
+          "code": 4.24609375
+        },
+        {
+          "char": "р",
+          "code": 4.25
+        },
+        {
+          "char": "с",
+          "code": 4.25390625
+        },
+        {
+          "char": "т",
+          "code": 4.2578125
+        },
+        {
+          "char": "у",
+          "code": 4.26171875
+        },
+        {
+          "char": "ф",
+          "code": 4.265625
+        },
+        {
+          "char": "х",
+          "code": 4.26953125
+        },
+        {
+          "char": "ц",
+          "code": 4.2734375
+        },
+        {
+          "char": "ч",
+          "code": 4.27734375
+        },
+        {
+          "char": "ш",
+          "code": 4.28125
+        },
+        {
+          "char": "щ",
+          "code": 4.28515625
+        },
+        {
+          "char": "ъ",
+          "code": 4.2890625
+        },
+        {
+          "char": "ы",
+          "code": 4.29296875
+        },
+        {
+          "char": "ь",
+          "code": 4.296875
+        },
+        {
+          "char": "э",
+          "code": 4.30078125
+        },
+        {
+          "char": "ю",
+          "code": 4.3046875
+        },
+        {
+          "char": "я",
+          "code": 4.30859375
+        },
+        {
+          "char": "0",
+          "code": 0.1875
+        },
+        {
+          "char": "1",
+          "code": 0.19140625
+        },
+        {
+          "char": "2",
+          "code": 0.1953125
+        },
+        {
+          "char": "3",
+          "code": 0.19921875
+        },
+        {
+          "char": "4",
+          "code": 0.203125
+        },
+        {
+          "char": "5",
+          "code": 0.20703125
+        },
+        {
+          "char": "6",
+          "code": 0.2109375
+        },
+        {
+          "char": "7",
+          "code": 0.21484375
+        },
+        {
+          "char": "8",
+          "code": 0.21875
+        },
+        {
+          "char": "9",
+          "code": 0.22265625
+        },
+        {
+          "char": "\n",
+          "code": 0.0390625
+        },
+        {
+          "char": "\t",
+          "code": 0.03515625
+        },
+        {
+          "char": " ",
+          "code": 0.125
+        },
+        {
+          "char": ",",
+          "code": 0.171875
+        },
+        {
+          "char": ".",
+          "code": 0.1796875
+        },
+        {
+          "char": "#",
+          "code": 0.13671875
+        }
+      ],
+      "index": 52,
+      "isFunc": false,
+      "text": "52. Name: CHAR_CODE_SOURCES, Type: object",
+      "example": [
+        {
+          "char": "a",
+          "code": 0.37890625
+        },
+        {
+          "char": "b",
+          "code": 0.3828125
+        },
+        {
+          "char": "c",
+          "code": 0.38671875
+        },
+        {
+          "char": "d",
+          "code": 0.390625
+        },
+        {
+          "char": "e",
+          "code": 0.39453125
+        },
+        {
+          "char": "f",
+          "code": 0.3984375
+        },
+        {
+          "char": "g",
+          "code": 0.40234375
+        },
+        {
+          "char": "h",
+          "code": 0.40625
+        },
+        {
+          "char": "i",
+          "code": 0.41015625
+        },
+        {
+          "char": "j",
+          "code": 0.4140625
+        },
+        {
+          "char": "k",
+          "code": 0.41796875
+        },
+        {
+          "char": "l",
+          "code": 0.421875
+        },
+        {
+          "char": "m",
+          "code": 0.42578125
+        },
+        {
+          "char": "n",
+          "code": 0.4296875
+        },
+        {
+          "char": "o",
+          "code": 0.43359375
+        },
+        {
+          "char": "p",
+          "code": 0.4375
+        },
+        {
+          "char": "q",
+          "code": 0.44140625
+        },
+        {
+          "char": "r",
+          "code": 0.4453125
+        },
+        {
+          "char": "s",
+          "code": 0.44921875
+        },
+        {
+          "char": "t",
+          "code": 0.453125
+        },
+        {
+          "char": "u",
+          "code": 0.45703125
+        },
+        {
+          "char": "v",
+          "code": 0.4609375
+        },
+        {
+          "char": "w",
+          "code": 0.46484375
+        },
+        {
+          "char": "x",
+          "code": 0.46875
+        },
+        {
+          "char": "y",
+          "code": 0.47265625
+        },
+        {
+          "char": "z",
+          "code": 0.4765625
+        },
+        {
+          "char": "а",
+          "code": 4.1875
+        },
+        {
+          "char": "б",
+          "code": 4.19140625
+        },
+        {
+          "char": "в",
+          "code": 4.1953125
+        },
+        {
+          "char": "г",
+          "code": 4.19921875
+        },
+        {
+          "char": "д",
+          "code": 4.203125
+        },
+        {
+          "char": "е",
+          "code": 4.20703125
+        },
+        {
+          "char": "ё",
+          "code": 4.31640625
+        },
+        {
+          "char": "ж",
+          "code": 4.2109375
+        },
+        {
+          "char": "з",
+          "code": 4.21484375
+        },
+        {
+          "char": "и",
+          "code": 4.21875
+        },
+        {
+          "char": "й",
+          "code": 4.22265625
+        },
+        {
+          "char": "к",
+          "code": 4.2265625
+        },
+        {
+          "char": "л",
+          "code": 4.23046875
+        },
+        {
+          "char": "м",
+          "code": 4.234375
+        },
+        {
+          "char": "н",
+          "code": 4.23828125
+        },
+        {
+          "char": "о",
+          "code": 4.2421875
+        },
+        {
+          "char": "п",
+          "code": 4.24609375
+        },
+        {
+          "char": "р",
+          "code": 4.25
+        },
+        {
+          "char": "с",
+          "code": 4.25390625
+        },
+        {
+          "char": "т",
+          "code": 4.2578125
+        },
+        {
+          "char": "у",
+          "code": 4.26171875
+        },
+        {
+          "char": "ф",
+          "code": 4.265625
+        },
+        {
+          "char": "х",
+          "code": 4.26953125
+        },
+        {
+          "char": "ц",
+          "code": 4.2734375
+        },
+        {
+          "char": "ч",
+          "code": 4.27734375
+        },
+        {
+          "char": "ш",
+          "code": 4.28125
+        },
+        {
+          "char": "щ",
+          "code": 4.28515625
+        },
+        {
+          "char": "ъ",
+          "code": 4.2890625
+        },
+        {
+          "char": "ы",
+          "code": 4.29296875
+        },
+        {
+          "char": "ь",
+          "code": 4.296875
+        },
+        {
+          "char": "э",
+          "code": 4.30078125
+        },
+        {
+          "char": "ю",
+          "code": 4.3046875
+        },
+        {
+          "char": "я",
+          "code": 4.30859375
+        },
+        {
+          "char": "0",
+          "code": 0.1875
+        },
+        {
+          "char": "1",
+          "code": 0.19140625
+        },
+        {
+          "char": "2",
+          "code": 0.1953125
+        },
+        {
+          "char": "3",
+          "code": 0.19921875
+        },
+        {
+          "char": "4",
+          "code": 0.203125
+        },
+        {
+          "char": "5",
+          "code": 0.20703125
+        },
+        {
+          "char": "6",
+          "code": 0.2109375
+        },
+        {
+          "char": "7",
+          "code": 0.21484375
+        },
+        {
+          "char": "8",
+          "code": 0.21875
+        },
+        {
+          "char": "9",
+          "code": 0.22265625
+        },
+        {
+          "char": "\n",
+          "code": 0.0390625
+        },
+        {
+          "char": "\t",
+          "code": 0.03515625
+        },
+        {
+          "char": " ",
+          "code": 0.125
+        },
+        {
+          "char": ",",
+          "code": 0.171875
+        },
+        {
+          "char": ".",
+          "code": 0.1796875
+        },
+        {
+          "char": "#",
+          "code": 0.13671875
+        }
+      ]
+    },
+    {
+      "desc": "CHAR_CODE_VALUES",
+      "value": [
+        0.37890625,
+        0.3828125,
+        0.38671875,
+        0.390625,
+        0.39453125,
+        0.3984375,
+        0.40234375,
+        0.40625,
+        0.41015625,
+        0.4140625,
+        0.41796875,
+        0.421875,
+        0.42578125,
+        0.4296875,
+        0.43359375,
+        0.4375,
+        0.44140625,
+        0.4453125,
+        0.44921875,
+        0.453125,
+        0.45703125,
+        0.4609375,
+        0.46484375,
+        0.46875,
+        0.47265625,
+        0.4765625,
+        4.1875,
+        4.19140625,
+        4.1953125,
+        4.19921875,
+        4.203125,
+        4.20703125,
+        4.31640625,
+        4.2109375,
+        4.21484375,
+        4.21875,
+        4.22265625,
+        4.2265625,
+        4.23046875,
+        4.234375,
+        4.23828125,
+        4.2421875,
+        4.24609375,
+        4.25,
+        4.25390625,
+        4.2578125,
+        4.26171875,
+        4.265625,
+        4.26953125,
+        4.2734375,
+        4.27734375,
+        4.28125,
+        4.28515625,
+        4.2890625,
+        4.29296875,
+        4.296875,
+        4.30078125,
+        4.3046875,
+        4.30859375,
+        0.1875,
+        0.19140625,
+        0.1953125,
+        0.19921875,
+        0.203125,
+        0.20703125,
+        0.2109375,
+        0.21484375,
+        0.21875,
+        0.22265625,
+        0.0390625,
+        0.03515625,
+        0.125,
+        0.171875,
+        0.1796875,
+        0.13671875
+      ],
+      "index": 53,
+      "isFunc": false,
+      "text": "53. Name: CHAR_CODE_VALUES, Type: object",
+      "example": [
+        0.37890625,
+        0.3828125,
+        0.38671875,
+        0.390625,
+        0.39453125,
+        0.3984375,
+        0.40234375,
+        0.40625,
+        0.41015625,
+        0.4140625,
+        0.41796875,
+        0.421875,
+        0.42578125,
+        0.4296875,
+        0.43359375,
+        0.4375,
+        0.44140625,
+        0.4453125,
+        0.44921875,
+        0.453125,
+        0.45703125,
+        0.4609375,
+        0.46484375,
+        0.46875,
+        0.47265625,
+        0.4765625,
+        4.1875,
+        4.19140625,
+        4.1953125,
+        4.19921875,
+        4.203125,
+        4.20703125,
+        4.31640625,
+        4.2109375,
+        4.21484375,
+        4.21875,
+        4.22265625,
+        4.2265625,
+        4.23046875,
+        4.234375,
+        4.23828125,
+        4.2421875,
+        4.24609375,
+        4.25,
+        4.25390625,
+        4.2578125,
+        4.26171875,
+        4.265625,
+        4.26953125,
+        4.2734375,
+        4.27734375,
+        4.28125,
+        4.28515625,
+        4.2890625,
+        4.29296875,
+        4.296875,
+        4.30078125,
+        4.3046875,
+        4.30859375,
+        0.1875,
+        0.19140625,
+        0.1953125,
+        0.19921875,
+        0.203125,
+        0.20703125,
+        0.2109375,
+        0.21484375,
+        0.21875,
+        0.22265625,
+        0.0390625,
+        0.03515625,
+        0.125,
+        0.171875,
+        0.1796875,
+        0.13671875
+      ]
+    },
+    {
+      "desc": "DIV_CONTENT",
+      "value": "\n##############################\n",
+      "index": 54,
+      "isFunc": false,
+      "text": "54. Name: DIV_CONTENT, Type: string",
+      "example": "\n##############################\n"
+    },
+    {
+      "desc": "DIV_LINE",
+      "value": "\n####################\n",
+      "index": 55,
+      "isFunc": false,
+      "text": "55. Name: DIV_LINE, Type: string",
+      "example": "\n####################\n"
+    },
+    {
+      "desc": "DIV_TITLE",
+      "value": "\t#####\t",
+      "index": 56,
+      "isFunc": false,
+      "text": "56. Name: DIV_TITLE, Type: string",
+      "example": "\t#####\t"
+    },
+    {
+      "desc": "MIN_LENGTH",
+      "value": 1,
+      "index": 57,
+      "isFunc": false,
+      "text": "57. Name: MIN_LENGTH, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "MAX_LENGTH",
+      "value": 2000,
+      "index": 58,
+      "isFunc": false,
+      "text": "58. Name: MAX_LENGTH, Type: number",
+      "example": 2000
+    },
+    {
+      "desc": "MIN_CHAR_CODE",
+      "value": 0.03515625,
+      "index": 59,
+      "isFunc": false,
+      "text": "59. Name: MIN_CHAR_CODE, Type: number",
+      "example": 0.03515625
+    },
+    {
+      "desc": "MAX_CHAR_CODE",
+      "value": 4.31640625,
+      "index": 60,
+      "isFunc": false,
+      "text": "60. Name: MAX_CHAR_CODE, Type: number",
+      "example": 4.31640625
+    },
+    {
+      "desc": "RANGE_LENGTH",
+      "value": [
+        1,
+        2000
+      ],
+      "index": 61,
+      "isFunc": false,
+      "text": "61. Name: RANGE_LENGTH, Type: object",
+      "example": [
+        1,
+        2000
+      ]
+    },
+    {
+      "desc": "RANGE_CHAR_CODE",
+      "value": [
+        0.03515625,
+        4.31640625
+      ],
+      "index": 62,
+      "isFunc": false,
+      "text": "62. Name: RANGE_CHAR_CODE, Type: object",
+      "example": [
+        0.03515625,
+        4.31640625
+      ]
+    },
+    {
+      "desc": "ARRAY_SIZE",
+      "value": 10,
+      "index": 63,
+      "isFunc": false,
+      "text": "63. Name: ARRAY_SIZE, Type: number",
+      "example": 10
+    },
+    {
+      "desc": "LIKE_DIFF",
+      "value": 0.1,
+      "index": 64,
+      "isFunc": false,
+      "text": "64. Name: LIKE_DIFF, Type: number",
+      "example": 0.1
+    },
+    {
+      "desc": "INPUT_SIZE",
+      "value": 1,
+      "index": 65,
+      "isFunc": false,
+      "text": "65. Name: INPUT_SIZE, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "HIDDEN_SIZE",
+      "value": 3,
+      "index": 66,
+      "isFunc": false,
+      "text": "66. Name: HIDDEN_SIZE, Type: number",
+      "example": 3
+    },
+    {
+      "desc": "OUTPUT_SIZE",
+      "value": 1,
+      "index": 67,
+      "isFunc": false,
+      "text": "67. Name: OUTPUT_SIZE, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "TRAIN_SET_SIZE",
+      "value": 1000,
+      "index": 68,
+      "isFunc": false,
+      "text": "68. Name: TRAIN_SET_SIZE, Type: number",
+      "example": 1000
+    },
+    {
+      "desc": "LEARNING_RATE",
+      "value": 0.05,
+      "index": 69,
+      "isFunc": false,
+      "text": "69. Name: LEARNING_RATE, Type: number",
+      "example": 0.05
+    },
+    {
+      "desc": "OPTIONS_FS",
+      "value": {
+        "encoding": "utf-8"
+      },
+      "index": 70,
+      "isFunc": false,
+      "text": "70. Name: OPTIONS_FS, Type: object",
+      "example": {
+        "encoding": "utf-8"
+      }
+    },
+    {
+      "desc": "OPTIONS_BRAIN_LSTM",
+      "value": {
+        "log": true
+      },
+      "index": 71,
+      "isFunc": false,
+      "text": "71. Name: OPTIONS_BRAIN_LSTM, Type: object",
+      "example": {
+        "log": true
+      }
+    },
+    {
+      "desc": "ERROR_THRESHOLD",
+      "value": 0.005,
+      "index": 72,
+      "isFunc": false,
+      "text": "72. Name: ERROR_THRESHOLD, Type: number",
+      "example": 0.005
+    },
+    {
+      "desc": "LOG_PERIOD",
+      "value": 100,
+      "index": 73,
+      "isFunc": false,
+      "text": "73. Name: LOG_PERIOD, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "OPTIONS_BRAIN_TRAIN",
+      "value": {
+        "log": true,
+        "learningRate": 0.05,
+        "iterations": 1000,
+        "errorThresh": 0.005,
+        "logPeriod": 100
+      },
+      "index": 74,
+      "isFunc": false,
+      "text": "74. Name: OPTIONS_BRAIN_TRAIN, Type: object",
+      "example": {
+        "log": true,
+        "learningRate": 0.05,
+        "iterations": 1000,
+        "errorThresh": 0.005,
+        "logPeriod": 100
+      }
+    },
+    {
+      "desc": "TIME",
+      "value": "9/23/2022, 4:18:26 AM",
+      "index": 94,
+      "isFunc": false,
+      "text": "94. Name: TIME, Type: string",
+      "example": "9/23/2022, 4:18:26 AM"
+    },
+    {
+      "desc": "SOURCE",
+      "value": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:18:26 AM\n\t\n",
+      "index": 95,
+      "isFunc": false,
+      "text": "95. Name: SOURCE, Type: string",
+      "example": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:18:26 AM\n\t\n"
+    },
+    {
+      "desc": "ROOT",
+      "value": "/Users/alex/js/brain_exp",
+      "index": 96,
+      "isFunc": false,
+      "text": "96. Name: ROOT, Type: string",
+      "example": "/Users/alex/js/brain_exp"
+    },
+    {
+      "desc": "DIR",
+      "value": "/Users/alex/js/brain_exp",
+      "index": 97,
+      "isFunc": false,
+      "text": "97. Name: DIR, Type: string",
+      "example": "/Users/alex/js/brain_exp"
+    },
+    {
+      "desc": "FILE",
+      "value": "/Users/alex/js/brain_exp/helpersPlain.js",
+      "index": 98,
+      "isFunc": false,
+      "text": "98. Name: FILE, Type: string",
+      "example": "/Users/alex/js/brain_exp/helpersPlain.js"
+    },
+    {
+      "desc": "MIN",
+      "value": 1,
+      "index": 105,
+      "isFunc": false,
+      "text": "105. Name: MIN, Type: number",
+      "example": 1
+    },
+    {
+      "desc": "MAX",
+      "value": 100,
+      "index": 106,
+      "isFunc": false,
+      "text": "106. Name: MAX, Type: number",
+      "example": 100
+    },
+    {
+      "desc": "RANGE",
+      "value": [
+        1,
+        100
+      ],
+      "index": 107,
+      "isFunc": false,
+      "text": "107. Name: RANGE, Type: object",
+      "example": [
+        1,
+        100
+      ]
+    },
+    {
+      "desc": "ITERATIONS",
+      "value": 1000,
+      "index": 108,
+      "isFunc": false,
+      "text": "108. Name: ITERATIONS, Type: number",
+      "example": 1000
+    }
+  ],
+  "EXAMPLES_FUNCTIONS": [
+    {
+      "desc": "FUNC",
+      "index": 11,
+      "isFunc": true,
+      "text": "11. Name: FUNC, Type: function"
+    },
+    {
+      "desc": "_logGradient",
+      "index": 23,
+      "isFunc": true,
+      "text": "23. Name: _logGradient, Type: function"
+    },
+    {
+      "desc": "_logColored",
+      "index": 24,
+      "isFunc": true,
+      "text": "24. Name: _logColored, Type: function"
+    },
+    {
+      "desc": "_logLolcatPrint",
+      "index": 25,
+      "isFunc": true,
+      "text": "25. Name: _logLolcatPrint, Type: function"
+    },
+    {
+      "desc": "_logLolcatRainbow",
+      "index": 26,
+      "isFunc": true,
+      "text": "26. Name: _logLolcatRainbow, Type: function"
+    },
+    {
+      "desc": "_logCowSay",
+      "index": 27,
+      "isFunc": true,
+      "text": "27. Name: _logCowSay, Type: function"
+    },
+    {
+      "desc": "_logCowThink",
+      "index": 28,
+      "isFunc": true,
+      "text": "28. Name: _logCowThink, Type: function"
+    },
+    {
+      "desc": "_logDefault",
+      "index": 29,
+      "isFunc": true,
+      "text": "29. Name: _logDefault, Type: function"
+    },
+    {
+      "desc": "_logJson",
+      "index": 30,
+      "isFunc": true,
+      "text": "30. Name: _logJson, Type: function"
+    },
+    {
+      "desc": "_logValues",
+      "index": 31,
+      "isFunc": true,
+      "text": "31. Name: _logValues, Type: function"
+    },
+    {
+      "desc": "_logExamples",
+      "index": 32,
+      "isFunc": true,
+      "text": "32. Name: _logExamples, Type: function"
+    },
+    {
+      "desc": "is",
+      "index": 75,
+      "isFunc": true,
+      "text": "75. Name: is, Type: function"
+    },
+    {
+      "desc": "isTypeStr",
+      "index": 76,
+      "isFunc": true,
+      "text": "76. Name: isTypeStr, Type: function"
+    },
+    {
+      "desc": "isTypeNum",
+      "index": 77,
+      "isFunc": true,
+      "text": "77. Name: isTypeNum, Type: function"
+    },
+    {
+      "desc": "isTypeFunc",
+      "index": 78,
+      "isFunc": true,
+      "text": "78. Name: isTypeFunc, Type: function"
+    },
+    {
+      "desc": "isTypeObj",
+      "index": 79,
+      "isFunc": true,
+      "text": "79. Name: isTypeObj, Type: function"
+    },
+    {
+      "desc": "isTypeBool",
+      "index": 80,
+      "isFunc": true,
+      "text": "80. Name: isTypeBool, Type: function"
+    },
+    {
+      "desc": "isTypeBig",
+      "index": 81,
+      "isFunc": true,
+      "text": "81. Name: isTypeBig, Type: function"
+    },
+    {
+      "desc": "isTypeSym",
+      "index": 82,
+      "isFunc": true,
+      "text": "82. Name: isTypeSym, Type: function"
+    },
+    {
+      "desc": "isTypeUnd",
+      "index": 83,
+      "isFunc": true,
+      "text": "83. Name: isTypeUnd, Type: function"
+    },
+    {
+      "desc": "isLen",
+      "index": 84,
+      "isFunc": true,
+      "text": "84. Name: isLen, Type: function"
+    },
+    {
+      "desc": "isDefined",
+      "index": 85,
+      "isFunc": true,
+      "text": "85. Name: isDefined, Type: function"
+    },
+    {
+      "desc": "isTypeObjTruthy",
+      "index": 86,
+      "isFunc": true,
+      "text": "86. Name: isTypeObjTruthy, Type: function"
+    },
+    {
+      "desc": "isTypeOfValue",
+      "index": 87,
+      "isFunc": true,
+      "text": "87. Name: isTypeOfValue, Type: function"
+    },
+    {
+      "desc": "toTypeOf",
+      "index": 88,
+      "isFunc": true,
+      "text": "88. Name: toTypeOf, Type: function"
+    },
+    {
+      "desc": "isType",
+      "index": 89,
+      "isFunc": true,
+      "text": "89. Name: isType, Type: function"
+    },
+    {
+      "desc": "isEvery",
+      "index": 90,
+      "isFunc": true,
+      "text": "90. Name: isEvery, Type: function"
+    },
+    {
+      "desc": "isSome",
+      "index": 91,
+      "isFunc": true,
+      "text": "91. Name: isSome, Type: function"
+    },
+    {
+      "desc": "getTimeStamp",
+      "index": 92,
+      "isFunc": true,
+      "text": "92. Name: getTimeStamp, Type: function"
+    },
+    {
+      "desc": "getSource",
+      "index": 93,
+      "isFunc": true,
+      "text": "93. Name: getSource, Type: function"
+    },
+    {
+      "desc": "toMaxLen",
+      "index": 99,
+      "isFunc": true,
+      "text": "99. Name: toMaxLen, Type: function"
+    },
+    {
+      "desc": "toMinLen",
+      "index": 100,
+      "isFunc": true,
+      "text": "100. Name: toMinLen, Type: function"
+    },
+    {
+      "desc": "toMatchLen",
+      "index": 101,
+      "isFunc": true,
+      "text": "101. Name: toMatchLen, Type: function"
+    },
+    {
+      "desc": "toCharCode",
+      "index": 102,
+      "isFunc": true,
+      "text": "102. Name: toCharCode, Type: function"
+    },
+    {
+      "desc": "toCharFromCode",
+      "index": 103,
+      "isFunc": true,
+      "text": "103. Name: toCharFromCode, Type: function"
+    },
+    {
+      "desc": "toCharCodeFromText",
+      "index": 104,
+      "isFunc": true,
+      "text": "104. Name: toCharCodeFromText, Type: function"
+    },
+    {
+      "desc": "filePath",
+      "index": 109,
+      "isFunc": true,
+      "text": "109. Name: filePath, Type: function"
+    },
+    {
+      "desc": "fileList",
+      "index": 110,
+      "isFunc": true,
+      "text": "110. Name: fileList, Type: function"
+    },
+    {
+      "desc": "fileRead",
+      "index": 111,
+      "isFunc": true,
+      "text": "111. Name: fileRead, Type: function"
+    },
+    {
+      "desc": "fileWrite",
+      "index": 112,
+      "isFunc": true,
+      "text": "112. Name: fileWrite, Type: function"
+    },
+    {
+      "desc": "fileAppend",
+      "index": 113,
+      "isFunc": true,
+      "text": "113. Name: fileAppend, Type: function"
+    },
+    {
+      "desc": "fileCreateDir",
+      "index": 114,
+      "isFunc": true,
+      "text": "114. Name: fileCreateDir, Type: function"
+    },
+    {
+      "desc": "genBool",
+      "index": 115,
+      "isFunc": true,
+      "text": "115. Name: genBool, Type: function"
+    },
+    {
+      "desc": "gen",
+      "index": 116,
+      "isFunc": true,
+      "text": "116. Name: gen, Type: function"
+    },
+    {
+      "desc": "genInt",
+      "index": 117,
+      "isFunc": true,
+      "text": "117. Name: genInt, Type: function"
+    },
+    {
+      "desc": "genCoin",
+      "index": 118,
+      "isFunc": true,
+      "text": "118. Name: genCoin, Type: function"
+    },
+    {
+      "desc": "genId",
+      "index": 119,
+      "isFunc": true,
+      "text": "119. Name: genId, Type: function"
+    },
+    {
+      "desc": "genKey",
+      "index": 120,
+      "isFunc": true,
+      "text": "120. Name: genKey, Type: function"
+    },
+    {
+      "desc": "genArr",
+      "index": 121,
+      "isFunc": true,
+      "text": "121. Name: genArr, Type: function"
+    },
+    {
+      "desc": "genMany",
+      "index": 122,
+      "isFunc": true,
+      "text": "122. Name: genMany, Type: function"
+    },
+    {
+      "desc": "genSort",
+      "index": 123,
+      "isFunc": true,
+      "text": "123. Name: genSort, Type: function"
+    },
+    {
+      "desc": "genIndex",
+      "index": 124,
+      "isFunc": true,
+      "text": "124. Name: genIndex, Type: function"
+    },
+    {
+      "desc": "genElement",
+      "index": 125,
+      "isFunc": true,
+      "text": "125. Name: genElement, Type: function"
+    },
+    {
+      "desc": "genElementsMany",
+      "index": 126,
+      "isFunc": true,
+      "text": "126. Name: genElementsMany, Type: function"
+    },
+    {
+      "desc": "genObjKey",
+      "index": 127,
+      "isFunc": true,
+      "text": "127. Name: genObjKey, Type: function"
+    },
+    {
+      "desc": "genObjValue",
+      "index": 128,
+      "isFunc": true,
+      "text": "128. Name: genObjValue, Type: function"
+    },
+    {
+      "desc": "genObjEntry",
+      "index": 129,
+      "isFunc": true,
+      "text": "129. Name: genObjEntry, Type: function"
+    },
+    {
+      "desc": "genChar",
+      "index": 130,
+      "isFunc": true,
+      "text": "130. Name: genChar, Type: function"
+    },
+    {
+      "desc": "genCharLatin",
+      "index": 131,
+      "isFunc": true,
+      "text": "131. Name: genCharLatin, Type: function"
+    },
+    {
+      "desc": "genCharKyrillic",
+      "index": 132,
+      "isFunc": true,
+      "text": "132. Name: genCharKyrillic, Type: function"
+    },
+    {
+      "desc": "genCharCode",
+      "index": 133,
+      "isFunc": true,
+      "text": "133. Name: genCharCode, Type: function"
+    },
+    {
+      "desc": "genCharCodeLatin",
+      "index": 134,
+      "isFunc": true,
+      "text": "134. Name: genCharCodeLatin, Type: function"
+    },
+    {
+      "desc": "genCharCodeKyrillic",
+      "index": 135,
+      "isFunc": true,
+      "text": "135. Name: genCharCodeKyrillic, Type: function"
+    },
+    {
+      "desc": "genRgb",
+      "index": 136,
+      "isFunc": true,
+      "text": "136. Name: genRgb, Type: function"
+    },
+    {
+      "desc": "isRxp",
+      "index": 137,
+      "isFunc": true,
+      "text": "137. Name: isRxp, Type: function"
+    },
+    {
+      "desc": "toCallback",
+      "index": 138,
+      "isFunc": true,
+      "text": "138. Name: toCallback, Type: function"
+    },
+    {
+      "desc": "toLen",
+      "index": 139,
+      "isFunc": true,
+      "text": "139. Name: toLen, Type: function"
+    },
+    {
+      "desc": "isLenMin",
+      "index": 140,
+      "isFunc": true,
+      "text": "140. Name: isLenMin, Type: function"
+    },
+    {
+      "desc": "isLenMax",
+      "index": 141,
+      "isFunc": true,
+      "text": "141. Name: isLenMax, Type: function"
+    },
+    {
+      "desc": "isLenEqual",
+      "index": 142,
+      "isFunc": true,
+      "text": "142. Name: isLenEqual, Type: function"
+    },
+    {
+      "desc": "isLenRange",
+      "index": 143,
+      "isFunc": true,
+      "text": "143. Name: isLenRange, Type: function"
+    },
+    {
+      "desc": "isNum",
+      "index": 144,
+      "isFunc": true,
+      "text": "144. Name: isNum, Type: function"
+    },
+    {
+      "desc": "isStr",
+      "index": 145,
+      "isFunc": true,
+      "text": "145. Name: isStr, Type: function"
+    },
+    {
+      "desc": "isArr",
+      "index": 146,
+      "isFunc": true,
+      "text": "146. Name: isArr, Type: function"
+    },
+    {
+      "desc": "isObj",
+      "index": 147,
+      "isFunc": true,
+      "text": "147. Name: isObj, Type: function"
+    },
+    {
+      "desc": "isCharLatin",
+      "index": 148,
+      "isFunc": true,
+      "text": "148. Name: isCharLatin, Type: function"
+    },
+    {
+      "desc": "isCharKyrrylic",
+      "index": 149,
+      "isFunc": true,
+      "text": "149. Name: isCharKyrrylic, Type: function"
+    },
+    {
+      "desc": "isCharNum",
+      "index": 150,
+      "isFunc": true,
+      "text": "150. Name: isCharNum, Type: function"
+    },
+    {
+      "desc": "isCharSpecial",
+      "index": 151,
+      "isFunc": true,
+      "text": "151. Name: isCharSpecial, Type: function"
+    },
+    {
+      "desc": "isCharValid",
+      "index": 152,
+      "isFunc": true,
+      "text": "152. Name: isCharValid, Type: function"
+    },
+    {
+      "desc": "isNumLike",
+      "index": 153,
+      "isFunc": true,
+      "text": "153. Name: isNumLike, Type: function"
+    },
+    {
+      "desc": "filterStr",
+      "index": 154,
+      "isFunc": true,
+      "text": "154. Name: filterStr, Type: function"
+    },
+    {
+      "desc": "filterNum",
+      "index": 155,
+      "isFunc": true,
+      "text": "155. Name: filterNum, Type: function"
+    },
+    {
+      "desc": "filterArr",
+      "index": 156,
+      "isFunc": true,
+      "text": "156. Name: filterArr, Type: function"
+    },
+    {
+      "desc": "filterBool",
+      "index": 157,
+      "isFunc": true,
+      "text": "157. Name: filterBool, Type: function"
+    },
+    {
+      "desc": "filterFunc",
+      "index": 158,
+      "isFunc": true,
+      "text": "158. Name: filterFunc, Type: function"
+    },
+    {
+      "desc": "or",
+      "index": 159,
+      "isFunc": true,
+      "text": "159. Name: or, Type: function"
+    },
+    {
+      "desc": "and",
+      "index": 160,
+      "isFunc": true,
+      "text": "160. Name: and, Type: function"
+    },
+    {
+      "desc": "like",
+      "index": 161,
+      "isFunc": true,
+      "text": "161. Name: like, Type: function"
+    },
+    {
+      "desc": "not",
+      "index": 162,
+      "isFunc": true,
+      "text": "162. Name: not, Type: function"
+    },
+    {
+      "desc": "getIndexLast",
+      "index": 163,
+      "isFunc": true,
+      "text": "163. Name: getIndexLast, Type: function"
+    },
+    {
+      "desc": "getElementLast",
+      "index": 164,
+      "isFunc": true,
+      "text": "164. Name: getElementLast, Type: function"
+    },
+    {
+      "desc": "getSlice",
+      "index": 165,
+      "isFunc": true,
+      "text": "165. Name: getSlice, Type: function"
+    },
+    {
+      "desc": "getElementNeighbours",
+      "index": 166,
+      "isFunc": true,
+      "text": "166. Name: getElementNeighbours, Type: function"
+    },
+    {
+      "desc": "getElementNext",
+      "index": 167,
+      "isFunc": true,
+      "text": "167. Name: getElementNext, Type: function"
+    },
+    {
+      "desc": "getSplitted",
+      "index": 168,
+      "isFunc": true,
+      "text": "168. Name: getSplitted, Type: function"
+    },
+    {
+      "desc": "getChars",
+      "index": 169,
+      "isFunc": true,
+      "text": "169. Name: getChars, Type: function"
+    },
+    {
+      "desc": "getWords",
+      "index": 170,
+      "isFunc": true,
+      "text": "170. Name: getWords, Type: function"
+    },
+    {
+      "desc": "getPhrases",
+      "index": 171,
+      "isFunc": true,
+      "text": "171. Name: getPhrases, Type: function"
+    },
+    {
+      "desc": "getLines",
+      "index": 172,
+      "isFunc": true,
+      "text": "172. Name: getLines, Type: function"
+    },
+    {
+      "desc": "getWordFirst",
+      "index": 173,
+      "isFunc": true,
+      "text": "173. Name: getWordFirst, Type: function"
+    },
+    {
+      "desc": "getWordLast",
+      "index": 174,
+      "isFunc": true,
+      "text": "174. Name: getWordLast, Type: function"
+    },
+    {
+      "desc": "genPhraseFromWords",
+      "index": 175,
+      "isFunc": true,
+      "text": "175. Name: genPhraseFromWords, Type: function"
+    },
+    {
+      "desc": "getPhrasesWithWord",
+      "index": 176,
+      "isFunc": true,
+      "text": "176. Name: getPhrasesWithWord, Type: function"
+    },
+    {
+      "desc": "getPhrasesWithoutWord",
+      "index": 177,
+      "isFunc": true,
+      "text": "177. Name: getPhrasesWithoutWord, Type: function"
+    },
+    {
+      "desc": "getPhrasesEndsWith",
+      "index": 178,
+      "isFunc": true,
+      "text": "178. Name: getPhrasesEndsWith, Type: function"
+    },
+    {
+      "desc": "getPhrasesStartsWith",
+      "index": 179,
+      "isFunc": true,
+      "text": "179. Name: getPhrasesStartsWith, Type: function"
+    },
+    {
+      "desc": "getPhrasesByLength",
+      "index": 180,
+      "isFunc": true,
+      "text": "180. Name: getPhrasesByLength, Type: function"
+    },
+    {
+      "desc": "getPhrasesByIndex",
+      "index": 181,
+      "isFunc": true,
+      "text": "181. Name: getPhrasesByIndex, Type: function"
+    },
+    {
+      "desc": "reduceText",
+      "index": 182,
+      "isFunc": true,
+      "text": "182. Name: reduceText, Type: function"
+    },
+    {
+      "desc": "reduceSum",
+      "index": 183,
+      "isFunc": true,
+      "text": "183. Name: reduceSum, Type: function"
+    },
+    {
+      "desc": "reduceMult",
+      "index": 184,
+      "isFunc": true,
+      "text": "184. Name: reduceMult, Type: function"
+    },
+    {
+      "desc": "reduceObj",
+      "index": 185,
+      "isFunc": true,
+      "text": "185. Name: reduceObj, Type: function"
+    },
+    {
+      "desc": "reducePropValue",
+      "index": 186,
+      "isFunc": true,
+      "text": "186. Name: reducePropValue, Type: function"
+    },
+    {
+      "desc": "reducePropDesc",
+      "index": 187,
+      "isFunc": true,
+      "text": "187. Name: reducePropDesc, Type: function"
+    },
+    {
+      "desc": "reduceElementStats",
+      "index": 188,
+      "isFunc": true,
+      "text": "188. Name: reduceElementStats, Type: function"
+    },
+    {
+      "desc": "reduceElementKeys",
+      "index": 189,
+      "isFunc": true,
+      "text": "189. Name: reduceElementKeys, Type: function"
+    },
+    {
+      "desc": "reduceElementValues",
+      "index": 190,
+      "isFunc": true,
+      "text": "190. Name: reduceElementValues, Type: function"
+    },
+    {
+      "desc": "reduceElementEntries",
+      "index": 191,
+      "isFunc": true,
+      "text": "191. Name: reduceElementEntries, Type: function"
+    },
+    {
+      "desc": "toArr",
+      "index": 192,
+      "isFunc": true,
+      "text": "192. Name: toArr, Type: function"
+    },
+    {
+      "desc": "toObj",
+      "index": 193,
+      "isFunc": true,
+      "text": "193. Name: toObj, Type: function"
+    },
+    {
+      "desc": "toText",
+      "index": 194,
+      "isFunc": true,
+      "text": "194. Name: toText, Type: function"
+    },
+    {
+      "desc": "toKeys",
+      "index": 195,
+      "isFunc": true,
+      "text": "195. Name: toKeys, Type: function"
+    },
+    {
+      "desc": "toNumDiff",
+      "index": 196,
+      "isFunc": true,
+      "text": "196. Name: toNumDiff, Type: function"
+    },
+    {
+      "desc": "toNumRange",
+      "index": 197,
+      "isFunc": true,
+      "text": "197. Name: toNumRange, Type: function"
+    },
+    {
+      "desc": "toTrim",
+      "index": 198,
+      "isFunc": true,
+      "text": "198. Name: toTrim, Type: function"
+    },
+    {
+      "desc": "toTrimLine",
+      "index": 199,
+      "isFunc": true,
+      "text": "199. Name: toTrimLine, Type: function"
+    },
+    {
+      "desc": "toUnical",
+      "index": 200,
+      "isFunc": true,
+      "text": "200. Name: toUnical, Type: function"
+    },
+    {
+      "desc": "toJoin",
+      "index": 201,
+      "isFunc": true,
+      "text": "201. Name: toJoin, Type: function"
+    },
+    {
+      "desc": "toRepeat",
+      "index": 202,
+      "isFunc": true,
+      "text": "202. Name: toRepeat, Type: function"
+    },
+    {
+      "desc": "toReversed",
+      "index": 203,
+      "isFunc": true,
+      "text": "203. Name: toReversed, Type: function"
+    },
+    {
+      "desc": "toBuffer",
+      "index": 204,
+      "isFunc": true,
+      "text": "204. Name: toBuffer, Type: function"
+    },
+    {
+      "desc": "toFloatFixed",
+      "index": 205,
+      "isFunc": true,
+      "text": "205. Name: toFloatFixed, Type: function"
+    },
+    {
+      "desc": "toTrainingData",
+      "index": 206,
+      "isFunc": true,
+      "text": "206. Name: toTrainingData, Type: function"
+    },
+    {
+      "desc": "toFormatted",
+      "index": 207,
+      "isFunc": true,
+      "text": "207. Name: toFormatted, Type: function"
+    },
+    {
+      "desc": "toPercent",
+      "index": 208,
+      "isFunc": true,
+      "text": "208. Name: toPercent, Type: function"
+    },
+    {
+      "desc": "toResultStats",
+      "index": 209,
+      "isFunc": true,
+      "text": "209. Name: toResultStats, Type: function"
+    },
+    {
+      "desc": "toResultProps",
+      "index": 210,
+      "isFunc": true,
+      "text": "210. Name: toResultProps, Type: function"
+    },
+    {
+      "desc": "toTitleCase",
+      "index": 211,
+      "isFunc": true,
+      "text": "211. Name: toTitleCase, Type: function"
+    },
+    {
+      "desc": "jsonParse",
+      "index": 212,
+      "isFunc": true,
+      "text": "212. Name: jsonParse, Type: function"
+    },
+    {
+      "desc": "jsonCreate",
+      "index": 213,
+      "isFunc": true,
+      "text": "213. Name: jsonCreate, Type: function"
+    },
+    {
+      "desc": "toAverage",
+      "index": 214,
+      "isFunc": true,
+      "text": "214. Name: toAverage, Type: function"
+    },
+    {
+      "desc": "toRxp",
+      "index": 215,
+      "isFunc": true,
+      "text": "215. Name: toRxp, Type: function"
+    },
+    {
+      "desc": "toRxpNext",
+      "index": 216,
+      "isFunc": true,
+      "text": "216. Name: toRxpNext, Type: function"
+    },
+    {
+      "desc": "toMatchWordFirst",
+      "index": 217,
+      "isFunc": true,
+      "text": "217. Name: toMatchWordFirst, Type: function"
+    },
+    {
+      "desc": "toMatchWordLast",
+      "index": 218,
+      "isFunc": true,
+      "text": "218. Name: toMatchWordLast, Type: function"
+    },
+    {
+      "desc": "toMatchLineWithWord",
+      "index": 219,
+      "isFunc": true,
+      "text": "219. Name: toMatchLineWithWord, Type: function"
+    },
+    {
+      "desc": "toMatchChars",
+      "index": 220,
+      "isFunc": true,
+      "text": "220. Name: toMatchChars, Type: function"
+    },
+    {
+      "desc": "toMatchWords",
+      "index": 221,
+      "isFunc": true,
+      "text": "221. Name: toMatchWords, Type: function"
+    },
+    {
+      "desc": "toMatchPhrases",
+      "index": 222,
+      "isFunc": true,
+      "text": "222. Name: toMatchPhrases, Type: function"
+    },
+    {
+      "desc": "toMatchLines",
+      "index": 223,
+      "isFunc": true,
+      "text": "223. Name: toMatchLines, Type: function"
+    },
+    {
+      "desc": "toMatchDividered",
+      "index": 224,
+      "isFunc": true,
+      "text": "224. Name: toMatchDividered, Type: function"
+    },
+    {
+      "desc": "toMatchNextWords",
+      "index": 225,
+      "isFunc": true,
+      "text": "225. Name: toMatchNextWords, Type: function"
+    },
+    {
+      "desc": "toArrValues",
+      "index": 226,
+      "isFunc": true,
+      "text": "226. Name: toArrValues, Type: function"
+    },
+    {
+      "desc": "toNotUnical",
+      "index": 227,
+      "isFunc": true,
+      "text": "227. Name: toNotUnical, Type: function"
+    },
+    {
+      "desc": "replaceManyChars",
+      "index": 228,
+      "isFunc": true,
+      "text": "228. Name: replaceManyChars, Type: function"
+    },
+    {
+      "desc": "replaceChars",
+      "index": 229,
+      "isFunc": true,
+      "text": "229. Name: replaceChars, Type: function"
+    },
+    {
+      "desc": "getIndex",
+      "index": 230,
+      "isFunc": true,
+      "text": "230. Name: getIndex, Type: function"
+    },
+    {
+      "desc": "getIndexAll",
+      "index": 231,
+      "isFunc": true,
+      "text": "231. Name: getIndexAll, Type: function"
+    },
+    {
+      "desc": "getMatch",
+      "index": 232,
+      "isFunc": true,
+      "text": "232. Name: getMatch, Type: function"
+    },
+    {
+      "desc": "getMatchAll",
+      "index": 233,
+      "isFunc": true,
+      "text": "233. Name: getMatchAll, Type: function"
+    },
+    {
+      "desc": "getElementsSequence",
+      "index": 234,
+      "isFunc": true,
+      "text": "234. Name: getElementsSequence, Type: function"
+    },
+    {
+      "desc": "msToTimeDesc",
+      "index": 235,
+      "isFunc": true,
+      "text": "235. Name: msToTimeDesc, Type: function"
+    },
+    {
+      "desc": "toFixed",
+      "index": 236,
+      "isFunc": true,
+      "text": "236. Name: toFixed, Type: function"
+    },
+    {
+      "desc": "sliceToSize",
+      "index": 237,
+      "isFunc": true,
+      "text": "237. Name: sliceToSize, Type: function"
+    },
+    {
+      "desc": "encode",
+      "index": 238,
+      "isFunc": true,
+      "text": "238. Name: encode, Type: function"
+    },
+    {
+      "desc": "decode",
+      "index": 239,
+      "isFunc": true,
+      "text": "239. Name: decode, Type: function"
+    },
+    {
+      "desc": "isStrEqual",
+      "index": 240,
+      "isFunc": true,
+      "text": "240. Name: isStrEqual, Type: function"
+    },
+    {
+      "desc": "isLineBreak",
+      "index": 241,
+      "isFunc": true,
+      "text": "241. Name: isLineBreak, Type: function"
+    },
+    {
+      "desc": "isSharp",
+      "index": 242,
+      "isFunc": true,
+      "text": "242. Name: isSharp, Type: function"
+    },
+    {
+      "desc": "isSpace",
+      "index": 243,
+      "isFunc": true,
+      "text": "243. Name: isSpace, Type: function"
+    },
+    {
+      "desc": "isStar",
+      "index": 244,
+      "isFunc": true,
+      "text": "244. Name: isStar, Type: function"
+    },
+    {
+      "desc": "character",
+      "index": 245,
+      "isFunc": true,
+      "text": "245. Name: character, Type: function"
+    },
+    {
+      "desc": "_toObj",
+      "index": 246,
+      "isFunc": true,
+      "text": "246. Name: _toObj, Type: function"
+    },
+    {
+      "desc": "_toArr",
+      "index": 247,
+      "isFunc": true,
+      "text": "247. Name: _toArr, Type: function"
+    },
+    {
+      "desc": "_toStr",
+      "index": 248,
+      "isFunc": true,
+      "text": "248. Name: _toStr, Type: function"
+    }
+  ],
+  "EXAMPLES_FUNCTION_NAMES": [
+    "FUNC",
+    "_logGradient",
+    "_logColored",
+    "_logLolcatPrint",
+    "_logLolcatRainbow",
+    "_logCowSay",
+    "_logCowThink",
+    "_logDefault",
+    "_logJson",
+    "_logValues",
+    "_logExamples",
+    "is",
+    "isTypeStr",
+    "isTypeNum",
+    "isTypeFunc",
+    "isTypeObj",
+    "isTypeBool",
+    "isTypeBig",
+    "isTypeSym",
+    "isTypeUnd",
+    "isLen",
+    "isDefined",
+    "isTypeObjTruthy",
+    "isTypeOfValue",
+    "toTypeOf",
+    "isType",
+    "isEvery",
+    "isSome",
+    "getTimeStamp",
+    "getSource",
+    "toMaxLen",
+    "toMinLen",
+    "toMatchLen",
+    "toCharCode",
+    "toCharFromCode",
+    "toCharCodeFromText",
+    "filePath",
+    "fileList",
+    "fileRead",
+    "fileWrite",
+    "fileAppend",
+    "fileCreateDir",
+    "genBool",
+    "gen",
+    "genInt",
+    "genCoin",
+    "genId",
+    "genKey",
+    "genArr",
+    "genMany",
+    "genSort",
+    "genIndex",
+    "genElement",
+    "genElementsMany",
+    "genObjKey",
+    "genObjValue",
+    "genObjEntry",
+    "genChar",
+    "genCharLatin",
+    "genCharKyrillic",
+    "genCharCode",
+    "genCharCodeLatin",
+    "genCharCodeKyrillic",
+    "genRgb",
+    "isRxp",
+    "toCallback",
+    "toLen",
+    "isLenMin",
+    "isLenMax",
+    "isLenEqual",
+    "isLenRange",
+    "isNum",
+    "isStr",
+    "isArr",
+    "isObj",
+    "isCharLatin",
+    "isCharKyrrylic",
+    "isCharNum",
+    "isCharSpecial",
+    "isCharValid",
+    "isNumLike",
+    "filterStr",
+    "filterNum",
+    "filterArr",
+    "filterBool",
+    "filterFunc",
+    "or",
+    "and",
+    "like",
+    "not",
+    "getIndexLast",
+    "getElementLast",
+    "getSlice",
+    "getElementNeighbours",
+    "getElementNext",
+    "getSplitted",
+    "getChars",
+    "getWords",
+    "getPhrases",
+    "getLines",
+    "getWordFirst",
+    "getWordLast",
+    "genPhraseFromWords",
+    "getPhrasesWithWord",
+    "getPhrasesWithoutWord",
+    "getPhrasesEndsWith",
+    "getPhrasesStartsWith",
+    "getPhrasesByLength",
+    "getPhrasesByIndex",
+    "reduceText",
+    "reduceSum",
+    "reduceMult",
+    "reduceObj",
+    "reducePropValue",
+    "reducePropDesc",
+    "reduceElementStats",
+    "reduceElementKeys",
+    "reduceElementValues",
+    "reduceElementEntries",
+    "toArr",
+    "toObj",
+    "toText",
+    "toKeys",
+    "toNumDiff",
+    "toNumRange",
+    "toTrim",
+    "toTrimLine",
+    "toUnical",
+    "toJoin",
+    "toRepeat",
+    "toReversed",
+    "toBuffer",
+    "toFloatFixed",
+    "toTrainingData",
+    "toFormatted",
+    "toPercent",
+    "toResultStats",
+    "toResultProps",
+    "toTitleCase",
+    "jsonParse",
+    "jsonCreate",
+    "toAverage",
+    "toRxp",
+    "toRxpNext",
+    "toMatchWordFirst",
+    "toMatchWordLast",
+    "toMatchLineWithWord",
+    "toMatchChars",
+    "toMatchWords",
+    "toMatchPhrases",
+    "toMatchLines",
+    "toMatchDividered",
+    "toMatchNextWords",
+    "toArrValues",
+    "toNotUnical",
+    "replaceManyChars",
+    "replaceChars",
+    "getIndex",
+    "getIndexAll",
+    "getMatch",
+    "getMatchAll",
+    "getElementsSequence",
+    "msToTimeDesc",
+    "toFixed",
+    "sliceToSize",
+    "encode",
+    "decode",
+    "isStrEqual",
+    "isLineBreak",
+    "isSharp",
+    "isSpace",
+    "isStar",
+    "character",
+    "_toObj",
+    "_toArr",
+    "_toStr"
+  ],
+  "EXAMPLES_FUNCTION_RESULTS": [
+    {
+      "desc": "FUNC",
+      "result": []
+    },
+    {
+      "desc": "_logGradient"
+    },
+    {
+      "desc": "_logColored"
+    },
+    {
+      "desc": "_logLolcatPrint"
+    },
+    {
+      "desc": "_logLolcatRainbow"
+    },
+    {
+      "desc": "_logCowSay"
+    },
+    {
+      "desc": "_logCowThink"
+    },
+    {
+      "desc": "_logDefault"
+    },
+    {
+      "desc": "_logJson"
+    },
+    {
+      "desc": "_logValues"
+    },
+    {
+      "desc": "_logExamples"
+    },
+    {
+      "desc": "is",
+      "result": true
+    },
+    {
+      "desc": "isTypeStr",
+      "result": true
+    },
+    {
+      "desc": "isTypeNum",
+      "result": true
+    },
+    {
+      "desc": "isTypeFunc",
+      "result": true
+    },
+    {
+      "desc": "isTypeObj",
+      "result": true
+    },
+    {
+      "desc": "isTypeBool",
+      "result": true
+    },
+    {
+      "desc": "isTypeBig",
+      "result": true
+    },
+    {
+      "desc": "isTypeSym",
+      "result": true
+    },
+    {
+      "desc": "isTypeUnd",
+      "result": true
+    },
+    {
+      "desc": "isLen",
+      "result": true
+    },
+    {
+      "desc": "isDefined",
+      "result": true
+    },
+    {
+      "desc": "isTypeObjTruthy",
+      "result": true
+    },
+    {
+      "desc": "isTypeOfValue",
+      "result": true
+    },
+    {
+      "desc": "toTypeOf",
+      "result": "undefined"
+    },
+    {
+      "desc": "isType",
+      "result": true
+    },
+    {
+      "desc": "isEvery",
+      "result": true
+    },
+    {
+      "desc": "isSome",
+      "result": false
+    },
+    {
+      "desc": "getTimeStamp",
+      "result": "9/23/2022, 4:18:26 AM"
+    },
+    {
+      "desc": "getSource",
+      "result": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:18:26 AM\n\t\n"
+    },
+    {
+      "desc": "toMaxLen"
+    },
+    {
+      "desc": "toMinLen"
+    },
+    {
+      "desc": "toMatchLen"
+    },
+    {
+      "desc": "toCharCode",
+      "result": false
+    },
+    {
+      "desc": "toCharFromCode",
+      "result": false
+    },
+    {
+      "desc": "toCharCodeFromText",
+      "result": false
+    },
+    {
+      "desc": "filePath",
+      "result": "/Users/alex/js/brain_exp"
+    },
+    {
+      "desc": "fileList",
+      "result": [
+        "error.log",
+        "info.log",
+        "log.log",
+        "warn.log"
+      ]
+    },
+    {
+      "desc": "fileRead",
+      "result": "\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:14:46 AM\n\t\n\n\t/Users/alex/js/brain_exp/helpersPlain.js\n\t9/23/2022, 4:14:46 AM\n\t\n"
+    },
+    {
+      "desc": "genBool",
+      "result": true
+    },
+    {
+      "desc": "gen",
+      "result": 0.4297602688025093
+    },
+    {
+      "desc": "genInt",
+      "result": 76
+    },
+    {
+      "desc": "genCoin",
+      "result": false
+    },
+    {
+      "desc": "genId",
+      "result": "184"
+    },
+    {
+      "desc": "genKey",
+      "result": "11111"
+    },
+    {
+      "desc": "genArr",
+      "result": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "desc": "genMany",
+      "result": [
+        0.8866677785957362,
+        0.6217990510096159,
+        0.19171396492768955,
+        0.9357420512070571,
+        0.6774181667493162,
+        0.04959181618620523,
+        0.6670125774549867,
+        0.6839585348004784,
+        0.9308870935785838,
+        0.1299106330125679
+      ]
+    },
+    {
+      "desc": "genSort",
+      "result": 1
+    },
+    {
+      "desc": "genIndex",
+      "result": 0
+    },
+    {
+      "desc": "genElement",
+      "result": false
+    },
+    {
+      "desc": "genElementsMany",
+      "result": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "desc": "genObjKey",
+      "result": false
+    },
+    {
+      "desc": "genObjValue",
+      "result": false
+    },
+    {
+      "desc": "genObjEntry",
+      "result": false
+    },
+    {
+      "desc": "genChar",
+      "result": "\t"
+    },
+    {
+      "desc": "genCharLatin",
+      "result": "u"
+    },
+    {
+      "desc": "genCharKyrillic",
+      "result": "ц"
+    },
+    {
+      "desc": "genCharCode",
+      "result": 0.19921875
+    },
+    {
+      "desc": "genCharCodeLatin",
+      "result": 13
+    },
+    {
+      "desc": "genCharCodeKyrillic",
+      "result": 460
+    },
+    {
+      "desc": "genRgb",
+      "result": {
+        "r": 1,
+        "g": 1,
+        "b": 1
+      }
+    },
+    {
+      "desc": "isRxp",
+      "result": false
+    },
+    {
+      "desc": "toCallback"
+    },
+    {
+      "desc": "toLen",
+      "result": -1
+    },
+    {
+      "desc": "isLenMin",
+      "result": false
+    },
+    {
+      "desc": "isLenMax",
+      "result": false
+    },
+    {
+      "desc": "isLenEqual",
+      "result": false
+    },
+    {
+      "desc": "isLenRange",
+      "result": false
+    },
+    {
+      "desc": "isNum",
+      "result": false
+    },
+    {
+      "desc": "isStr",
+      "result": false
+    },
+    {
+      "desc": "isArr",
+      "result": false
+    },
+    {
+      "desc": "isObj",
+      "result": false
+    },
+    {
+      "desc": "isCharLatin",
+      "result": false
+    },
+    {
+      "desc": "isCharKyrrylic",
+      "result": false
+    },
+    {
+      "desc": "isCharNum",
+      "result": false
+    },
+    {
+      "desc": "isCharSpecial",
+      "result": false
+    },
+    {
+      "desc": "isCharValid",
+      "result": false
+    },
+    {
+      "desc": "isNumLike",
+      "result": false
+    },
+    {
+      "desc": "filterStr",
+      "result": []
+    },
+    {
+      "desc": "filterNum",
+      "result": []
+    },
+    {
+      "desc": "filterArr",
+      "result": []
+    },
+    {
+      "desc": "filterBool",
+      "result": []
+    },
+    {
+      "desc": "filterFunc",
+      "result": []
+    },
+    {
+      "desc": "or"
+    },
+    {
+      "desc": "and"
+    },
+    {
+      "desc": "like",
+      "result": []
+    },
+    {
+      "desc": "not",
+      "result": []
+    },
+    {
+      "desc": "getIndexLast",
+      "result": false
+    },
+    {
+      "desc": "getElementLast",
+      "result": false
+    },
+    {
+      "desc": "getSlice",
+      "result": false
+    },
+    {
+      "desc": "getElementNeighbours",
+      "result": false
+    },
+    {
+      "desc": "getElementNext",
+      "result": false
+    },
+    {
+      "desc": "getSplitted",
+      "result": false
+    },
+    {
+      "desc": "getChars",
+      "result": false
+    },
+    {
+      "desc": "getWords",
+      "result": false
+    },
+    {
+      "desc": "getPhrases",
+      "result": false
+    },
+    {
+      "desc": "getLines",
+      "result": false
+    },
+    {
+      "desc": "getWordFirst",
+      "result": "Some"
+    },
+    {
+      "desc": "getWordLast",
+      "result": "value"
+    },
+    {
+      "desc": "genPhraseFromWords",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesWithWord",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesWithoutWord",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesEndsWith",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesStartsWith",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesByLength",
+      "result": false
+    },
+    {
+      "desc": "getPhrasesByIndex",
+      "result": false
+    },
+    {
+      "desc": "reduceText",
+      "result": "Some string value 638"
+    },
+    {
+      "desc": "reduceSum",
+      "result": "Some string value638"
+    },
+    {
+      "desc": "reduceMult",
+      "result": "Some string value1276"
+    },
+    {
+      "desc": "reduceObj",
+      "result": [
+        "S",
+        "o",
+        "m",
+        "e",
+        " ",
+        "s",
+        "t",
+        "r",
+        "i",
+        "n",
+        "g",
+        " ",
+        "v",
+        "a",
+        "l",
+        "u",
+        "e",
+        {
+          "value": 638,
+          "index": 1
+        }
+      ]
+    },
+    {
+      "desc": "reducePropValue",
+      "result": [
+        "Some string value",
+        {},
+        0.6383302082520825,
+        638,
+        true,
+        [
+          "Some string value",
+          638
+        ],
+        {
+          "STR": "Some string value",
+          "NUM": 638
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "desc": "reducePropDesc",
+      "result": [
+        "UND",
+        "NULL",
+        "STR",
+        "ERR",
+        "RND",
+        "NUM",
+        "BLN",
+        "ARR",
+        "OBJ",
+        "SYM",
+        "BIG",
+        "FUNC"
+      ]
+    },
+    {
+      "desc": "reduceElementStats",
+      "result": "\n{\n  \"desc\": \"UND\",\n  \"index\": 0,\n  \"type\": \"undefined\"\n}\n{\n  \"value\": null,\n  \"desc\": \"NULL\",\n  \"index\": 1,\n  \"type\": \"object\"\n}\n{\n  \"value\": \"Some string value\",\n  \"desc\": \"STR\",\n  \"index\": 2,\n  \"type\": \"string\"\n}\n{\n  \"value\": {},\n  \"desc\": \"ERR\",\n  \"index\": 3,\n  \"type\": \"object\"\n}\n{\n  \"value\": 0.6383302082520825,\n  \"desc\": \"RND\",\n  \"index\": 4,\n  \"type\": \"number\"\n}\n{\n  \"value\": 638,\n  \"desc\": \"NUM\",\n  \"index\": 5,\n  \"type\": \"number\"\n}\n{\n  \"value\": true,\n  \"desc\": \"BLN\",\n  \"index\": 6,\n  \"type\": \"boolean\"\n}\n{\n  \"value\": [\n    \"Some string value\",\n    638\n  ],\n  \"desc\": \"ARR\",\n  \"index\": 7,\n  \"type\": \"object\"\n}\n{\n  \"value\": {\n    \"STR\": \"Some string value\",\n    \"NUM\": 638\n  },\n  \"desc\": \"OBJ\",\n  \"index\": 8,\n  \"type\": \"object\"\n}\n{\n  \"desc\": \"SYM\",\n  \"index\": 9,\n  \"type\": \"symbol\"\n}\n{\n  \"value\": null,\n  \"desc\": \"BIG\",\n  \"index\": 10,\n  \"type\": \"number\"\n}\n{\n  \"desc\": \"FUNC\",\n  \"index\": 11,\n  \"type\": \"function\"\n}"
+    },
+    {
+      "desc": "reduceElementKeys",
+      "result": [
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ],
+        [
+          "value",
+          "desc",
+          "index",
+          "type",
+          "callback"
+        ]
+      ]
+    },
+    {
+      "desc": "reduceElementValues",
+      "result": [
+        [
+          null,
+          "UND",
+          0,
+          "undefined",
+          null
+        ],
+        [
+          null,
+          "NULL",
+          1,
+          "object",
+          null
+        ],
+        [
+          "Some string value",
+          "STR",
+          2,
+          "string",
+          null
+        ],
+        [
+          {},
+          "ERR",
+          3,
+          "object",
+          null
+        ],
+        [
+          0.6383302082520825,
+          "RND",
+          4,
+          "number",
+          null
+        ],
+        [
+          638,
+          "NUM",
+          5,
+          "number",
+          null
+        ],
+        [
+          true,
+          "BLN",
+          6,
+          "boolean",
+          null
+        ],
+        [
+          [
+            "Some string value",
+            638
+          ],
+          "ARR",
+          7,
+          "object",
+          null
+        ],
+        [
+          {
+            "STR": "Some string value",
+            "NUM": 638
+          },
+          "OBJ",
+          8,
+          "object",
+          null
+        ],
+        [
+          null,
+          "SYM",
+          9,
+          "symbol",
+          null
+        ],
+        [
+          null,
+          "BIG",
+          10,
+          "number",
+          null
+        ],
+        [
+          null,
+          "FUNC",
+          11,
+          "function",
+          null
+        ]
+      ]
+    },
+    {
+      "desc": "reduceElementEntries",
+      "result": [
+        [
+          [
+            "value",
+            null
+          ],
+          [
+            "desc",
+            "UND"
+          ],
+          [
+            "index",
+            0
+          ],
+          [
+            "type",
+            "undefined"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            null
+          ],
+          [
+            "desc",
+            "NULL"
+          ],
+          [
+            "index",
+            1
+          ],
+          [
+            "type",
+            "object"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            "Some string value"
+          ],
+          [
+            "desc",
+            "STR"
+          ],
+          [
+            "index",
+            2
+          ],
+          [
+            "type",
+            "string"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            {}
+          ],
+          [
+            "desc",
+            "ERR"
+          ],
+          [
+            "index",
+            3
+          ],
+          [
+            "type",
+            "object"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            0.6383302082520825
+          ],
+          [
+            "desc",
+            "RND"
+          ],
+          [
+            "index",
+            4
+          ],
+          [
+            "type",
+            "number"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            638
+          ],
+          [
+            "desc",
+            "NUM"
+          ],
+          [
+            "index",
+            5
+          ],
+          [
+            "type",
+            "number"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            true
+          ],
+          [
+            "desc",
+            "BLN"
+          ],
+          [
+            "index",
+            6
+          ],
+          [
+            "type",
+            "boolean"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            [
+              "Some string value",
+              638
+            ]
+          ],
+          [
+            "desc",
+            "ARR"
+          ],
+          [
+            "index",
+            7
+          ],
+          [
+            "type",
+            "object"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            {
+              "STR": "Some string value",
+              "NUM": 638
+            }
+          ],
+          [
+            "desc",
+            "OBJ"
+          ],
+          [
+            "index",
+            8
+          ],
+          [
+            "type",
+            "object"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            null
+          ],
+          [
+            "desc",
+            "SYM"
+          ],
+          [
+            "index",
+            9
+          ],
+          [
+            "type",
+            "symbol"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            null
+          ],
+          [
+            "desc",
+            "BIG"
+          ],
+          [
+            "index",
+            10
+          ],
+          [
+            "type",
+            "number"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ],
+        [
+          [
+            "value",
+            null
+          ],
+          [
+            "desc",
+            "FUNC"
+          ],
+          [
+            "index",
+            11
+          ],
+          [
+            "type",
+            "function"
+          ],
+          [
+            "callback",
+            null
+          ]
+        ]
+      ]
+    },
+    {
+      "desc": "toArr",
+      "result": [
+        null
+      ]
+    },
+    {
+      "desc": "toObj",
+      "result": {}
+    },
+    {
+      "desc": "toText",
+      "result": "{}"
+    },
+    {
+      "desc": "toKeys",
+      "result": []
+    },
+    {
+      "desc": "toNumDiff",
+      "result": null
+    },
+    {
+      "desc": "toNumRange",
+      "result": [
+        null,
+        null
+      ]
+    },
+    {
+      "desc": "toTrim",
+      "result": "{}"
+    },
+    {
+      "desc": "toTrimLine",
+      "result": ""
+    },
+    {
+      "desc": "toUnical",
+      "result": [
+        null
+      ]
+    },
+    {
+      "desc": "toJoin",
+      "result": "{}"
+    },
+    {
+      "desc": "toRepeat",
+      "result": "{}{}"
+    },
+    {
+      "desc": "toReversed",
+      "result": "}{"
+    },
+    {
+      "desc": "toBuffer",
+      "result": false
+    },
+    {
+      "desc": "toFloatFixed",
+      "result": 0
+    },
+    {
+      "desc": "toTrainingData",
+      "result": {
+        "other": []
+      }
+    },
+    {
+      "desc": "toFormatted",
+      "result": false
+    },
+    {
+      "desc": "toPercent",
+      "result": false
+    },
+    {
+      "desc": "toResultStats",
+      "result": "{}"
+    },
+    {
+      "desc": "toResultProps",
+      "result": {
+        "desc": "{}"
+      }
+    },
+    {
+      "desc": "toTitleCase",
+      "result": false
+    },
+    {
+      "desc": "jsonParse",
+      "result": false
+    },
+    {
+      "desc": "jsonCreate",
+      "result": "[]"
+    },
+    {
+      "desc": "toAverage",
+      "result": 0
+    },
+    {
+      "desc": "toRxp",
+      "result": {}
+    },
+    {
+      "desc": "toRxpNext",
+      "result": {}
+    },
+    {
+      "desc": "toMatchWordFirst",
+      "result": null
+    },
+    {
+      "desc": "toMatchWordLast",
+      "result": null
+    },
+    {
+      "desc": "toMatchLineWithWord",
+      "result": ""
+    },
+    {
+      "desc": "toMatchChars",
+      "result": []
+    },
+    {
+      "desc": "toMatchWords",
+      "result": []
+    },
+    {
+      "desc": "toMatchPhrases",
+      "result": []
+    },
+    {
+      "desc": "toMatchLines",
+      "result": []
+    },
+    {
+      "desc": "toMatchDividered",
+      "result": []
+    },
+    {
+      "desc": "toMatchNextWords",
+      "result": ""
+    },
+    {
+      "desc": "toArrValues",
+      "result": false
+    },
+    {
+      "desc": "toNotUnical",
+      "result": []
+    },
+    {
+      "desc": "replaceManyChars",
+      "result": false
+    },
+    {
+      "desc": "replaceChars",
+      "result": false
+    },
+    {
+      "desc": "getIndex",
+      "result": -1
+    },
+    {
+      "desc": "getIndexAll",
+      "result": []
+    },
+    {
+      "desc": "getMatch",
+      "result": []
+    },
+    {
+      "desc": "getMatchAll",
+      "result": []
+    },
+    {
+      "desc": "getElementsSequence",
+      "result": []
+    },
+    {
+      "desc": "msToTimeDesc",
+      "result": "0 days, 0 hours, 0 minutes, 0 seconds"
+    },
+    {
+      "desc": "toFixed",
+      "result": null
+    },
+    {
+      "desc": "sliceToSize",
+      "result": false
+    },
+    {
+      "desc": "encode",
+      "result": false
+    },
+    {
+      "desc": "decode",
+      "result": false
+    },
+    {
+      "desc": "isStrEqual",
+      "result": false
+    },
+    {
+      "desc": "isLineBreak",
+      "result": false
+    },
+    {
+      "desc": "isSharp",
+      "result": false
+    },
+    {
+      "desc": "isSpace",
+      "result": false
+    },
+    {
+      "desc": "isStar",
+      "result": false
+    },
+    {
+      "desc": "character",
+      "result": []
+    },
+    {
+      "desc": "_toObj",
+      "result": {
+        "values": []
+      }
+    },
+    {
+      "desc": "_toArr",
+      "result": []
+    },
+    {
+      "desc": "_toStr",
+      "result": "{\n  \"values\": []\n}"
+    }
+  ]
+}

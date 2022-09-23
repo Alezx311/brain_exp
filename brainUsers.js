@@ -1,5 +1,5 @@
 const brain = require("brain.js")
-const Helpers = require("./helpers")
+const Helpers = require("./helpersOld")
 
 const fileContent = Helpers.fileRead("./training/users.json")
 const data = JSON.parse(fileContent)

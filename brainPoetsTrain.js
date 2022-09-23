@@ -1,5 +1,5 @@
 const brain = require("brain.js")
-const Helpers = require("./helpers")
+const Helpers = require("./helpersOld")
 const { TrainingDataPoetry } = require("./trainingData")
 const { now } = performance
 

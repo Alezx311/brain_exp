@@ -2,11 +2,20 @@ const fs = require("fs")
 const path = require("path")
 const util = require("util")
 const cowsay = require("cowsay")
-const { rainbow, print } = require("lolcats")
 const gradientString = require("gradient-string")
 const chalk = require("chalk")
-
-const { parse: _parse, stringify: _stringify} = JSON
+const { rainbow, print } = require("lolcats")
+const {
+	readdirSync: _readdir,
+	readFileSync: _readFile,
+	writeFileSync: _writeFile,
+	appendFileSync: _appendFile,
+	mkdirSync: _mkdir
+} = fs
+const { now: _now } = Date
+const { MAX_SAFE_INTEGER, MIN_SAFE_INTEGER, MAX_VALUE, MIN_VALUE } = Number
+const { cwd: _cwd, env: _env } = process
+const { parse: _parse, stringify: _stringify } = JSON
 const { format: _format, isDeepStrictEqual: _isEqual } = util
 const { log: _log, warn: _warn, info: _info, error: _error, table: _table, timeStamp: _timeStamp } = console
 const { random: _random, min: _min, max: _max, abs: _abs, round: _round } = Math
@@ -14,774 +23,766 @@ const { keys: _keys, values: _values, entries: _entries, assign: _assign, getOwn
 const { isArray: _isArray } = Array
 const { fromCharCode: _fromCharCode } = String
 
+const UND = undefined
+const NULL = null
+const STR = "Some string value"
+const ERR = new Error(STR)
+const RND = _random()
+const NUM = ~~(RND * 1000)
+const BLN = RND > 0.5
+const ARR = [STR, NUM]
+const OBJ = { STR, NUM }
+const SYM = Symbol("Symbol example")
+const BIG = NUM * MAX_VALUE
+const FUNC = (...values) => values
+const VALUES_SOURCES = [
+	{ value: UND, desc: "UND" },
+	{ value: NULL, desc: "NULL" },
+	{ value: STR, desc: "STR" },
+	{ value: ERR, desc: "ERR" },
+	{ value: RND, desc: "RND" },
+	{ value: NUM, desc: "NUM" },
+	{ value: BLN, desc: "BLN" },
+	{ value: ARR, desc: "ARR" },
+	{ value: OBJ, desc: "OBJ" },
+	{ value: SYM, desc: "SYM" },
+	{ value: BIG, desc: "BIG" },
+	{ value: FUNC, desc: "FUNC" }
+].map((src, index) => ({ ...src, index, type: typeof src.value, callback: () => src.value }))
+const VALUES = VALUES_SOURCES.reduce((acc, v) => [...acc, v.value], [])
+const TYPEOF_VALUES = ["string", "number", "function", "object", "boolean", "bigint", "symbol", "undefined"]
+
+const CONSOLE_METHODS = ["log", "info", "warn", "error", "dir", "debug"]
+const GRADIENT_METHODS = [
+	"atlas",
+	"cristal",
+	"teen",
+	"mind",
+	"morning",
+	"vice",
+	"passion",
+	"fruit",
+	"instagram",
+	"retro",
+	"summer",
+	"rainbow",
+	"pastel"
+]
+const COLOR_METHODS = ["blue", "red", "blue", "blue", "red", "underline", "green", "blue", "red", "green", "yellow"]
+
+const CONSOLE_SOURCES = CONSOLE_METHODS.map((desc) => {
+	const callback = console[desc]
+	const logger = callback
+	return { desc, callback, logger }
+})
+const GRADIENTS_SOURCES = GRADIENT_METHODS.map((desc) => {
+	const callback = gradientString[desc]
+	const logger = (...v) => _log(callback(...v))
+	return { desc, callback, logger }
+})
+const COLORED_SOURCES = COLOR_METHODS.map((desc) => {
+	const callback = chalk[desc]
+	const logger = (...v) => _log(callback(...v))
+	return { desc, callback, logger }
+})
+const CONSOLE_OTHER_SOURCES = [
+	{ desc: "lolcat_print", callback: print, logger: print },
+	{ desc: "lolcat_rainbow", callback: rainbow, logger: (...v) => _log(rainbow(toText(v))) },
+	{ desc: "cow_say", callback: cowsay.say, logger: (...v) => _log(cowsay.say({ text: toText(v) })) },
+	{ desc: "cow_think", callback: cowsay.think, logger: (...v) => _log(cowsay.think({ text: toText(v) })) }
+]
+const LOGGER_SOURCES = [...CONSOLE_SOURCES, ...GRADIENTS_SOURCES, ...COLORED_SOURCES, ...CONSOLE_OTHER_SOURCES]
+
+const _logGradient = LOGGER_SOURCES.find((el) => el.desc === "atlas").logger
+const _logColored = LOGGER_SOURCES.find((el) => el.desc === "green").logger
+const _logLolcatPrint = LOGGER_SOURCES.find((el) => el.desc === "lolcat_print").logger
+const _logLolcatRainbow = LOGGER_SOURCES.find((el) => el.desc === "lolcat_rainbow").logger
+const _logCowSay = LOGGER_SOURCES.find((el) => el.desc === "cow_say").logger
+const _logCowThink = LOGGER_SOURCES.find((el) => el.desc === "cow_think").logger
+const _logDefault = _logCowSay
+const _logJson = (...values) => _logDefault(values)
+const _logValues = (...values) => _logDefault(values)
+const _logExamples = (msg = SOURCE) => {
+	_log("Simple console log message", msg)
+	_logGradient("_logGradient example", msg)
+	_logColored("_logColored example", msg)
+	_logLolcatPrint("_logLolcatPrint example", msg)
+	_logLolcatRainbow("_logLolcatRainbow example", msg)
+	_logCowSay("_logCowSay example", msg)
+	_logCowThink("_logCowThink example", msg)
+	_logJson("_logJson example", msg)
+	_logValues("_logValues example", msg)
+	LOGGER_SOURCES.map(({ logger, desc }) => logger(`${desc} example`, msg))
+}
+
+//* Validators
+
+const is = (...arr) => arr.every((el) => !!el)
+const isTypeStr = (...arr) => arr.every((el) => typeof el === "string")
+const isTypeNum = (...arr) => arr.every((el) => typeof el === "number")
+const isTypeFunc = (...arr) => arr.every((el) => typeof el === "function")
+const isTypeObj = (...arr) => arr.every((el) => typeof el === "object")
+const isTypeBool = (...arr) => arr.every((el) => typeof el === "boolean")
+const isTypeBig = (...arr) => arr.every((el) => typeof el === "bigint")
+const isTypeSym = (...arr) => arr.every((el) => typeof el === "symbol")
+const isTypeUnd = (...arr) => arr.every((el) => typeof el === "undefined")
+const isLen = (...arr) => arr.every((el) => typeof el?.length === "number")
+const isDefined = (...arr) => arr.every((el) => el !== null && el !== undefined)
+const isTypeObjTruthy = (...arr) => arr.every((el) => !!el && isTypeObj(el))
+const isTypeOfValue = (...arr) => isTypeStr(...arr) && arr.every((el) => TYPEOF_VALUES.includes(el))
+const toTypeOf = (v) => (isTypeOfValue(v) ? v : typeof v)
+const isType = (v1, v2) => toTypeOf(v1) === toTypeOf(v2)
+const isEvery = (v, ...arr) => (_isArray(v) ? v.every((el) => arr.includes(el)) : arr.every((el) => el === v))
+const isSome = (v, ...arr) => (_isArray(v) ? v.some((el) => arr.includes(el)) : arr.some((el) => el === v))
+
+const getTimeStamp = () => new Date().toLocaleString()
+const getSource = (msg = "") => `\n\t${__filename}\n\t${getTimeStamp()}\n\t${msg}\n`
+
+//* File System Helpers
+const TIME = getTimeStamp()
+const SOURCE = getSource()
+const ROOT = _cwd()
+const DIR = __dirname
+const FILE = __filename
+const NAME_TEMP = `logs_temp`
+
+const LOG_DIR = "logs"
+const LOG_FILE = NAME_TEMP + ".log"
+const PATH_LOG_DIR = path.join(__dirname, "./", LOG_DIR)
+const PATH_LOG_FILE = path.join(PATH_LOG_DIR, LOG_FILE)
+
+const CHAR_CODE_MULT = 256
+const MAX_ENCODED_SIZE = 100
+
+const toMaxLen = (v, max = MAX_LENGTH) => (isLen(v) && v.length > max ? v.slice(0, max) : v)
+const toMinLen = (v, min = MIN_LENGTH) => (isLen(v) && v.length < min ? [...v, ...genArr(v.length - min, 0)] : v)
+const toMatchLen = (v, l) => (isLen(v) && v.length === l ? v : toMaxLen(toMinLen(v, l), l))
+
+const toCharCode = (char) => isTypeStr(char) && char.charCodeAt(0) / CHAR_CODE_MULT
+const toCharFromCode = (code) => isTypeNum(code) && _fromCharCode(code) * CHAR_CODE_MULT
+const toCharCodeFromText = (text) => {
+	if (!isTypeStr(text)) return false
+	const values = text.split("").reduce((acc, v) => [...acc, toCharCode(v)], [])
+	return toMaxLen(values, MAX_ENCODED_SIZE)
+}
+
+//* Chars
+const CHAR_LINE = "\n"
+const CHAR_TAB = "\t"
+const CHAR_SPACE = " "
+const CHAR_COMMA = ","
+const CHAR_DOT = "."
+const CHAR_DIV = "#"
+const CHARS_ENG = "abcdefghijklmnopqrstuvwxyz"
+const CHARS_RUS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+const CHARS_NUM = "0123456789"
+const CHARS_SIMPLE = CHARS_ENG + CHARS_RUS + CHARS_NUM
+const CHARS_SPECIAL = CHAR_LINE + CHAR_TAB + CHAR_SPACE + CHAR_COMMA + CHAR_DOT + CHAR_DIV
+const CHARS_VALID = CHARS_SIMPLE + CHARS_SPECIAL
+
+const CHAR_CODE_SOURCES = CHARS_VALID.split("").map((char) => ({ char, code: toCharCode(char) }))
+const CHAR_CODE_VALUES = [...new Set([...CHAR_CODE_SOURCES.reduce((acc, v) => [...acc, v.code], []).filter(Number)])]
+
+//* Dividers
+const DIV_CONTENT = `\n${CHAR_DIV.repeat(30)}\n`
+const DIV_LINE = `\n${CHAR_DIV.repeat(20)}\n`
+const DIV_TITLE = `\t${CHAR_DIV.repeat(5)}\t`
+
+//* Constants
+const MIN = 1
+const MAX = 100
+const MIN_LENGTH = 1
+const MAX_LENGTH = 2000
+const MIN_CHAR_CODE = _min(...CHAR_CODE_VALUES)
+const MAX_CHAR_CODE = _max(...CHAR_CODE_VALUES)
+
+const RANGE = [MIN, MAX]
+const RANGE_LENGTH = [MIN_LENGTH, MAX_LENGTH]
+const RANGE_CHAR_CODE = [MIN_CHAR_CODE, MAX_CHAR_CODE]
+
+const ARRAY_SIZE = 10
+const LIKE_DIFF = 0.1
+const INPUT_SIZE = 1
+const HIDDEN_SIZE = 3
+const OUTPUT_SIZE = 1
+const TRAIN_SET_SIZE = 1000
+const LEARNING_RATE = 0.05
+
+//* Options
+const OPTIONS_FS = { encoding: "utf-8" }
+const OPTIONS_BRAIN_LSTM = { log: true }
+const ITERATIONS = 1000
+const ERROR_THRESHOLD = 0.005
+const LOG_PERIOD = 100
+const OPTIONS_BRAIN_TRAIN = {
+	log: true,
+	learningRate: LEARNING_RATE,
+	iterations: ITERATIONS,
+	errorThresh: ERROR_THRESHOLD,
+	logPeriod: LOG_PERIOD,
+	callback: _info
+}
+
+const filePath = (...sArr) => path.join(__dirname, ...sArr)
+const fileList = (s = LOG_DIR) => _readdir(filePath(s))
+const fileRead = (s = LOG_FILE) => _readFile(filePath(s), OPTIONS_FS).toString()
+const fileWrite = (file, data = getSource()) => isStr(file) && _writeFile(filePath(file), data, OPTIONS_FS)
+const fileAppend = (file, data = getSource()) => isStr(file) && _appendFile(filePath(file), data, OPTIONS_FS)
+const fileCreateDir = (dir = NAME_TEMP) => isStr(dir) && _mkdir(dir)
+
+//* Generate Value Helpers
+const genBool = () => _random() > 0.5
+const gen = (max = null) => (max ? _random() * max : _random())
+const genInt = (max = MAX, min = MIN) => (isTypeNum(max, min) ? ~~(_random() * max - min) + min : ~~(_random() * MAX))
+const genCoin = (v1 = true, v2 = false) => (genBool() ? v1 : v2)
+const genId = () => `${parseInt(`${genInt()}`, 36)}`
+const genKey = () => genId().repeat(5).replace(/[a-z]/gim, "")
+const genArr = (l = ARRAY_SIZE, v = 1) => Array(~~l).fill(v)
+const genMany = (l = ARRAY_SIZE, cb = _random) => genArr(l).map(isTypeFunc(cb) ? cb : () => cb)
+const genSort = () => genCoin(1, -1)
+const genIndex = (v) => (isLen(v) && v.length > 2 ? genInt(v.length - 1, 0) : genCoin(1, 0))
+const genElement = (v) => isLen(v) && v[genIndex(v)]
+
+const genElementsMany = (v, l = ARRAY_SIZE) => genMany(l, () => genElement(v))
+const genObjKey = (v) => isObj(v) && genElement(_keys(v))
+const genObjValue = (v) => isObj(v) && genElement(_values(v))
+const genObjEntry = (v) => isObj(v) && genElement(_entries(v))
+const genChar = () => genElement(CHARS_VALID)
+const genCharLatin = () => genElement(CHARS_ENG)
+const genCharKyrillic = () => genElement(CHARS_RUS)
+const genCharCode = () => genElement(CHAR_CODE_VALUES)
+const genCharCodeLatin = () => genInt(122, 97)
+const genCharCodeKyrillic = () => genInt(1103, 1072)
+const genRgb = (hex) => {
+	const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
+	hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+		return r + r + g + g + b + b
+	})
+	const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+	return result
+		? {
+				r: _round(parseInt(result[1], 16) / 2.55) / 100,
+				g: _round(parseInt(result[2], 16) / 2.55) / 100,
+				b: _round(parseInt(result[3], 16) / 2.55) / 100
+		  }
+		: null
+}
+
+const isRxp = (v) => v instanceof RegExp
+const toCallback = (v) => (isTypeFunc(v) ? v : () => v)
+const toLen = (v1) => (isLen(v1) ? v1.length : -1)
+const isLenMin = (v, l = MIN_LENGTH) => isLen(v) && v.length >= l
+const isLenMax = (v, l = MAX_LENGTH) => isLen(v) && v.length <= l
+const isLenEqual = (v1, v2) => isLen(v1, v2) && v1.length === v2.length
+const isLenRange = (v1, min = 0, max = MAX_VALUE) => isLen(v1) && v1.length > min && v1.length < max
+const isNum = (v1, min = 0, max = MAX_VALUE) => isTypeNum(v1) && v1 >= min && v1 < max
+const isStr = (v1, min = 0, max = MAX_VALUE) => isTypeStr(v1) && isLenRange(v1, min, max)
+const isArr = (v1, min = 0, max = MAX_VALUE) => isTypeObj(v1) && _isArray(v1) && isLenRange(v1, min, max)
+const isObj = (v) => isTypeObj(v) && !_isArray(v) && is(v)
+const isCharLatin = (ch) => isTypeStr(ch) && CHARS_ENG.includes(ch.toLowerCase())
+const isCharKyrrylic = (ch) => isTypeStr(ch) && CHARS_RUS.includes(ch.toLowerCase())
+const isCharNum = (ch) => isTypeStr(ch) && CHARS_NUM.includes(ch.toLowerCase())
+const isCharSpecial = (ch) => isTypeStr(ch) && CHARS_SPECIAL.includes(ch.toLowerCase())
+const isCharValid = (ch) => isTypeStr(ch) && CHARS_VALID.includes(ch.toLowerCase())
+const isNumLike = (v1, v2, d = LIKE_DIFF) => isTypeNum(v1, v2, d) && v1 < v2 + d && v1 > v2 - d
+const filterStr = (...values) => values.filter(String)
+const filterNum = (...values) => values.filter(Number)
+const filterArr = (...values) => values.filter(Array)
+const filterBool = (...values) => values.filter(Boolean)
+const filterFunc = (...values) => values.filter(Function)
+
+//* Get Value Helpers
+const or = (v1, v2) => v1 || v2
+const and = (v1, v2) => v1 && v2
+const like = (v1, ...values) => values.filter((el) => el == v1 || typeof el == typeof v1)
+const not = (v1, ...values) => values.filter((el) => el !== v1 && typeof el !== typeof v1)
+
+const getIndexLast = (v) => isLen(v) && _max(0, v.length - 1)
+const getElementLast = (v) => isLen(v) && v?.[getIndexLast(v)]
+const getSlice = (v, i1 = 0, i2 = null) => {
+	if (!isLen(v)) return false
+	const last = getIndexLast(v)
+	const start = isNum(i1, last) ? i1 : genInt(last)
+	const end = isNum(i2, last) ? i1 : genInt(last)
+	const range = [i?.[0] ?? genIndex(v), i?.[1] ?? genIndex(v)]
+	return v.slice(_min(...range, last), _max(...range))
+}
+const getElementNeighbours = (arr, el, l = 1) => {
+	if (!isLen(arr) || !arr.includes(el)) return false
+	const i = arr.indexOf(el)
+	const last = getIndexLast(arr)
+	const start = i > 0 ? i - 1 : 0
+	const end = i < last ? i + 1 : last
+	return arr.slice(start, end)
+}
+const getElementNext = (arr, el = 0) => {
+	if (!isLen(arr) || !arr.includes(el)) return false
+	const i = arr.indexOf(el)
+	const last = getIndexLast(arr)
+	return i < last ? arr[i + 1] : arr[0]
+}
+const getSplitted = (str, ch = "", min = false) => {
+	if (!isStr(str, ch)) return false
+	const arr = str.split(ch).filter(String)
+	return min ? arr.filter((el) => isLenMin(el, min)) : arr
+}
+const getChars = (s) => getSplitted(s, "")
+const getWords = (s, min = 1) => getSplitted(s, " ", min)
+const getPhrases = (s, min = 1) => getSplitted(s, ".", min)
+const getLines = (s, min = 1) => getSplitted(s, "\n", min)
+const getWordFirst = (str) => getWords(str)?.[0]
+const getWordLast = (str) => getWords(str).reverse()?.[0]
+const genPhraseFromWords = (words, size = ARRAY_SIZE) => {
+	if (!isArr(words, 1)) return false
+	return genElementsMany(words, size).join(" ")
+}
+const getPhrasesWithWord = (a, w) => isArr(a) && isStr(w) && a.filter((el) => isStr(el) && el.includes(w))
+const getPhrasesWithoutWord = (a, w) => isArr(a) && isStr(w) && a.filter((el) => isStr(el) && !el.includes(w))
+const getPhrasesEndsWith = (a, s) => isArr(a) && isStr(s) && a.filter((el) => isStr(el) && el.endsWith(s))
+const getPhrasesStartsWith = (a, s) => isArr(a) && isStr(s) && a.filter((el) => isStr(el) && el.startsWith(s))
+const getPhrasesByLength = (a, l = RANGE_LENGTH) => {
+	if (!isArr(a)) return false
+	if (isTypeNum(l)) return a.filter((el) => el === l)
+	if (isArr(l)) return a.filter((el) => isLenRange(el, _min(...l), _max(...l)))
+	return a.filter(String)
+}
+const getPhrasesByIndex = (a, l = RANGE_LENGTH) => {
+	if (!isArr(a)) return false
+	if (isArr(l)) return a.filter((el, i) => isLenRange(i, _min(...l), _max(...l)))
+	if (isTypeNum(l)) return a.filter((el, i) => i === l)
+	return a.filter(String)
+}
+
+//* Array Reducers
+const reduceText = (a, v) => `${a} ${v}`
+const reduceSum = (a, v) => a + v
+const reduceMult = (a, v) => a + v * 2
+const reduceObj = (a, v, i) => [...a, { value: v, index: i }]
+const reducePropValue = (a, v) => (is(v?.value) ? [...a, v?.value] : a)
+const reducePropDesc = (a, v) => (is(v?.desc) ? [...a, v.desc] : a)
+const reduceElementStats = (a, v) => a + "\n" + toResultStats(v)
+const reduceElementKeys = (a, v) => (isObj(v) ? [...a, _keys(v)] : a)
+const reduceElementValues = (a, v) => (isObj(v) ? [...a, _values(v)] : a)
+const reduceElementEntries = (a, v) => (isObj(v) ? [...a, _entries(v)] : a)
+
+//* Converters
+const _toObj = (...v) => ({ values: v })
+const _toArr = (...v) => v
+const _toStr = (...v) => _stringify(_toObj(...v), null, 2)
+
+const toArr = (v) => (isArr(v) ? v : [v])
+const toObj = (v) => (isObj(v) ? v : { value: v })
+const toText = (v) => _stringify(toObj(v), null, 2)
+const toKeys = (v) => (isObj(v) ? _keys(v) : [])
+const toNumDiff = (...v) => _max(...v) - _min(...v)
+const toNumRange = (...v) => [_min(...v), _max(...v)]
+const toTrim = (v) => (isTypeStr(v) ? v : toText(v)).trim()
+const toTrimLine = (v = "") => isTypeStr(v) && v.replace(/\n/gim, " ")
+const toUnical = (v) => (isArr(v) ? [...new Set([...v])] : [v])
+const toJoin = (v, ch = "\n") => (isArr(v) ? v.join(isTypeStr(ch) ? ch : "\n") : toText(v))
+const toRepeat = (v, r = 2) => (isTypeStr(v) ? v : toText(v)).repeat(isNum(r, 2) ? r : 2)
+const toReversed = (v) => (isArr(v) ? v.reverse() : toText(v).split("").reverse().join(""))
+const toBuffer = (v) => is(v) && Buffer.from(v)
+const toFloatFixed = (v, l = 2) => (isTypeNum(v) ? Number(v.toFixed(~~l)) : 0)
+const toTrainingData = (input, output, ...other) => ({ input, output, other })
+const toFormatted = (s, r = "") => isTypeStr(s, r) && s.replace(/[^а-я\s\n]+/gim, r)
+const toPercent = (v1, v2) => isTypeNum(v1, v2) && v2 / (v1 / 100)
+const toResultStats = (v) => toText(v)
+const toResultProps = (v) => _assign({}, toObj(v), { desc: toResultStats(v) })
+const toTitleCase = (s) => {
+	if (!isStr(s, 1)) return false
+	const str = s.trim().toLowerCase()
+	return str.slice(0, 1).toUpperCase() + str.slice(1)
+}
+const jsonParse = (v) => (isStr(v, 1) ? _parse(v) : false)
+const jsonCreate = (...v) => _stringify(v, null, 2)
+const toAverage = (...v) => {
+	const a = v.flat().filter(Number)
+	return a.length ? a.reduce(reduceSum) / a.length : 0
+}
+
+//* Regular Expressions
+const toRxp = (str = "", flags = "im") => new RegExp(str, flags)
+const toRxpNext = (word = "", rep = 1) => {
+	const rxpString = word + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(rep)
+	return new RegExp(rxpString, "gim")
+}
+const toMatchWordFirst = (str = "") => str.match(/^(\w+)\b/i)
+const toMatchWordLast = (str = "") => str.match(/\b(\w+)$/i)
+const toMatchLineWithWord = (str = "", word = "") => {
+	if (!isStr(str)) return ""
+	const rxp = toRxp(`^.+${word}.+$`, "im")
+	const result = rxp.exec(str) ?? ""
+	return result
+}
+const toMatchChars = (str = "") => {
+	if (!isStr(str)) return []
+	return str.split("").filter(String)
+}
+const toMatchWords = (str = "") => {
+	if (!isStr(str)) return []
+	return str
+		.split(/\s|\n|\t|\b/gim)
+		.filter((s) => isLenMin(s, 1))
+		.map((s) => s.replace(/\s|\n|\t/, "").trim())
+}
+const toMatchPhrases = (str = "") => {
+	if (!isStr(str)) return []
+	return str
+		.split(".")
+		.filter((s) => isLenMin(s, 1))
+		.map((s) => s.replace("\n", "").trim())
+}
+const toMatchLines = (str = "") => {
+	if (!isStr(str)) return []
+	return str
+		.split("\n")
+		.filter((s) => isLenMin(s, 1))
+		.map((s) => s.replace("\n", "").trim())
+}
+const toMatchDividered = (str = "", div = CHAR_DIV) => {
+	if (!isStr(str)) return []
+	return str.split(div).filter((s) => isLenMin(s, 1))
+}
+const toMatchNextWords = (str = "", word = "", size = 2) => {
+	if (!isStr(str) || !isStr(word) || !str.includes(word)) return ""
+	const rxpString = word + ".\\b\\w+\\b".repeat(size)
+	const rxp = new RegExp(rxpString, "im")
+	const result = rxp.exec(str)
+	return result?.[1] ?? ""
+}
+const toArrValues = (arr) =>
+	isArr(arr, 1) && arr.map((value, index) => ({ value, index, text: value ? toText(value) : typeof value }))
+const toNotUnical = (arr) => {
+	if (!isArr(arr, 1)) return []
+	const unical = toUnical(arr)
+	return arr.filter((v) => unical.includes(v))
+}
+const isUnical = (el, arr) => {
+	const notUnical = toNotUnical(arr)
+	return notUnical.includes(el)
+}
+const replaceManyChars = (str) => {
+	if (!isStr(str)) return false
+	return str.replace(/\s+|\t+/gim, " ").replace(/\n+/gim, "\n")
+}
+const replaceChars = (str) => {
+	if (!isStr(str)) return false
+	const replaced = str.replace(/[^а-яa-z\s\n,.]/gim, " ")
+	return replaceManyChars(replaced)
+}
+const getIndex = (src = "", el = "") => {
+	if (!isLenMin(src) || !el) return -1
+	return src.indexOf(el)
+}
+const getIndexAll = (arr, el) => {
+	if (!isArr(arr) || !el) return []
+	return arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
+}
+const getMatch = (v = "", el = "") => {
+	if (!isStr(v) || !el) return []
+	const rxp = isRxp(el) ? el : new RegExp(el, "im")
+	return v.match(rxp) ?? []
+}
+const getMatchAll = (v = "", el = "") => {
+	if (!isStr(v) || !el) return []
+	const rxp = isRxp(el) ? el : new RegExp(el, "gim")
+	return v.match(rxp) ?? []
+}
+const getElementsSequence = (arr, el, size = 3) => {
+	if (!isArr(arr) || !el || !arr.includes(el)) {
+		return []
+	}
+	const start = _max(arr.indexOf(el), 0)
+	const end = _min(index + size, arr.length - 1)
+	return arr.slice(start, end)
+}
+const msToTimeDesc = (ms) => {
+	const seconds = ~~(ms / 1000)
+	const minutes = ~~(seconds / 60)
+	const hours = ~~(minutes / 60)
+	const days = ~~(hours / 24)
+	return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
+}
+const toFixed = (v, l = 2) => Number(Number(v).toFixed(l))
+const sliceToSize = (v, l) => isLen(v, 1) && (v.length > l ? v.slice(0, l) : v)
+const encode = (value, size = MAX_ENCODED_SIZE) => {
+	let elements
+	if (isNum(value)) {
+		elements = [value]
+	} else if (isStr(value)) {
+		elements = toCharCodeFromText(value)
+	} else if (isArr(value)) {
+		elements = value.filter(String).reduce((a, v) => [...a, ...toCharCodeFromText(v)], [])
+	}
+
+	return sliceToSize(elements, size)
+}
+const decode = (value) => {
+	if (isNum(value)) {
+		return charDecode(value)
+	} else if (isArr(value)) {
+		return value.map(charDecode).filter(Boolean).join("")
+	}
+	return toCharFromCode(value)
+}
+const isStrEqual = (s1, s2) => isTypeStr(s1, s2) && s1 === s2
+const isLineBreak = (v) => v === "\n"
+const isSharp = (v) => v === "#"
+const isSpace = (v) => v === " "
+const isStar = (v) => v === "*"
+const character = (s) => (isStr(s) ? s.trim().split("").map(isSharp) : [])
+
 class Helpers {
-	static UND = undefined
-	static NULL
-	static ERR = new Error("Some Error")
-	static STR = "Some string value"
-	static NUM = 42
-	static BLN = false
-	static ARR = [msg, num]
-	static OBJ = { msg, num }
-	static SYM = new Symbol("Symbol example")
-	static BIG = this.NUM * Number.MAX_VALUE
-	static FUNC = (...values) => values
-	static SRC = [
-		{ value: this.ERR, desc: "ERR" },
-		{ value: this.STR, desc: "STR" },
-		{ value: this.UND, desc: "UND" },
-		{ value: this.NULL, desc: "NULL" },
-		{ value: this.NUM, desc: "NUM" },
-		{ value: this.ARR, desc: "ARR" },
-		{ value: this.OBJ, desc: "OBJ" },
-		{ value: this.FUNC, desc: "FUNC" },
-		{ value: this.SYM, desc: "SYM" },
-		{ value: this.BIG, desc: "BIG" },
-		{ value: this.BLN, desc: "BLN" }
-	].map((src) => ({ ...src, type: typeof src.value, callback: () => src.value }))
-	static TYPEOF = ["string", "number", "function", "object", "boolean", "bigint", "symbol", "undefined"]
-	static JSON = JSON.stringify(this.SRC, null, 2)
-	static VALUES = {
-		array: this.ARR,
-		string: this.STR,
-		number: this.NUM,
-		function: this.FUNC,
-		object: this.OBJ,
-		boolean: this.BLN,
-		bigint: this.BIG,
-		symbol: this.SYM,
-		undefined: this.UND,
-		null: this.NULL,
-		sources: this.SRC,
-		type: this.TYPEOF,
-		json: this.JSON
-	}
-	static _values = (...v) => v
-	static _type = (v) => (this.TYPEOF.includes(v) ? v : typeof v)
-	static LOG_METHODS = ["log", "info", "warn", "error", "table", "dir", "debug"]
-	static GRADIENT_METHODS = [
-		"atlas",
-		"cristal",
-		"teen",
-		"mind",
-		"morning",
-		"vice",
-		"passion",
-		"fruit",
-		"instagram",
-		"retro",
-		"summer",
-		"rainbow",
-		"pastel"
-	]
-	static COLOR_METHODS = [
-		"blue",
-		"red",
-		"blue",
-		"blue",
-		"red",
-		"underline",
-		"green",
-		"blue",
-		"red",
-		"green",
-		"yellow",
-		"rgb",
-		"hex"
-	]
-	static CONSOLE_SOURCES = this.LOG_METHODS.map((desc) => {
-		const callback = console[desc]
-		const logger = (...v) => callback(...v)
-		return { desc, callback, logger }
-	})
-	static GRADIENTS_SOURCES = this.GRADIENT_METHODS.map((desc) => {
-		const callback = gradientString[desc]
-		const logger = (...v) => _log(callback(...v))
-		return { desc, callback, logger }
-	})
-	static COLORED_SOURCES = this.COLOR_METHODS.map((desc) => {
-		const callback = chalk[desc]
-		const logger = (...v) => _log(callback(...v))
-		return { desc, callback, logger }
-	})
-	static LOGGER_SOURCE_DEFAULT = { desc: "log", callback: _log, logger: (...v) => _log(this.toText(v)) }
-	static LOGGER_SOURCES = [
-		...this.CONSOLE_SOURCES,
-		...this.GRADIENTS_SOURCES,
-		...this.COLORED_SOURCES,
-		...this.CONSOLE_OTHER_SOURCES,
-		{ desc: "Lolcat", callback: print, logger: (...v) => print(...v) },
-		{ desc: "Lolcat Rainbow", callback: rainbow, logger: (...v) => _log(rainbow(...v)) },
-		{ desc: "Cowsay", callback: cowsay.say, logger: (...v) => cowsay.say(...v) },
-		{ desc: "Cowsay think", callback: cowsay.think, logger: (...v) => cowsay.think(...v) },
-		LOGGER_SOURCE_DEFAULT
-	]
-	static logPretty = (values, opt) => {
-		const src = this.isTypeStr(opt) && this.LOGGER_SOURCES.find((s) => s.desc === opt)
-		const { logger } = src || this.LOGGER_SOURCE_DEFAULT
-		logger(values)
-	}
-	static logExamples = (msg = this.STR) =>
-		this.LOGGER_SOURCES.map(({ logger, desc }) => logger(`Example of ${desc} message: ${msg}`))
-	
-		//* Validators
-	static is = (...a) => a.every((v) => !!v)
-	static isTypeStr = (...a) => a.every((v) => typeof v === "string")
-	static isTypeNum = (...a) => a.every((v) => typeof v === "number")
-	static isTypeFunc = (...a) => a.every((v) => typeof v === "function")
-	static isTypeObj = (...a) => a.every((v) => typeof v === "object")
-	static isTypeBool = (...a) => a.every((v) => typeof v === "boolean")
-	static isTypeBig = (...a) => a.every((v) => typeof v === "bigint")
-	static isTypeSym = (...a) => a.every((v) => typeof v === "symbol")
-	static isTypeUnd = (...a) => a.every((v) => typeof v === "undefined")
-	static isDefined = (...a) => a.every((v) => v !== null && v !== undefined)
-	static isTypeSimple = (...a) => a.every((v) => !this.isTypeObj(v))
-	static isTypeObjTruthy = (...a) => a.every((v) => this.isTypeObj(v) && !this.isDefined(v))
-	static isType = (v1, v2) => this._type(v1) === this._type(v2)
-	static isEqual = (v1, v2) =>  _isEqual(v1, v2)
-	static isEvery = (v, ...arr) => (_isArray(v) ? v.every((el) => arr.includes(el)) : arr.every((el) => el === v))
-	static isSome = (v, ...arr) => (_isArray(v) ? v.some((el) => arr.includes(el)) : arr.some((el) => el === v))
-	
-	//* File names
-	static FILENAME_OUTPUT = "output.txt"
-	static FILENAME_INPUT = "input.txt"
-	static FILENAME_LOG = "log.log"
-	
-	//* Folders
-	static PATH_FILES = path.join(__dirname, "./files/")
-	static PATH_RESULTS = path.join(__dirname, "./results/")
-	static PATH_NETWORKS = path.join(__dirname, "./networks/")
-	static PATH_TRAINING = path.join(__dirname, "./training/")
-	static CONTENT_FILES = fs.readdirSync(this.PATH_FILES)
-	static CONTENT_RESULTS = fs.readdirSync(this.PATH_RESULTS)
-	static CONTENT_NETWORKS = fs.readdirSync(this.PATH_NETWORKS)
-	static CONTENT_TRAINING = fs.readdirSync(this.PATH_TRAINING)
-	
-	//* Files
-	static PATH_OUTPUT = path.join(this.PATH_FILES, this.FILENAME_OUTPUT)
-	static PATH_INPUT = path.join(this.PATH_FILES, this.FILENAME_INPUT)
-	static PATH_LOG = path.join(this.PATH_FILES, this.FILENAME_LOG)
-	
-	//* Chars
-	static CHAR_CODE_MULT = 256
-	static MAX_ENCODED_SIZE = 100
-	static LINE = "\n"
-	static TAB = "\t"
-	static SPACE = " "
-	static COMMA = ","
-	static DOT = "."
-	static DIV = "#"
-
-	static toMaxLength = (v, max) => (this.isLen(v) && v.length > max ? v.slice(0, max) : v)
-	static toCharCode = (char) => char.charCodeAt(0) / this.CHAR_CODE_MULT
-	static toCharFromCode = (code) => _fromCharCode(code) * this.CHAR_CODE_MULT
-	static toCharCodeFromText = (text) => {
-		if (!this.isTypeStr(text)) return false
-		const values = text.split("").reduce((acc, v) => [...acc, this.toCharCode(v)], [])
-		return this.toMaxLength(values, this.MAX_ENCODED_SIZE)
-	}
-
-	static CHARS_NUM = "0123456789"
-	static CHARS_ENG = "abcdefghijklmnopqrstuvwxyz"
-	static CHARS_RUS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-	static CHARS_SIMPLE = this.CHARS_ENG + this.CHARS_RUS + this.CHARS_NUM
-	static CHARS_SPECIAL = this.LINE + this.TAB + this.SPACE + this.COMMA + this.DOT + this.DIV
-	static CHARS_VALID = this.CHARS_SIMPLE + this.CHARS_SPECIAL
-	static CHAR_CODE_SOURCES = this.CHARS_VALID.map((char) => ({ char, code: this.toCharCode(char) }))
-	static CHAR_CODE_VALUES = [
-		...new Set([...this.CHAR_CODE_SOURCES.reduce((acc, v) => [...acc, v.code], []).filter(Number)])
-	]
-	
-	//* Dividers
-	static DIV_LINE = `\n${this.DIV.repeat(20)}\n`
-	static DIV_TITLE = `\t${this.DIV.repeat(5)}\t`
-	
-	//* Constants
-	static MIN = 1
-	static MAX = 100
-	static RANGE = [this.MIN, this.MAX]
-	static ARRAY_SIZE = 10
-	static LIKE_DIFF = 0.1
-	static MIN_LENGTH = 3
-	static MAX_LENGTH = 16
-	static MIN_CHAR_CODE = _min(...this.CHAR_CODE_VALUES)
-	static MAX_CHAR_CODE = _max(...this.CHAR_CODE_VALUES)
-	static INPUT_SIZE = 1
-	static HIDDEN_SIZE = 3
-	static OUTPUT_SIZE = 1
-	static TRAIN_SET_SIZE = 1000
-	static LEARNING_RATE = 0.05
-	
-	//* Options
-	static OPTIONS_FS = { encoding: "utf-8" }
-	static OPTIONS_BRAIN_LSTM = { log: true }	
-	static ITERATIONS = 1000
-	static ERROR_THRESHOLD = 0.005
-	static OPTIONS_BRAIN_TRAIN = {
-		learningRate: this.LEARNING_RATE,
-		iterations: this.ITERATIONS,
-		errorThresh: this.ERROR_THRESHOLD,
-		log: true,
-		logPeriod: 100,
-		momentum: 0.1,
-		callback: _info,
-	}
-
-	static get time() {
-		return Date.now
-	}
-	static get timestamp() {
-		return new Date().toLocaleString()
-	}
-	static get source() {
-		return `\t${__filename} at ${this.timestamp}\t`
-	}
-	static get dice() {
-		return ~~(_random() * this.MAX_LENGTH) + this.MIN_LENGTH
-	}
-	static get dice6() {
-		return ~~(_random() * 5) + 1
-	}
-	static get dice21() {
-		return ~~(_random() * 20) + 1
-	}
-	
-	static sourceMessage = (msg) => `\n\t${__filename}\n\t${this.timestamp}\n\t${message}\n`
-	
-	//* File System Helpers
-	static filePath = (...s) => path.join(__dirname, ...s)
-	static fileList = (s = "./") => fs.readdirSync(this.filePath(s))
-	static fileRead = (s = this.LOG_FILE) => fs.readFileSync(this.filePath(s), this.OPTIONS_FS).toString()
-	static fileWrite = (file = this.LOG_FILE, data = "") => fs.writeFileSync(this.filePath(file), data, this.OPTIONS_FS)
-	static fileAppend = (file = this.LOG_FILE, data = "") => fs.appendFileSync(this.filePath(file), data, this.OPTIONS_FS)
-	static fileCreateDir = (dir = this.PATH_LOG) => fs.mkdirSync(dir)
-	
-	//* Generate Value Helpers
-	static gen = () => _random()
-	static genBool = () => this.gen() > 0.5
-	static genInt = (max = this.MAX, min = this.MIN) => this.isTypeNum(max, min) ? ~~(_random() * max - min) + min : ~~(_random() * this.MAX)
-	static genCoin = (v1 = true, v2 = false) => (this.genBool() ? v1 : v2)
-	static genId = () => `${parseInt(`${this.genInt()}`, 36)}`
-	static genKey = () => this.genId().repeat(5).replace(/[a-z]/gim, "")
-	static genArr = (l = this.ARRAY_SIZE, v = 1) => Array(~~l).fill(v)
-	static genMany = (l = this.ARRAY_SIZE, cb = _random) => this.genArr(l).map(this.isTypeFunc(cb) ? cb : () => cb)
-	static genSort = () => this.genCoin(1, -1)
-	static genIndex = (v) => this.isLen(v) && v.length > 2 ? this.genInt(v.length - 1, 0) : this.genCoin(1,0)
-	static genElement = (v) => this.isLen(v) && v[this.genIndex(v)]
-	static genElementsMany = (v, l = this.ARRAY_SIZE) => this.genMany(l, () => this.genElement(v))
-	static genObjKey = (v) => this.isObj(v) && this.genElement(_keys(v))
-	static genObjValue = (v) => this.isObj(v) && this.genElement(_values(v))
-	static genObjEntry = (v) => this.isObj(v) && this.genElement(_entries(v))
-	static genChar = () => this.genElement(this.CHARS_SIMPLE)
-	static genCharLatin = () => this.genElement(this.CHARS_ENG)
-	static genCharKyrillic = () => this.genElement(this.CHARS_RUS)
-	static genCharCode = () => this.genElement(this.CHAR_CODE_VALUES)
-	static genCharCodeLatin = () => this.genInt(122, 97)
-	static genCharCodeKyrillic = () => this.genInt(1103, 1072)
-	static genRgb = (hex) => {
-		const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i
-		hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-			return r + r + g + g + b + b
-		})
-		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-		return result
-			? {
-					r: _round(parseInt(result[1], 16) / 2.55) / 100,
-					g: _round(parseInt(result[2], 16) / 2.55) / 100,
-					b: _round(parseInt(result[3], 16) / 2.55) / 100
-			  }
-			: null
-	}
-
-	static toCallback = (v) => this.isTypeFunc(v) ? v : () => v
-	static isLen = (...v) => v.every((el) => this.is(el?.length))
-	static toLen = (v1, v2 = false) => (this.isLen(v1) ? v1.length : v2)
-	static toProps = (v) => this.isTypeObjTruthy(v) && _names(v)
-	static isLenMin = (v, l = this.MIN_LENGTH) => this.toLen(v, l - 1) >= l
-	static isLenMax = (v, l = this.MAX_LENGTH) => this.toLen(v, l + 1) <= l
-	static isLenEqual = (v1, v2) => this.toLen(v1) === v2
-	static isNum = (v, l) => this.isTypeNum(v) && (l ? v >= l : true)
-	static isStr = (v, l) => this.isTypeStr(v) && (l ? v.length >= l : true)
-	static isArr = (v, l) => this.isTypeObj(v) && _isArray(v) && (l ? v.length >= l : true)
-	static isRxp = (v) => v instanceof RegExp
-	static isNum = (v, ...n = this.RANGE) =>   this.isTypeNum(v) && (this.isTypeNum(...n) ?  v > _min(...n) && v < _max(...n) : true) 
-	static isNumLike = (v1, v2, diff = this.LIKE_DIFF) =>this.isNum(v1, v2 + diff, v2 - diff)
-	static isCharLatin = (ch) => this.isTypeStr(ch) && this.CHARS_ENG.includes(ch.toLowerCase())
-	static isCharKyrrylic = (ch) => this.isTypeStr(ch) && this.CHARS_RUS.includes(ch.toLowerCase())
-	static isCharNum = (ch) => this.isTypeStr(ch) && this.CHARS_NUM.includes(ch.toLowerCase())
-	static isCharSpecial = (ch) => this.isTypeStr(ch) && this.CHARS_SPECIAL.includes(ch.toLowerCase())
-	static isCharValid = (ch) => this.isTypeStr(ch) && this.CHARS_VALID.includes(ch.toLowerCase())
-	static isObj = (v, ...keys) => {
-		if (!this.isTypeObjTruthy(v) || this.isArr(v)) return true
-		return this.isEvery(_names(v), ...keys)
-	}
-	
-	//* Get Value Helpers
-	static _or = ( v1, v2) => (this.isTruthy(v1) ? v1 : v2)
-	static _and = ( v1, v2) => (this.isTruthy(v1) ? v2 : v1)
-	static getIndexLast = (v) =>  this.isLen(v) && _abs(v.length - 1)
-	static getElementLast = (v) => this.isLen(v) && v[this.getIndexLast(v)]
-	static getPart = (v, ...i) => {
-		if(!this.isLen(v)) return false
-		if(!v.length < 2) return v
-		const range = [i?.[0] ?? this.genIndex(v), i?.[1] ?? this.genIndex(v)]
-		return  v.slice(_min(...range), _max(...range))
-	} 
-	static getElementNeighbours = (arr, el, l = 1) => {
-		if(!this.isLen(arr) || !arr.includes(el)) return false 
-		const i = arr.indexOf(el)
-		const last = this.getIndexLast(arr)
-		const start = i > 0 ? i - 1 : 0
-		const end = i < last ? i + 1 : last
-		return  arr.slice(start, end)
-	}
-	static getElementNext = (arr, el = 0) => {
-		if(!this.isLen(arr) || !arr.includes(el)) return false 
-		const i = arr.indexOf(el)
-		const last = this.getIndexLast(arr)
-		return i < last ? arr[i + 1] : arr[0]
-	}
-	static getSplitted = (str, ch = '', min = false) => {
-		if(!this.isStr(str, ch)) return false
-		const arr = str.split(ch)
-		return min ? arr.filter(String) : arr.filter((el) => this.isLenMin(el, min))
-	}
-	static getChars = (s) =>  this.getSplitted(s, "", 1)
-	static getWords = (s, min = this.MIN_LENGTH) => this.getSplitted(s, " ", min)
-	static getPhrases = (s, min = this.MIN_LENGTH) => this.getSplitted(s, '.', min)
-	static getLines = (s, min = this.MIN_LENGTH) => this.getSplitted(s, '\n', min)
-	static getWordFirst = (str) => this.isTypeStr(str) ? str.split(' ')[0] : false
-	static getWordLast = (str) => this.isTypeStr(str) ? str.split(' ').reverse()[0] : false
-	static genPhraseFromWords = (words, size = this.ARRAY_SIZE) => {
-	if(!this.isLenMin(words, 1)) return false
-		return this.genElementsMany(words, size).join(' ')
-		}
-		static getPhrasesWithWord = (arr, word) => this.isArr(arr) && arr.filter((el) => this.isTypeStr(el) && el.includes(word))
-			static getPhrasesWithoutWord = (arr, word) => this.isArr(arr) && arr.filter((el) => this.isTypeStr(el) && !el.includes(word))
-			static getPhrasesEndsWith = (arr, str) => this.isArr(arr) && this.isTypeStr(str) && arr.filter((el) => this.isTypeStr(el) && el.endsWith(str))
-	static getPhrasesStartsWith = (arr, str) => this.isArr(arr) && this.isTypeStr(str) && arr.filter((el) => this.isTypeStr(el) && el.startsWith(str))
-	static getPhrasesStartsWith = (arr, str) => this.isArr(arr) && this.isTypeStr(str) && arr.filter((el) => this.isTypeStr(el) && el.startsWith(str))
-	
-	//* Array Reducers
-	static reduceText = (a, v) => `${a} ${v}`
-	static reduceSum = (a, v) => a + v
-	static reduceMult = (a, v) => a + v * 2
-	static reduceObj = (acc, value, index) => [...acc, { value, index }]
-	
-	//* Converters
-	static toArr = v => (this.isArr(v) ? v : [v])
-	static toObj = (value) => (this.isObj(value) ? value : { value })
-	static toText = (v) => _stringify(this.toObj(v), null, 2)
-	static toKeys = (v) => (this.isObj(v) ? _keys(v) : _names(v)) 
-	static toNumDiff = (...v) => _max(...v) - _min(...v)
-	static toNumRange = (...v) => [_min(...v), _max(...v)]
-	static toNumRangeReversed = (...v) => [_max(...v), _min(...v)]
-	static toTrim = (v) => (this.isTypeStr(v) ? v : this.toText(v)).trim()
-	static toTrimLine = (v = "") => this.isTypeStr(v) && v.replace(/\n/gim, " ")
-	static toUnical = (v) => this.isArr(v) ? [...new Set([...v])] : [v]
-	static toJoin = (v, ch = '\n') => (this.isArr(v) ? v.join(this.isTypeStr(ch) ? ch : '\n') : this.toText(v))
-	static toRepeat = (v, r = 2) => (this.isTypeStr(v) ? v: this.toText(v)).repeat(this.isNum(r, 2) ? r : 2)
-	static toReversed = (v) => (this.isArr(v) ? v.reverse() : this.toText(v).split('').reverse().join(''))
-	static toBuffer = (v) => this.is(v) && Buffer.from(v)
-	static toFloatFixed = (v, l = 2) => this.isTypeNum(v) ?  Number(v.toFixed(~~l)) : 0 
-	static toTrainingData = (input, output, ...other) => ({ input, output, other })
-	static toFormatted = (s, r = "") => this.isTypeStr(s, r) && s.replace(/[^а-я\s\n]+/gim, r)
-	static toPercent = (v1 = 100, v2 = 1) => this.isTypeNum(v1, v2) && (v2 / (v1 / 100))
-	static toResultStats = (v) => this.is(v) ? `Expected: ${v?.output}, Received: ${v?.result}, Values: ${v?.input}`.trim() : 'Unknown data'
-	static toResultProps = (v) => this.isObj(v) ? { ...v, desc: this.toResultStats(v) } : { value: v, desc: 'Unknown value'}
-	static toTitleCase = (s) => {
-		if(!this.isTypeStr(s))	return false
-		const str = s.trim()
-		return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase()
-	}
-	static jsonParse = (value) => this.isTypeStr(value) ? _parse(value) : { }
-	static jsonCreate = (value) => _stringify(this.toObj(value), null, 2)
-	static toAverage = (values) => {
-		if (!this.isArr(values, 1)) return 0
-		const nums = values.filter(Number)
-		const length = nums.length
-		return  this.reduceSum(nums) / length
-	}
-	
-	//* Regular Expressions
-	static toRxp = (str = "", flags = "im") => new RegExp(str, flags)
-	static toRxpNext = (word = "", rep = 1) => {
-		const rxpString = word + `[^а-яa-z]{0,}[а-яa-z]{0,}`.repeat(rep)
-		return new RegExp(rxpString, "gim")
-	}
-	static toMatchWordFirst = (str = "") => str.match(/^(\w+)\b/i)
-	static toMatchWordLast = (str = "") => str.match(/\b(\w+)$/i)
-	static toMatchLineWithWord = (str = "", word = "") => {
-		if (!this.isStr(str)) return ""
-		const rxp = this.toRxp(`^.+${word}.+$`, "im")
-		const result = rxp.exec(str) ?? ""
-		return result
-	}
-	static toMatchChars = (str = "") => {
-		if (!this.isStr(str)) return []
-		return str.split("").filter(String)
-	}
-	static toMatchWords = (str = "") => {
-		if (!this.isStr(str)) return []
-		return str
-			.split(/\s|\n|\t|\b/gim)
-			.filter((s) => this.isLenMin(s, 1))
-			.map((s) => s.replace(/\s|\n|\t/, "").trim())
-	}
-	static toMatchPhrases = (str = "") => {
-		if (!this.isStr(str)) return []
-		return str
-			.split(".")
-			.filter((s) => this.isLenMin(s, 1))
-			.map((s) => s.replace("\n", "").trim())
-	}
-	static toMatchLines = (str = "") => {
-		if (!this.isStr(str)) return []
-		return str
-			.split("\n")
-			.filter((s) => this.isLenMin(s, 1))
-			.map((s) => s.replace("\n", "").trim())
-	}
-	static toMatchDividered = (str = "", div = this.DIV) => {
-		if (!this.isStr(str)) return []
-		return str.split(div).filter((s) => this.isLenMin(s, 1))
-	}
-	static toMatchNextWords = (str = "", word = "", size = 2) => {
-		if (!this.isStr(str) || !this.isStr(word) || !str.includes(word)) return ""
-		const rxpString = word + ".\\b\\w+\\b".repeat(size)
-		const rxp = new RegExp(rxpString, "im")
-		const result = rxp.exec(str)
-		return result?.[1] ?? ""
-	}
-	static toArrValues = (arr) => arr.map((value, index) => ({ value, index, text: this.toText(value) }))
-	static toNotUnical = (arr) => {
-		const unical = this.toUnical(arr)
-		return arr.filter((v) => unical.includes(v))
-	}
-	static isUnical = (el, arr) => {
-		const notUnical = this.toNotUnical(arr)
-		return notUnical.includes(el)
-	}
-	static replaceManyChars = (str) => {
-		return str.replace(/\s+|\t+/gim, " ").replace(/\n+/gim, "\n")
-	}
-	static replaceChars = (str) => {
-		const replaced = str.replace(/[^а-яa-z\s\n,.]/gim, " ")
-		return this.replaceManyChars(replaced)
-	}
-	static getIndex = (src = "", el = "") => {
-		if (!this.isLenMin(src) || !el) return -1
-		return src.indexOf(el)
-	}
-	static getIndexAll = (arr, el) => {
-		if (!this.isArr(arr) || !el) return []
-		return arr.reduce((a, v, i) => (v === el ? [...a, i] : a))
-	}
-	static getMatch = (v = "", el = "") => {
-		if (!this.isStr(v) || !el) return []
-		const rxp = this.isRxp(el) ? el : new RegExp(el, "im")
-		return v.match(rxp) ?? []
-	}
-	static getMatchAll = (v = "", el = "") => {
-		if (!this.isStr(v) || !el) return []
-		const rxp = this.isRxp(el) ? el : new RegExp(el, "gim")
-		return v.match(rxp) ?? []
-	}
-	static getElementsSequence = (arr, el, size = 3) => {
-		if (!this.isArr(arr) || !el || !arr.includes(el)) {
-			return []
-		}
-		const start = _max(arr.indexOf(el), 0)
-		const end = _min(index + size, arr.length - 1)
-		return arr.slice(start, end)
-	}
-	static getElementsSequence = (arr, word, size = this.dice6) => {
-		const index = this.getIndex(arr, word)
-		const values = arr.slice(index, index + size)
-		const text = this.toTitleCase(values.join(" "))
-			.replace(/[^а-яa-z,.\s]/gim, " ")
-			.replace(/\s+/, " ")
-			.trim()
-		return { word, index, values, text }
-	}
-	static msToTimeDesc = (ms) => {
-		const seconds = ~~(ms / 1000)
-		const minutes = ~~(seconds / 60)
-		const hours = ~~(minutes / 60)
-		const days = ~~(hours / 24)
-		return `${days % 365} days, ${hours % 24} hours, ${minutes % 60} minutes, ${seconds % 60} seconds`
-	}
-	static toFixed = (value, size = 2) => Number(Number(value).toFixed(size))
-	static sliceToSize = (value, size) => (value.length > size ? value.slice(0, size) : value)
-	static codeEncode = (value) => value / this.CHAR_CODE_MULT
-	static codeDecode = (value) => ~~(value * this.CHAR_CODE_MULT)
-	static charEncode = (char) => this.codeEncode(char.charCodeAt(0))
-	static charEncode = (code) => _fromCharCode(this.codeDecode(code))
-	static encode = (value, size = this.MAX_ENCODED_SIZE) => {
-		let elements
-		if (this.isNum(value)) {
-			elements = [value]
-		} else if (this.isStr(value)) {
-			elements = value.split("")
-		} else if (this.isArr(value)) {
-			elements = value.filter(String)
-		}
-		const result = elements.reduce((acc, v) => [...acc, this.charEncode(v)], [])
-		return this.sliceToSize(result, size)
-	}
-	static decode = (value) => {
-		if (this.isNum(value)) {
-			return this.charDecode(value)
-		} else if (this.isArr(value)) {
-			return value.map(this.charDecode).filter(Boolean).join("")
-		}
-		return this.codeDecode(Number(value))
-	}
-	static isStrEqual = (s1,s2) => (this.isTypeStr(s1, s2) && s1 === s2)
-	static isLineBreak = (value) =>value ===  "\n"
-	static isSharp = (value) =>value ===  "#"
-	static isSpace = (value) =>value ===  " "
-	static isStar = (value) =>value ===  "*"
-	static character = (str) => this.isStr(str) ? str.trim().split("").map(this.isSharp) : []
+	static UND = UND
+	static NULL = NULL
+	static STR = STR
+	static ERR = ERR
+	static RND = RND
+	static NUM = NUM
+	static BLN = BLN
+	static ARR = ARR
+	static OBJ = OBJ
+	static SYM = SYM
+	static BIG = BIG
+	static FUNC = FUNC
+	static VALUES = VALUES
+	static VALUES_SOURCES = VALUES_SOURCES
+	static TYPEOF_VALUES = TYPEOF_VALUES
+	static CONSOLE_METHODS = CONSOLE_METHODS
+	static GRADIENT_METHODS = GRADIENT_METHODS
+	static COLOR_METHODS = COLOR_METHODS
+	static CONSOLE_SOURCES = CONSOLE_SOURCES
+	static GRADIENTS_SOURCES = GRADIENTS_SOURCES
+	static COLORED_SOURCES = COLORED_SOURCES
+	static CONSOLE_OTHER_SOURCES = CONSOLE_OTHER_SOURCES
+	static LOGGER_SOURCES = LOGGER_SOURCES
+	static _logGradient = _logGradient
+	static _logColored = _logColored
+	static _logLolcatPrint = _logLolcatPrint
+	static _logLolcatRainbow = _logLolcatRainbow
+	static _logCowSay = _logCowSay
+	static _logCowThink = _logCowThink
+	static _logDefault = _logDefault
+	static _logJson = _logJson
+	static _logValues = _logValues
+	static _logExamples = _logExamples
+	static NAME_TEMP = NAME_TEMP
+	static LOG_DIR = LOG_DIR
+	static LOG_FILE = LOG_FILE
+	static PATH_LOG_DIR = PATH_LOG_DIR
+	static PATH_LOG_FILE = PATH_LOG_FILE
+	static CHAR_CODE_MULT = CHAR_CODE_MULT
+	static MAX_ENCODED_SIZE = MAX_ENCODED_SIZE
+	static CHAR_LINE = CHAR_LINE
+	static CHAR_TAB = CHAR_TAB
+	static CHAR_SPACE = CHAR_SPACE
+	static CHAR_COMMA = CHAR_COMMA
+	static CHAR_DOT = CHAR_DOT
+	static CHAR_DIV = CHAR_DIV
+	static CHARS_ENG = CHARS_ENG
+	static CHARS_RUS = CHARS_RUS
+	static CHARS_NUM = CHARS_NUM
+	static CHARS_SIMPLE = CHARS_SIMPLE
+	static CHARS_SPECIAL = CHARS_SPECIAL
+	static CHARS_VALID = CHARS_VALID
+	static CHAR_CODE_SOURCES = CHAR_CODE_SOURCES
+	static CHAR_CODE_VALUES = CHAR_CODE_VALUES
+	static DIV_CONTENT = DIV_CONTENT
+	static DIV_LINE = DIV_LINE
+	static DIV_TITLE = DIV_TITLE
+	static MIN_LENGTH = MIN_LENGTH
+	static MAX_LENGTH = MAX_LENGTH
+	static MIN_CHAR_CODE = MIN_CHAR_CODE
+	static MAX_CHAR_CODE = MAX_CHAR_CODE
+	static RANGE_LENGTH = RANGE_LENGTH
+	static RANGE_CHAR_CODE = RANGE_CHAR_CODE
+	static ARRAY_SIZE = ARRAY_SIZE
+	static LIKE_DIFF = LIKE_DIFF
+	static INPUT_SIZE = INPUT_SIZE
+	static HIDDEN_SIZE = HIDDEN_SIZE
+	static OUTPUT_SIZE = OUTPUT_SIZE
+	static TRAIN_SET_SIZE = TRAIN_SET_SIZE
+	static LEARNING_RATE = LEARNING_RATE
+	static OPTIONS_FS = OPTIONS_FS
+	static OPTIONS_BRAIN_LSTM = OPTIONS_BRAIN_LSTM
+	static ERROR_THRESHOLD = ERROR_THRESHOLD
+	static LOG_PERIOD = LOG_PERIOD
+	static OPTIONS_BRAIN_TRAIN = OPTIONS_BRAIN_TRAIN
+	static is = is
+	static isTypeStr = isTypeStr
+	static isTypeNum = isTypeNum
+	static isTypeFunc = isTypeFunc
+	static isTypeObj = isTypeObj
+	static isTypeBool = isTypeBool
+	static isTypeBig = isTypeBig
+	static isTypeSym = isTypeSym
+	static isTypeUnd = isTypeUnd
+	static isLen = isLen
+	static isDefined = isDefined
+	static isTypeObjTruthy = isTypeObjTruthy
+	static isTypeOfValue = isTypeOfValue
+	static toTypeOf = toTypeOf
+	static isType = isType
+	static isEvery = isEvery
+	static isSome = isSome
+	static getTimeStamp = getTimeStamp
+	static getSource = getSource
+	static TIME = TIME
+	static SOURCE = SOURCE
+	static ROOT = ROOT
+	static DIR = DIR
+	static FILE = FILE
+	static toMaxLen = toMaxLen
+	static toMinLen = toMinLen
+	static toMatchLen = toMatchLen
+	static toCharCode = toCharCode
+	static toCharFromCode = toCharFromCode
+	static toCharCodeFromText = toCharCodeFromText
+	static MIN = MIN
+	static MAX = MAX
+	static RANGE = RANGE
+	static ITERATIONS = ITERATIONS
+	static filePath = filePath
+	static fileList = fileList
+	static fileRead = fileRead
+	static fileWrite = fileWrite
+	static fileAppend = fileAppend
+	static fileCreateDir = fileCreateDir
+	static genBool = genBool
+	static gen = gen
+	static genInt = genInt
+	static genCoin = genCoin
+	static genId = genId
+	static genKey = genKey
+	static genArr = genArr
+	static genMany = genMany
+	static genSort = genSort
+	static genIndex = genIndex
+	static genElement = genElement
+	static genElementsMany = genElementsMany
+	static genObjKey = genObjKey
+	static genObjValue = genObjValue
+	static genObjEntry = genObjEntry
+	static genChar = genChar
+	static genCharLatin = genCharLatin
+	static genCharKyrillic = genCharKyrillic
+	static genCharCode = genCharCode
+	static genCharCodeLatin = genCharCodeLatin
+	static genCharCodeKyrillic = genCharCodeKyrillic
+	static genRgb = genRgb
+	static isRxp = isRxp
+	static toCallback = toCallback
+	static toLen = toLen
+	static isLenMin = isLenMin
+	static isLenMax = isLenMax
+	static isLenEqual = isLenEqual
+	static isLenRange = isLenRange
+	static isNum = isNum
+	static isStr = isStr
+	static isArr = isArr
+	static isObj = isObj
+	static isCharLatin = isCharLatin
+	static isCharKyrrylic = isCharKyrrylic
+	static isCharNum = isCharNum
+	static isCharSpecial = isCharSpecial
+	static isCharValid = isCharValid
+	static isNumLike = isNumLike
+	static filterStr = filterStr
+	static filterNum = filterNum
+	static filterArr = filterArr
+	static filterBool = filterBool
+	static filterFunc = filterFunc
+	static or = or
+	static and = and
+	static like = like
+	static not = not
+	static getIndexLast = getIndexLast
+	static getElementLast = getElementLast
+	static getSlice = getSlice
+	static getElementNeighbours = getElementNeighbours
+	static getElementNext = getElementNext
+	static getSplitted = getSplitted
+	static getChars = getChars
+	static getWords = getWords
+	static getPhrases = getPhrases
+	static getLines = getLines
+	static getWordFirst = getWordFirst
+	static getWordLast = getWordLast
+	static genPhraseFromWords = genPhraseFromWords
+	static getPhrasesWithWord = getPhrasesWithWord
+	static getPhrasesWithoutWord = getPhrasesWithoutWord
+	static getPhrasesEndsWith = getPhrasesEndsWith
+	static getPhrasesStartsWith = getPhrasesStartsWith
+	static getPhrasesByLength = getPhrasesByLength
+	static getPhrasesByIndex = getPhrasesByIndex
+	static reduceText = reduceText
+	static reduceSum = reduceSum
+	static reduceMult = reduceMult
+	static reduceObj = reduceObj
+	static reducePropValue = reducePropValue
+	static reducePropDesc = reducePropDesc
+	static reduceElementStats = reduceElementStats
+	static reduceElementKeys = reduceElementKeys
+	static reduceElementValues = reduceElementValues
+	static reduceElementEntries = reduceElementEntries
+	static toArr = toArr
+	static toObj = toObj
+	static toText = toText
+	static toKeys = toKeys
+	static toNumDiff = toNumDiff
+	static toNumRange = toNumRange
+	static toTrim = toTrim
+	static toTrimLine = toTrimLine
+	static toUnical = toUnical
+	static toJoin = toJoin
+	static toRepeat = toRepeat
+	static toReversed = toReversed
+	static toBuffer = toBuffer
+	static toFloatFixed = toFloatFixed
+	static toTrainingData = toTrainingData
+	static toFormatted = toFormatted
+	static toPercent = toPercent
+	static toResultStats = toResultStats
+	static toResultProps = toResultProps
+	static toTitleCase = toTitleCase
+	static jsonParse = jsonParse
+	static jsonCreate = jsonCreate
+	static toAverage = toAverage
+	static toRxp = toRxp
+	static toRxpNext = toRxpNext
+	static toMatchWordFirst = toMatchWordFirst
+	static toMatchWordLast = toMatchWordLast
+	static toMatchLineWithWord = toMatchLineWithWord
+	static toMatchChars = toMatchChars
+	static toMatchWords = toMatchWords
+	static toMatchPhrases = toMatchPhrases
+	static toMatchLines = toMatchLines
+	static toMatchDividered = toMatchDividered
+	static toMatchNextWords = toMatchNextWords
+	static toArrValues = toArrValues
+	static toNotUnical = toNotUnical
+	static replaceManyChars = replaceManyChars
+	static replaceChars = replaceChars
+	static getIndex = getIndex
+	static getIndexAll = getIndexAll
+	static getMatch = getMatch
+	static getMatchAll = getMatchAll
+	static getElementsSequence = getElementsSequence
+	static msToTimeDesc = msToTimeDesc
+	static toFixed = toFixed
+	static sliceToSize = sliceToSize
+	static encode = encode
+	static decode = decode
+	static isStrEqual = isStrEqual
+	static isLineBreak = isLineBreak
+	static isSharp = isSharp
+	static isSpace = isSpace
+	static isStar = isStar
+	static character = character
+	static _toObj = _toObj
+	static _toArr = _toArr
+	static _toStr = _toStr
 }
 
 module.exports = Helpers
-
-
-const HELPERS_PROPS = [
-	"UND",
-	"NULL",
-	"ERR",
-	"STR",
-	"NUM",
-	"BLN",
-	"ARR",
-	"OBJ",
-	"SYM",
-	"BIG",
-	"FUNC",
-	"SRC",
-	"TYPEOF",
-	"JSON",
-	"VALUES",
-	"_values",
-	"_type",
-	"LOG_METHODS",
-	"GRADIENT_METHODS",
-	"COLOR_METHODS",
-	"CONSOLE_SOURCES",
-	"GRADIENTS_SOURCES",
-	"COLORED_SOURCES",
-	"LOGGER_SOURCE_DEFAULT",
-	"LOGGER_SOURCES",
-	"logPretty",
-	"logExamples",
-	"is",
-	"isTypeStr",
-	"isTypeNum",
-	"isTypeFunc",
-	"isTypeObj",
-	"isTypeBool",
-	"isTypeBig",
-	"isTypeSym",
-	"isTypeUnd",
-	"isDefined",
-	"isTypeSimple",
-	"isTypeObjTruthy",
-	"isType",
-	"isEqual",
-	"isEvery",
-	"isSome",
-	"FILENAME_OUTPUT",
-	"FILENAME_INPUT",
-	"FILENAME_LOG",
-	"PATH_FILES",
-	"PATH_RESULTS",
-	"PATH_NETWORKS",
-	"PATH_TRAINING",
-	"CONTENT_FILES",
-	"CONTENT_RESULTS",
-	"CONTENT_NETWORKS",
-	"CONTENT_TRAINING",
-	"PATH_OUTPUT",
-	"PATH_INPUT",
-	"PATH_LOG",
-	"CHAR_CODE_MULT",
-	"MAX_ENCODED_SIZE",
-	"LINE",
-	"TAB",
-	"SPACE",
-	"COMMA",
-	"DOT",
-	"DIV",
-	"toMaxLength",
-	"toCharCode",
-	"toCharFromCode",
-	"toCharCodeText",
-	"CHARS_NUM",
-	"CHARS_ENG",
-	"CHARS_RUS",
-	"CHARS_SIMPLE",
-	"CHARS_SPECIAL",
-	"CHARS_VALID",
-	"CHAR_CODE_SOURCES",
-	"CHAR_CODE_VALUES",
-	"DIV_LINE",
-	"DIV_TITLE",
-	"MIN",
-	"MAX",
-	"RANGE",
-	"ARRAY_SIZE",
-	"LIKE_DIFF",
-	"MIN_LENGTH",
-	"MAX_LENGTH",
-	"MIN_CHAR_CODE",
-	"MAX_CHAR_CODE",
-	"INPUT_SIZE",
-	"HIDDEN_SIZE",
-	"OUTPUT_SIZE",
-	"TRAIN_SET_SIZE",
-	"LEARNING_RATE",
-	"OPTIONS_FS",
-	"OPTIONS_BRAIN_LSTM",
-	"ITERATIONS",
-	"ERROR_THRESHOLD",
-	"OPTIONS_BRAIN_TRAIN",
-	"sourceMessage",
-	"filePath",
-	"fileList",
-	"fileRead",
-	"fileWrite",
-	"fileAppend",
-	"fileCreateDir",
-	"gen",
-	"genBool",
-	"genInt",
-	"genCoin",
-	"genId",
-	"genKey",
-	"genArr",
-	"genMany",
-	"genSort",
-	"genIndex",
-	"genElement",
-	"genElementsMany",
-	"genObjKey",
-	"genObjValue",
-	"genObjEntry",
-	"genChar",
-	"genCharLatin",
-	"genCharKyrillic",
-	"genCharCode",
-	"genCharCodeLatin",
-	"genCharCodeKyrillic",
-	"genRgb",
-	"toCallback",
-	"isLen",
-	"toLen",
-	"toProps",
-	"isLenMin",
-	"isLenMax",
-	"isLenEqual",
-	"isNum",
-	"isStr",
-	"isArr",
-	"isRxp",
-	"isNumLike",
-	"isCharLatin",
-	"isCharKyrrylic",
-	"isCharNum",
-	"isCharSpecial",
-	"isCharValid",
-	"isObj",
-	"_or",
-	"_and",
-	"getIndexLast",
-	"getElementLast",
-	"getPart",
-	"getElementNeighbours",
-	"getElementNext",
-	"getSplitted",
-	"getChars",
-	"getWords",
-	"getPhrases",
-	"getLines",
-	"getWordFirst",
-	"getWordLast",
-	"genPhraseFromWords",
-	"getPhrasesWithWord",
-	"getPhrasesWithoutWord",
-	"getPhrasesEndsWith",
-	"getPhrasesStartsWith",
-	"reduceText",
-	"reduceSum",
-	"reduceMult",
-	"reduceObj",
-	"toArr",
-	"toObj",
-	"toText",
-	"toKeys",
-	"toNumDiff",
-	"toNumRange",
-	"toNumRangeReversed",
-	"toTrim",
-	"toTrimLine",
-	"toUnical",
-	"toJoin",
-	"toRepeat",
-	"toReversed",
-	"toBuffer",
-	"toFloatFixed",
-	"toTrainingData",
-	"toFormatted",
-	"toPercent",
-	"toResultStats",
-	"toResultProps",
-	"toTitleCase",
-	"jsonParse",
-	"jsonCreate",
-	"toAverage",
-	"toRxp",
-	"toRxpNext",
-	"toMatchWordFirst",
-	"toMatchWordLast",
-	"toMatchLineWithWord",
-	"toMatchChars",
-	"toMatchWords",
-	"toMatchPhrases",
-	"toMatchLines",
-	"toMatchDividered",
-	"toMatchNextWords",
-	"toArrValues",
-	"toNotUnical",
-	"isUnical",
-	"replaceManyChars",
-	"replaceChars",
-	"getIndex",
-	"getIndexAll",
-	"getMatch",
-	"getMatchAll",
-	"getElementsSequence",
-	"msToTimeDesc",
-	"toFixed",
-	"sliceToSize",
-	"codeEncode",
-	"codeDecode",
-	"charEncode",
-	"encode",
-	"decode",
-	"isStrEqual",
-	"isLineBreak",
-	"isSharp",
-	"isSpace",
-	"isStar",
-	"character"
-].map((desc, index) => {
-	const value = Helpers[prop]
-	return { desc, index, value, type: typeof value }
-})
-
-const HELPERS_VALUES_DESC = HELPERS_PROPS.filter((prop) => prop.type !== "function")
-	.reduce((acc, v) => [...acc, Helpers.jsonCreate(v)], [])
-	.join("\n")
-const HELPERS_DESC = HELPERS_PROPS.reduce((acc, v) => [...acc, Helpers.jsonCreate(v)], []).join("\n")

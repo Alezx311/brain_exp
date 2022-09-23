@@ -1,5 +1,5 @@
 const brain = require("brain.js")
-const { timestamp, fileRead, fileWrite, msToTimeDesc } = require("./helpers")
+const { timestamp, fileRead, fileWrite, msToTimeDesc } = require("./helpersOld")
 
 const { random: _random } = Math
 const { now: _now } = performance
