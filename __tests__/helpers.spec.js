@@ -1,6 +1,5 @@
 const Helpers = require("../helpers")
 
-const KEYS = Object.keys(Helpers).filter((k) => k !== "UND")
 const RESULTS = [
 	{ desc: "FUNC", result: Helpers.FUNC("Test log message") },
 	{ desc: "_logExamples", result: Helpers._logExamples("Test log message") },
@@ -166,32 +165,51 @@ const RESULTS = [
 	{ desc: "_toArr", result: Helpers._toArr() },
 	{ desc: "_toStr", result: Helpers._toStr() }
 ]
-const SUMMARY = KEYS.map((k, i) => ({ index: i, desc: k, value: Helpers?.[k], result: "Unknown result" })).map(
-	(src) => {
-		const type = typeof src.value
-		const finded = RESULTS.find((el) => el.desc === src.desc)
-		return finded ? { ...finded, ...src, type } : { ...src, type }
-	}
-)
-const CONSTANTS = SUMMARY.filter((v) => v.type !== "function")
+const SUMMARY = Object.keys(Helpers)
+	.filter((k) => k !== "UND")
+	.map((desc, index) => {
+		const value = Helpers?.[desc]
+		const finded = RESULTS.find((el) => el.desc === desc)
+		return { index, desc, value, type: typeof value, result: finded?.result ?? "Unknown" }
+	})
+
+describe("Helpers summary", () => {
+	SUMMARY.map((v) => {
+		it(v.desc, () => {
+			expect(v.index).toBeDefined()
+			expect(v.desc).toBeDefined()
+			expect(v.value).toBeDefined()
+			expect(v.type).toBeDefined()
+			expect(v.result).toBeDefined()
+			expect(Helpers).toHaveProperty(v.desc)
+		})
+	})
+})
 
 describe("Helpers constants", () => {
-	CONSTANTS.map(({ desc, value }) => {
-		it(desc, () => {
-			expect(desc).toBeDefined()
-			expect(value).toBeDefined()
-			expect(Helpers).toHaveProperty(desc)
+	SUMMARY.filter((v) => v.type !== "function").map((v) => {
+		it(v.desc, () => {
+			expect(v.desc).toBeDefined()
+			expect(v.value).toBeDefined()
+			expect(v.type).toBeDefined()
+			expect(v.desc).toBeDefined()
+			expect(v.value).toBeDefined()
+			expect(v.result).toBeDefined()
+			expect(v.index).toBeDefined()
+			expect(Helpers).toHaveProperty(v.desc)
 		})
 	})
 })
 
 describe("Helpers functions", () => {
-	SUMMARY.map((v) => {
-		it(v?.desc, () => {
-			expect(v?.type).toBeDefined()
-			expect(v?.desc).toBeDefined()
-			expect(v?.value).toBeDefined()
-			expect(v?.result).toBeDefined()
+	SUMMARY.filter((v) => v.type === "function").map((v) => {
+		it(v.desc, () => {
+			expect(v.index).toBeDefined()
+			expect(v.type).toBeDefined()
+			expect(v.desc).toBeDefined()
+			expect(v.value).toBeDefined()
+			expect(v.result).toBeDefined()
+			expect(Helpers).toHaveProperty(v.desc)
 		})
 	})
 })
