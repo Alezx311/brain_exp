@@ -1,13 +1,13 @@
 import { A, B, F, N, O, R, S } from "./types"
 
+import { say, think } from "cowsay"
 import fs from "fs"
-import path from "path"
-import util from "util"
-import _cowsay from "cowsay"
-import _str from "string"
 import gradient from "gradient-string"
 import _stringify from "json-stringify-safe"
+import { join as _join } from "path"
+import _str from "string"
 import textTable from "text-table"
+import util from "util"
 import {
 	ARRAY_SIZE,
 	CHAR_CODE_MULT,
@@ -21,13 +21,9 @@ import {
 } from "./constants"
 
 const _arr = require("arr")
-const _lolcats = require("lolcats")
+const { rainbow } = require("lolcats")
 
 //? Shorthands
-const { say, think } = _cowsay
-const { rainbow } = _lolcats
-const { vice, instagram, atlas } = gradient
-const { join: _join } = path
 const { now: _now } = Date
 const { format: _format, isDeepStrictEqual: _isDeepEqual } = util
 const { log: _log, info: _info, warn: _warn, error: _error, debug: _debug, timeLog: _timeLog } = console
@@ -103,9 +99,9 @@ export const strThink = (v: any) => isStr(v) && think({ text: v })
 export const strSayRandom = (v: any) => isStr(v) && say({ text: v, r: true })
 export const strThinkRandom = (v: any) => isStr(v) && think({ text: v, r: true })
 export const strRainbow = (v: any) => isStr(v) && rainbow(v)
-export const strAtlas = (v: any) => isStr(v) && atlas(v)
-export const strInstagram = (v: any) => isStr(v) && instagram(v)
-export const strVice = (v: any) => isStr(v) && vice(v)
+export const strAtlas = (v: any) => isStr(v) && gradient.atlas(v)
+export const strInstagram = (v: any) => isStr(v) && gradient.instagram(v)
+export const strVice = (v: any) => isStr(v) && gradient.vice(v)
 export const strTable = (...v: any) => textTable(v.map(_str), { align: ["l", "c"] })
 export const strToMaxLen = (v: A | S, max = MAX) => isStr(v) && (v.length > max ? v.slice(0, max) : v)
 export const strToMinLen = (v: A | S, min = MIN) => isStr(v) && (v.length < min ? v.padEnd(min, " ") : v)

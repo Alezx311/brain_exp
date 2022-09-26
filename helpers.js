@@ -86,8 +86,8 @@ const DECORATE_SOURCES = [
 	{ desc: "rainbow color", func: (text) => _log(rainbow(text)) },
 	{ desc: "cow say", func: (text) => _log(say({ text })) },
 	{ desc: "cow think", func: (text) => _log(think({ text })) },
-	{ desc: "cow say random", func: (text) => _log(say({ text, r: true })) },
-	{ desc: "cow think rkRandom", func: (text) => _log(think({ text, r: true })) }
+	{ desc: "cow random say", func: (text) => _log(say({ text, r: true })) },
+	{ desc: "cow random think", func: (text) => _log(think({ text, r: true })) }
 ]
 const DECORATE_METHODS = _from(DECORATE_SOURCES.reduce((acc, { desc, func }) => [...acc, [desc, func]], []))
 const CHAR_LINE = "\n"

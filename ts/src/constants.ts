@@ -2,16 +2,14 @@ import { A, S } from "./types"
 
 import chalk from "chalk"
 import gradient from "gradient-string"
-import path from "path"
 import util from "util"
-import _cowsay from "cowsay"
+import { join as _join } from "path"
+import { say, think } from "cowsay"
 
 const _lolcats = require("lolcats")
 
 //? Shorthands
-const { say, think } = _cowsay
 const { print: lolcat, rainbow } = _lolcats
-const { join: _join } = path
 const { now: _now } = Date
 const { cwd } = process
 const { format: _format, isDeepStrictEqual: _isDeepEqual } = util
@@ -152,3 +150,63 @@ export const DIR = __dirname
 export const FILE = __filename
 export const LOG_DIR = _join(__dirname, "logs")
 export const LOG_FILE = _join(LOG_DIR, "logs.log")
+
+export class Constants {
+	static UND = UND
+	static SYM = SYM
+	static BIG = BIG
+	static NULL = NULL
+	static STR = STR
+	static ERR = ERR
+	static RND = RND
+	static NUM = NUM
+	static BLN = BLN
+	static ARR = ARR
+	static OBJ = OBJ
+	static FUNC = FUNC
+	static VALUES_SOURCES = VALUES_SOURCES
+	static VALUES = VALUES
+	static TYPEOF = TYPEOF
+	static CHAR_LINE = CHAR_LINE
+	static CHAR_TAB = CHAR_TAB
+	static CHAR_SPACE = CHAR_SPACE
+	static CHAR_COMMA = CHAR_COMMA
+	static CHAR_DOT = CHAR_DOT
+	static CHAR_DIV = CHAR_DIV
+	static CHARS_ENG = CHARS_ENG
+	static CHARS_RUS = CHARS_RUS
+	static CHARS_NUM = CHARS_NUM
+	static CHARS_SIMPLE = CHARS_SIMPLE
+	static CHARS_SPECIAL = CHARS_SPECIAL
+	static CHARS_VALID = CHARS_VALID
+	static DIV_CONTENT = DIV_CONTENT
+	static DIV_LINE = DIV_LINE
+	static DIV_TITLE = DIV_TITLE
+	static MIN = MIN
+	static MAX = MAX
+	static RANGE = RANGE
+	static RANGE_LENGTH = RANGE_LENGTH
+	static ARRAY_SIZE = ARRAY_SIZE
+	static LIKE_DIFF = LIKE_DIFF
+	static CHAR_CODE_MULT = CHAR_CODE_MULT
+	static MAX_ENCODED_SIZE = MAX_ENCODED_SIZE
+	static TIME = TIME
+	static OPTIONS_FS = OPTIONS_FS
+	static INPUT_SIZE = INPUT_SIZE
+	static HIDDEN_SIZE = HIDDEN_SIZE
+	static OUTPUT_SIZE = OUTPUT_SIZE
+	static TRAIN_SET_SIZE = TRAIN_SET_SIZE
+	static LEARNING_RATE = LEARNING_RATE
+	static ITERATIONS = ITERATIONS
+	static ERROR_THRESHOLD = ERROR_THRESHOLD
+	static LOG_PERIOD = LOG_PERIOD
+	static OPTIONS_BRAIN_LSTM = OPTIONS_BRAIN_LSTM
+	static OPTIONS_BRAIN_TRAIN = OPTIONS_BRAIN_TRAIN
+	static DECORATE_SOURCES = DECORATE_SOURCES
+	static DECORATE_METHODS = DECORATE_METHODS
+	static ROOT = ROOT
+	static DIR = DIR
+	static FILE = FILE
+	static LOG_DIR = LOG_DIR
+	static LOG_FILE = LOG_FILE
+}
