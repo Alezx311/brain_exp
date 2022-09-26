@@ -11,8 +11,13 @@
 	},
 	"dependencies": {
 		"@tensorflow/tfjs": "^3.20.0",
+		"@types/chalk": "^2.2.0",
+		"@types/gradient-string": "^1.1.2",
 		"@types/jest": "^29.0.3",
+		"@types/json-stringify-safe": "^5.0.0",
 		"@types/node": "^18.7.18",
+		"@types/string": "^0.0.31",
+		"@types/text-table": "^0.2.2",
 		"argparse": "^2.0.1",
 		"arr": "^0.1.5",
 		"awesome-pretty": "^2.4.0",
