@@ -26,11 +26,18 @@
  * Networks" http://karpathy.github.io/2015/05/21/rnn-effectiveness/
  */
 
-import * as tf from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs'
 
-import {TextData} from './data';
-import * as model from './model';
-import {onTextGenerationBegin, onTextGenerationChar, onTrainBatchEnd, onTrainBegin, onTrainEpochEnd, setUpUI} from './ui';
+import { TextData } from './data'
+import * as model from './model'
+import {
+  onTextGenerationBegin,
+  onTextGenerationChar,
+  onTrainBatchEnd,
+  onTrainBegin,
+  onTrainEpochEnd,
+  setUpUI,
+} from './ui'
 
 /**
  * Class that manages LSTM-based text generation.
@@ -48,10 +55,10 @@ export class LSTMTextGenerator {
    * @param {TextData} textData An instance of `TextData`.
    */
   constructor(textData) {
-    this.textData_ = textData;
-    this.charSetSize_ = textData.charSetSize();
-    this.sampleLen_ = textData.sampleLen();
-    this.textLen_ = textData.textLen();
+    this.textData_ = textData
+    this.charSetSize_ = textData.charSetSize()
+    this.sampleLen_ = textData.sampleLen()
+    this.textLen_ = textData.textLen()
   }
 
   /**
@@ -61,8 +68,7 @@ export class LSTMTextGenerator {
    *   number or an non-empty array of numbers.
    */
   createModel(lstmLayerSizes) {
-    this.model = model.createModel(
-        this.sampleLen_, this.charSetSize_, lstmLayerSizes);
+    this.model = model.createModel(this.sampleLen_, this.charSetSize_, lstmLayerSizes)
   }
 
   /**
@@ -71,7 +77,7 @@ export class LSTMTextGenerator {
    * @param {number} learningRate The learning rate to use during training.
    */
   compileModel(learningRate) {
-    model.compileModel(this.model, learningRate);
+    model.compileModel(this.model, learningRate)
   }
 
   /**
@@ -85,29 +91,27 @@ export class LSTMTextGenerator {
    *   training epochs.
    */
   async fitModel(numEpochs, examplesPerEpoch, batchSize, validationSplit) {
-    let batchCount = 0;
-    const batchesPerEpoch = examplesPerEpoch / batchSize;
-    const totalBatches = numEpochs * batchesPerEpoch;
-    let t = new Date().getTime();
+    let batchCount = 0
+    const batchesPerEpoch = examplesPerEpoch / batchSize
+    const totalBatches = numEpochs * batchesPerEpoch
+    let t = new Date().getTime()
 
-    onTrainBegin();
+    onTrainBegin()
     const callbacks = {
       onBatchEnd: async (batch, logs) => {
         // Calculate the training speed in the current batch, in # of
         // examples per second.
-        const t1 = new Date().getTime();
-        const examplesPerSec = batchSize / ((t1 - t) / 1e3);
-        t = t1;
-        onTrainBatchEnd(logs, ++batchCount / totalBatches, examplesPerSec);
+        const t1 = new Date().getTime()
+        const examplesPerSec = batchSize / ((t1 - t) / 1e3)
+        t = t1
+        onTrainBatchEnd(logs, ++batchCount / totalBatches, examplesPerSec)
       },
       onEpochEnd: async (epoch, logs) => {
-        onTrainEpochEnd(logs);
-      }
-    };
+        onTrainEpochEnd(logs)
+      },
+    }
 
-    await model.fitModel(
-        this.model, this.textData_, numEpochs, examplesPerEpoch, batchSize,
-        validationSplit, callbacks);
+    await model.fitModel(this.model, this.textData_, numEpochs, examplesPerEpoch, batchSize, validationSplit, callbacks)
   }
 
   /**
@@ -121,12 +125,17 @@ export class LSTMTextGenerator {
    * @returns {string} The generated text.
    */
   async generateText(sentenceIndices, length, temperature) {
-    onTextGenerationBegin();
+    onTextGenerationBegin()
     return await model.generateText(
-        this.model, this.textData_, sentenceIndices, length, temperature,
-        onTextGenerationChar);
+      this.model,
+      this.textData_,
+      sentenceIndices,
+      length,
+      temperature,
+      onTextGenerationChar,
+    )
   }
-};
+}
 
 /**
  * A subclass of LSTMTextGenerator that supports model saving and loading.
@@ -140,11 +149,10 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    * @param {TextData} textData An instance of `TextData`.
    */
   constructor(textData) {
-    super(textData);
-    this.modelIdentifier_ = textData.dataIdentifier();
-    this.MODEL_SAVE_PATH_PREFIX_ = 'indexeddb://lstm-text-generation';
-    this.modelSavePath_ =
-        `${this.MODEL_SAVE_PATH_PREFIX_}/${this.modelIdentifier_}`;
+    super(textData)
+    this.modelIdentifier_ = textData.dataIdentifier()
+    this.MODEL_SAVE_PATH_PREFIX_ = 'indexeddb://lstm-text-generation'
+    this.modelSavePath_ = `${this.MODEL_SAVE_PATH_PREFIX_}/${this.modelIdentifier_}`
   }
 
   /**
@@ -153,7 +161,7 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    * @returns {string} The model identifier.
    */
   modelIdentifier() {
-    return this.modelIdentifier_;
+    return this.modelIdentifier_
   }
 
   /**
@@ -163,15 +171,13 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    *   number or an non-empty array of numbers.
    */
   async loadModel(lstmLayerSizes) {
-    const modelsInfo = await tf.io.listModels();
+    const modelsInfo = await tf.io.listModels()
     if (this.modelSavePath_ in modelsInfo) {
-      console.log(`Loading existing model...`);
-      this.model = await tf.loadLayersModel(this.modelSavePath_);
-      console.log(`Loaded model from ${this.modelSavePath_}`);
+      console.log(`Loading existing model...`)
+      this.model = await tf.loadLayersModel(this.modelSavePath_)
+      console.log(`Loaded model from ${this.modelSavePath_}`)
     } else {
-      throw new Error(
-          `Cannot find model at ${this.modelSavePath_}. ` +
-          `Creating model from scratch.`);
+      throw new Error(`Cannot find model at ${this.modelSavePath_}. ` + `Creating model from scratch.`)
     }
   }
 
@@ -182,9 +188,9 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    */
   async saveModel() {
     if (this.model == null) {
-      throw new Error('Cannot save model before creating model.');
+      throw new Error('Cannot save model before creating model.')
     } else {
-      return await this.model.save(this.modelSavePath_);
+      return await this.model.save(this.modelSavePath_)
     }
   }
 
@@ -192,11 +198,10 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    * Remove the locally saved model from IndexedDB.
    */
   async removeModel() {
-    if (await this.checkStoredModelStatus() == null) {
-      throw new Error(
-          'Cannot remove locally saved model because it does not exist.');
+    if ((await this.checkStoredModelStatus()) == null) {
+      throw new Error('Cannot remove locally saved model because it does not exist.')
     }
-    return await tf.io.removeModel(this.modelSavePath_);
+    return await tf.io.removeModel(this.modelSavePath_)
   }
 
   /**
@@ -206,8 +211,8 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    *   object. Else, `undefined`.
    */
   async checkStoredModelStatus() {
-    const modelsInfo = await tf.io.listModels();
-    return modelsInfo[this.modelSavePath_];
+    const modelsInfo = await tf.io.listModels()
+    return modelsInfo[this.modelSavePath_]
   }
 
   /**
@@ -219,15 +224,15 @@ export class SaveableLSTMTextGenerator extends LSTMTextGenerator {
    */
   lstmLayerSizes() {
     if (this.model == null) {
-      throw new Error('Create model first.');
+      throw new Error('Create model first.')
     }
-    const numLSTMLayers = this.model.layers.length - 1;
-    const layerSizes = [];
+    const numLSTMLayers = this.model.layers.length - 1
+    const layerSizes = []
     for (let i = 0; i < numLSTMLayers; ++i) {
-      layerSizes.push(this.model.layers[i].units);
+      layerSizes.push(this.model.layers[i].units)
     }
-    return layerSizes.length === 1 ? layerSizes[0] : layerSizes;
+    return layerSizes.length === 1 ? layerSizes[0] : layerSizes
   }
 }
 
-setUpUI();
+setUpUI()
