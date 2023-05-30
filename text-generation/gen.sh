@@ -1,5 +1,28 @@
 #!/bin/zsh
 
+# yarn gen inputs/ukrainian_poetry.txt --genLength 10000 > output/ukrainian_poetry/300.txt
+
+# ########## Stats ##########
+#   TITLE: ukrainian_poetry
+#   LAYERS: 512
+#   EPOCHS: 300
+#   INPUT_FILE: ./inputs/ukrainian_poetry.txt
+#   OUTPUT_DIR: ./output/ukrainian_poetry
+#   OUTPUT_MODEL: ./output/ukrainian_poetry/model.json
+#   OUTPUT_FILE: ./output/ukrainian_poetry/300.txt
+#   GENERATE_SIZE_SMALL:
+#   GENERATE_SIZE_LARGE:
+# ###########################
+
+#  ______________________________
+# / Generating data with default \
+# \ temperature...               /
+#  ------------------------------
+#         \   ^__^
+#          \  (oo)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
 #? <----- Settings ------------>
 # TITLE=lorem
 TITLE=ukrainian_poetry
